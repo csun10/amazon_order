@@ -95,15 +95,19 @@ def main():
             print(f"Missing files for {filename}")
             failed += 1
     
-    # Copy files that didn't need restoration
-    print("\nCopying files that retained formatting...")
-    all_files = os.listdir(modified_dir)
-    for filename in all_files:
-        if filename.endswith('.xlsx') and filename not in problem_files:
-            src = os.path.join(modified_dir, filename)
-            dst = os.path.join(output_dir, filename)
-            shutil.copy2(src, dst)
-            print(f"Copied {filename}")
+    # Copy files that didn't need restoration (only if source and destination are different)
+    if modified_dir != output_dir:
+        print("\nCopying files that retained formatting...")
+        all_files = os.listdir(modified_dir)
+        for filename in all_files:
+            if filename.endswith('.xlsx') and filename not in problem_files:
+                src = os.path.join(modified_dir, filename)
+                dst = os.path.join(output_dir, filename)
+                if src != dst:  # Only copy if source and destination are different
+                    shutil.copy2(src, dst)
+                    print(f"Copied {filename}")
+    else:
+        print("\nFiles already in correct location - no copying needed.")
     
     print("=" * 50)
     print(f"Restoration complete!")
