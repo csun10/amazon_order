@@ -1,10 +1,12 @@
 @echo off
+set "SCRIPT_DIR=%~dp0"
 REM Batch file to convert JSON files to PO import Excel format
 REM Usage: convert_json_to_po_import.bat [order_name]
 REM If order_name is provided, it will process files named {order_name}-*.json
 REM If no order_name is provided, it will process all JSON files
 
 setlocal enabledelayedexpansion
+cd /d "%SCRIPT_DIR%"
 
 if "%~1"=="" (
     echo Converting all JSON files to PO import format...

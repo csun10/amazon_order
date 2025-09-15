@@ -1,4 +1,5 @@
 @echo off
+set "SCRIPT_DIR=%~dp0"
 echo Amazon Order Generation - Quick Setup for Windows
 echo ================================================
 echo.
@@ -11,6 +12,7 @@ echo - JSON to Excel Converter
 echo - Excel to JSON Template Converter
 echo.
 
+cd /d "%SCRIPT_DIR%"
 pause
 
 echo Installing required packages...

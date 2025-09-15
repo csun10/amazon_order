@@ -51,6 +51,65 @@ def fill_workbook(template: Path, data: dict, json_filename: str = ""):
             # Extract order number from filename (e.g., "factory-1.json" -> "factory-1")
             order_number = Path(json_filename).stem
             value = order_number
+        # Handle color cards (色卡) - insert color images
+        elif key.startswith('色卡') and value:
+            color_img_path = template.parent.parent / 'images' / 'colors' / f'{value}.png'
+            if not color_img_path.exists():
+                color_img_path = template.parent.parent / 'images' / 'colors' / f'{value}.jpg'
+            
+            if color_img_path.exists():
+                try:
+                    from PIL import Image as PILImage
+                    # Verify image can be opened by Pillow
+                    with PILImage.open(color_img_path) as pil_img:
+                        pil_img.verify()
+                        orig_width, orig_height = pil_img.size
+                    
+                    img = Image(str(color_img_path))
+                    # Set appropriate size for color card (smaller than product images)
+                    target_height_px = 60
+                    scale = target_height_px / orig_height
+                    img.height = target_height_px
+                    img.width = int(orig_width * scale)
+                    ws.add_image(img, addr)
+                    # Don't set text value for image cells
+                    continue
+                except Exception as e:
+                    value = f"[色卡图片错误] {value}: {e}"
+            else:
+                value = f"[色卡图片未找到] {value}"
+        # Handle logos - insert logo images  
+        elif key.startswith('Logo') and value:
+            logo_img_path = template.parent.parent / 'images' / 'logos' / f'{value}'
+            # If no extension provided, try common formats
+            if not logo_img_path.suffix:
+                for ext in ['.png', '.jpg', '.jpeg']:
+                    test_path = template.parent.parent / 'images' / 'logos' / f'{value}{ext}'
+                    if test_path.exists():
+                        logo_img_path = test_path
+                        break
+            
+            if logo_img_path.exists():
+                try:
+                    from PIL import Image as PILImage
+                    # Verify image can be opened by Pillow
+                    with PILImage.open(logo_img_path) as pil_img:
+                        pil_img.verify()
+                        orig_width, orig_height = pil_img.size
+                    
+                    img = Image(str(logo_img_path))
+                    # Set appropriate size for logo (similar to color card)
+                    target_height_px = 60
+                    scale = target_height_px / orig_height
+                    img.height = target_height_px
+                    img.width = int(orig_width * scale)
+                    ws.add_image(img, addr)
+                    # Don't set text value for image cells
+                    continue
+                except Exception as e:
+                    value = f"[Logo图片错误] {value}: {e}"
+            else:
+                value = f"[Logo图片未找到] {value}"
         
         ws[addr] = value
 

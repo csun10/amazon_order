@@ -1,10 +1,13 @@
 @echo off
+set "SCRIPT_DIR=%~dp0"
 echo Excel to JSON Template Converter
 echo ================================
 echo.
 echo This script converts Excel files in the empty_base_template.xlsx format
 echo to JSON template files for use with the order generation system.
 echo.
+
+cd /d "%SCRIPT_DIR%"
 
 if "%~1"=="" (
     echo Usage: convert_excel_to_json.bat ^<excel_file^>
@@ -18,8 +21,7 @@ if "%~1"=="" (
     exit /b 1
 )
 
-cd /d "c:\Users\Cheng\Desktop\amazon_order\order_generation"
-C:/Users/Cheng/AppData/Local/Programs/Python/Python310/python.exe excel_to_json_template.py %*
+python excel_to_json_template.py %*
 
 echo.
 echo Conversion completed!
