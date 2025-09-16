@@ -304,7 +304,7 @@ class ExcelToJsonConverter:
 class ExcelToJsonGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("Excel to JSON Template Converter")
+        self.root.title("Excel转JSON模板转换器")
         self.root.geometry("800x600")
         
         # Initialize converter
@@ -329,12 +329,12 @@ class ExcelToJsonGUI:
         main_frame.rowconfigure(2, weight=1)
         
         # Title
-        title_label = ttk.Label(main_frame, text="Excel to JSON Template Converter", 
+        title_label = ttk.Label(main_frame, text="Excel转JSON模板转换器", 
                                font=("TkDefaultFont", 16, "bold"))
         title_label.grid(row=0, column=0, pady=(0, 20))
         
         # File selection section
-        file_frame = ttk.LabelFrame(main_frame, text="File Selection", padding="10")
+        file_frame = ttk.LabelFrame(main_frame, text="文件选择", padding="10")
         file_frame.grid(row=1, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
         file_frame.columnconfigure(0, weight=1)
         
@@ -342,11 +342,11 @@ class ExcelToJsonGUI:
         button_frame = ttk.Frame(file_frame)
         button_frame.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
         
-        ttk.Button(button_frame, text="Select Excel Files", 
+        ttk.Button(button_frame, text="选择Excel文件", 
                   command=self._select_files).pack(side=tk.LEFT, padx=(0, 10))
-        ttk.Button(button_frame, text="Add Folder", 
+        ttk.Button(button_frame, text="添加文件夹", 
                   command=self._select_folder).pack(side=tk.LEFT, padx=(0, 10))
-        ttk.Button(button_frame, text="Clear All", 
+        ttk.Button(button_frame, text="清空全部", 
                   command=self._clear_files).pack(side=tk.LEFT, padx=(0, 10))
         
         # File list
@@ -367,19 +367,19 @@ class ExcelToJsonGUI:
         control_frame = ttk.Frame(file_frame)
         control_frame.grid(row=2, column=0, sticky=(tk.W, tk.E), pady=(10, 0))
         
-        ttk.Button(control_frame, text="Remove Selected", 
+        ttk.Button(control_frame, text="移除选中", 
                   command=self._remove_selected).pack(side=tk.LEFT, padx=(0, 10))
-        ttk.Button(control_frame, text="Convert to JSON", 
+        ttk.Button(control_frame, text="转换为JSON", 
                   command=self._convert_files).pack(side=tk.LEFT, padx=(20, 0))
         
         # Progress and output section
-        output_frame = ttk.LabelFrame(main_frame, text="Conversion Progress", padding="10")
+        output_frame = ttk.LabelFrame(main_frame, text="转换进度", padding="10")
         output_frame.grid(row=2, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 10))
         output_frame.columnconfigure(0, weight=1)
         output_frame.rowconfigure(1, weight=1)
         
         # Progress bar
-        self.progress_var = tk.StringVar(value="Ready to convert files...")
+        self.progress_var = tk.StringVar(value="准备转换文件...")
         progress_label = ttk.Label(output_frame, textvariable=self.progress_var)
         progress_label.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 5))
         
@@ -391,14 +391,14 @@ class ExcelToJsonGUI:
         self.output_text.grid(row=2, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
         # Status bar
-        self.status_var = tk.StringVar(value="Ready")
+        self.status_var = tk.StringVar(value="就绪")
         status_bar = ttk.Label(main_frame, textvariable=self.status_var, relief=tk.SUNKEN)
         status_bar.grid(row=3, column=0, sticky=(tk.W, tk.E), pady=(10, 0))
         
         # Initial message
-        self._log("Excel to JSON Template Converter ready!")
-        self._log("Select Excel files to convert to JSON templates.")
-        self._log(f"Output directory: {self.converter.template_dir}")
+        self._log("Excel转JSON模板转换器准备就绪！")
+        self._log("选择Excel文件以转换为JSON模板。")
+        self._log(f"输出目录: {self.converter.template_dir}")
         
     def _log(self, message: str):
         """Log a message to the output text"""
@@ -409,12 +409,12 @@ class ExcelToJsonGUI:
     def _select_files(self):
         """Select Excel files to convert"""
         filetypes = [
-            ("Excel files", "*.xlsx *.xls"),
-            ("All files", "*.*")
+            ("Excel文件", "*.xlsx *.xls"),
+            ("所有文件", "*.*")
         ]
         
         files = filedialog.askopenfilenames(
-            title="Select Excel files to convert",
+            title="选择要转换的Excel文件",
             filetypes=filetypes
         )
         
@@ -426,12 +426,12 @@ class ExcelToJsonGUI:
                     self.file_listbox.insert(tk.END, Path(file_path).name)
                     added_count += 1
             
-            self._log(f"Added {added_count} file(s)")
-            self.status_var.set(f"Selected {len(self.selected_files)} file(s)")
+            self._log(f"添加了 {added_count} 个文件")
+            self.status_var.set(f"已选择 {len(self.selected_files)} 个文件")
     
     def _select_folder(self):
         """Select all Excel files from a folder"""
-        folder = filedialog.askdirectory(title="Select folder containing Excel files")
+        folder = filedialog.askdirectory(title="选择包含Excel文件的文件夹")
         
         if folder:
             folder_path = Path(folder)
@@ -445,15 +445,15 @@ class ExcelToJsonGUI:
                     self.file_listbox.insert(tk.END, file_path.name)
                     added_count += 1
             
-            self._log(f"Added {added_count} file(s) from folder: {folder}")
-            self.status_var.set(f"Selected {len(self.selected_files)} file(s)")
+            self._log(f"从文件夹添加了 {added_count} 个文件: {folder}")
+            self.status_var.set(f"已选择 {len(self.selected_files)} 个文件")
     
     def _clear_files(self):
         """Clear all selected files"""
         self.selected_files.clear()
         self.file_listbox.delete(0, tk.END)
-        self._log("Cleared all selected files")
-        self.status_var.set("Ready")
+        self._log("清空了所有选中的文件")
+        self.status_var.set("就绪")
     
     def _remove_selected(self):
         """Remove selected file from list"""
@@ -462,13 +462,13 @@ class ExcelToJsonGUI:
             index = selection[0]
             removed_file = self.selected_files.pop(index)
             self.file_listbox.delete(index)
-            self._log(f"Removed: {Path(removed_file).name}")
-            self.status_var.set(f"Selected {len(self.selected_files)} file(s)")
+            self._log(f"移除了: {Path(removed_file).name}")
+            self.status_var.set(f"已选择 {len(self.selected_files)} 个文件")
     
     def _convert_files(self):
         """Convert selected files to JSON templates"""
         if not self.selected_files:
-            messagebox.showwarning("Warning", "Please select Excel files to convert")
+            messagebox.showwarning("警告", "请选择要转换的Excel文件")
             return
         
         # Disable convert button during processing
@@ -507,54 +507,54 @@ class ExcelToJsonGUI:
             self.progress_bar.configure(maximum=total_files)
             
             for i, file_path in enumerate(self.selected_files):
-                self.progress_var.set(f"Processing {i+1}/{total_files}: {Path(file_path).name}")
+                self.progress_var.set(f"处理中 {i+1}/{total_files}: {Path(file_path).name}")
                 self.progress_bar.configure(value=i)
                 
-                self._log(f"\n[{i+1}/{total_files}] Processing: {Path(file_path).name}")
+                self._log(f"\n[{i+1}/{total_files}] 处理中: {Path(file_path).name}")
                 
                 try:
                     generated_files = self.converter.convert_excel_to_json(Path(file_path))
                     total_generated += len(generated_files)
                     
                     if generated_files:
-                        self._log(f"  ✓ Generated {len(generated_files)} JSON template(s)")
+                        self._log(f"  ✓ 生成了 {len(generated_files)} 个JSON模板")
                         for json_file in generated_files:
                             self._log(f"    - {json_file.name}")
                     else:
-                        self._log(f"  ⚠ No templates generated (no products found)")
+                        self._log(f"  ⚠ 未生成模板（未找到产品）")
                         
                 except Exception as e:
-                    self._log(f"  ✗ Error: {e}")
+                    self._log(f"  ✗ 错误: {e}")
             
             self.progress_bar.configure(value=total_files)
-            self.progress_var.set("Conversion completed!")
+            self.progress_var.set("转换完成！")
             
             # Summary
             self._log(f"\n" + "="*50)
-            self._log(f"CONVERSION SUMMARY")
+            self._log(f"转换总结")
             self._log(f"="*50)
-            self._log(f"Files processed: {total_files}")
-            self._log(f"JSON templates generated: {total_generated}")
-            self._log(f"Output directory: {self.converter.template_dir}")
+            self._log(f"处理的文件: {total_files}")
+            self._log(f"生成的JSON模板: {total_generated}")
+            self._log(f"输出目录: {self.converter.template_dir}")
             self._log(f"="*50)
             
             if total_generated > 0:
-                messagebox.showinfo("Success", 
-                    f"Conversion completed!\n\n"
-                    f"Files processed: {total_files}\n"
-                    f"JSON templates generated: {total_generated}\n"
-                    f"Output directory: {self.converter.template_dir}")
+                messagebox.showinfo("成功", 
+                    f"转换完成！\n\n"
+                    f"处理的文件: {total_files}\n"
+                    f"生成的JSON模板: {total_generated}\n"
+                    f"输出目录: {self.converter.template_dir}")
             else:
-                messagebox.showwarning("Warning", 
-                    f"Conversion completed but no JSON templates were generated.\n"
-                    f"Please check the Excel files contain valid product data.")
+                messagebox.showwarning("警告", 
+                    f"转换完成但未生成JSON模板。\n"
+                    f"请检查Excel文件是否包含有效的产品数据。")
             
-            self.status_var.set(f"Completed: {total_generated} templates generated")
+            self.status_var.set(f"完成: 生成了 {total_generated} 个模板")
             
         except Exception as e:
-            self._log(f"\nUnexpected error: {e}")
-            messagebox.showerror("Error", f"Conversion failed: {e}")
-            self.status_var.set("Error occurred")
+            self._log(f"\n意外错误: {e}")
+            messagebox.showerror("错误", f"转换失败: {e}")
+            self.status_var.set("发生错误")
         
         finally:
             # Re-enable widgets

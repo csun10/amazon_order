@@ -40,7 +40,7 @@ except ImportError:
 class AccessoryMappingUpdaterGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("Accessory Mapping Updater")
+        self.root.title("辅料映射更新器")
         self.root.geometry("1000x700")
         
         # Initialize variables
@@ -68,7 +68,7 @@ class AccessoryMappingUpdaterGUI:
             else:
                 self.current_mapping = {"products": {}}
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to load current mapping: {e}")
+            messagebox.showerror("错误", f"加载当前映射失败: {e}")
             self.current_mapping = {"products": {}}
     
     def _create_widgets(self):
@@ -99,7 +99,7 @@ class AccessoryMappingUpdaterGUI:
     def _create_file_selection_tab(self, parent):
         """Create file selection and processing tab"""
         # File selection section
-        file_section = ttk.LabelFrame(parent, text="Excel File Selection", padding="10")
+        file_section = ttk.LabelFrame(parent, text="Excel文件选择", padding="10")
         file_section.pack(fill=tk.X, padx=10, pady=10)
         
         # File path display
@@ -107,28 +107,28 @@ class AccessoryMappingUpdaterGUI:
         file_path_frame = ttk.Frame(file_section)
         file_path_frame.pack(fill=tk.X, pady=(0, 10))
         
-        ttk.Label(file_path_frame, text="Selected File:").pack(side=tk.LEFT)
+        ttk.Label(file_path_frame, text="选择的文件:").pack(side=tk.LEFT)
         file_path_entry = ttk.Entry(file_path_frame, textvariable=self.file_path_var, state="readonly")
         file_path_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(10, 10))
         
-        ttk.Button(file_path_frame, text="Browse...", command=self._browse_file).pack(side=tk.RIGHT)
+        ttk.Button(file_path_frame, text="浏览...", command=self._browse_file).pack(side=tk.RIGHT)
         
         # Excel processing options
-        options_frame = ttk.LabelFrame(file_section, text="Processing Options", padding="10")
+        options_frame = ttk.LabelFrame(file_section, text="处理选项", padding="10")
         options_frame.pack(fill=tk.X, pady=(10, 0))
         
         # Sheet selection
         sheet_frame = ttk.Frame(options_frame)
         sheet_frame.pack(fill=tk.X, pady=(0, 10))
         
-        ttk.Label(sheet_frame, text="Sheet Name:").pack(side=tk.LEFT)
+        ttk.Label(sheet_frame, text="工作表名称:").pack(side=tk.LEFT)
         self.sheet_var = tk.StringVar(value="关联辅料")
         sheet_combo = ttk.Combobox(sheet_frame, textvariable=self.sheet_var, width=20)
         sheet_combo.pack(side=tk.LEFT, padx=(10, 20))
         self.sheet_combo = sheet_combo
         
         # Process button
-        ttk.Button(sheet_frame, text="Process File", command=self._process_file).pack(side=tk.LEFT, padx=(20, 0))
+        ttk.Button(sheet_frame, text="处理文件", command=self._process_file).pack(side=tk.LEFT, padx=(20, 0))
         
         # Column mapping section
         mapping_section = ttk.LabelFrame(parent, text="Column Mapping", padding="10")

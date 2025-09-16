@@ -24,7 +24,7 @@ import pyperclip  # For clipboard functionality
 class ProductSearchGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("Amazon Order Product Search")
+        self.root.title("亚马逊订单产品搜索")
         self.root.geometry("1000x800")
         
         # Load product data
@@ -62,7 +62,7 @@ class ProductSearchGUI:
                     print(f"Error reading {json_file}: {e}")
                     
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to load products: {e}")
+            messagebox.showerror("错误", f"加载产品失败: {e}")
             
         return products
     
@@ -89,26 +89,26 @@ class ProductSearchGUI:
         main_frame.columnconfigure(1, weight=1)
         
         # Search section
-        search_frame = ttk.LabelFrame(main_frame, text="Product Search", padding="10")
+        search_frame = ttk.LabelFrame(main_frame, text="产品搜索", padding="10")
         search_frame.grid(row=0, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(0, 10))
         search_frame.columnconfigure(1, weight=1)
         
         # Search type selection
-        ttk.Label(search_frame, text="Search by:").grid(row=0, column=0, sticky=tk.W, padx=(0, 10))
+        ttk.Label(search_frame, text="搜索方式:").grid(row=0, column=0, sticky=tk.W, padx=(0, 10))
         
         self.search_type = tk.StringVar(value="name")
         search_type_frame = ttk.Frame(search_frame)
         search_type_frame.grid(row=0, column=1, sticky=(tk.W, tk.E))
         
-        ttk.Radiobutton(search_type_frame, text="Product Name (产品名称)", 
+        ttk.Radiobutton(search_type_frame, text="产品名称", 
                        variable=self.search_type, value="name",
                        command=self._on_search_type_change).pack(side=tk.LEFT, padx=(0, 20))
-        ttk.Radiobutton(search_type_frame, text="Product Code (产品编号)", 
+        ttk.Radiobutton(search_type_frame, text="产品编号", 
                        variable=self.search_type, value="sku",
                        command=self._on_search_type_change).pack(side=tk.LEFT)
         
         # Search entry with autocomplete
-        ttk.Label(search_frame, text="Search:").grid(row=1, column=0, sticky=tk.W, padx=(0, 10), pady=(10, 0))
+        ttk.Label(search_frame, text="搜索:").grid(row=1, column=0, sticky=tk.W, padx=(0, 10), pady=(10, 0))
         
         self.search_var = tk.StringVar()
         self.search_var.trace('w', self._on_search_change)
@@ -122,7 +122,7 @@ class ProductSearchGUI:
         self.suggestion_combo.bind('<<ComboboxSelected>>', self._on_suggestion_select)
         
         # Selected product section
-        product_frame = ttk.LabelFrame(main_frame, text="Selected Product", padding="10")
+        product_frame = ttk.LabelFrame(main_frame, text="已选产品", padding="10")
         product_frame.grid(row=1, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(0, 10))
         product_frame.columnconfigure(1, weight=1)
         
@@ -131,7 +131,7 @@ class ProductSearchGUI:
         self.sku_label = ttk.Label(product_frame, text="", foreground="blue")
         self.sku_label.grid(row=0, column=1, sticky=tk.W)
         
-        ttk.Label(product_frame, text="Name:").grid(row=1, column=0, sticky=tk.W, padx=(0, 10))
+        ttk.Label(product_frame, text="名称:").grid(row=1, column=0, sticky=tk.W, padx=(0, 10))
         self.name_label = ttk.Label(product_frame, text="", wraplength=600)
         self.name_label.grid(row=1, column=1, sticky=tk.W)
         
@@ -143,7 +143,7 @@ class ProductSearchGUI:
         quantity_frame = ttk.Frame(product_frame)
         quantity_frame.grid(row=3, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(10, 0))
         
-        ttk.Label(quantity_frame, text="Quantity:").pack(side=tk.LEFT, padx=(0, 10))
+        ttk.Label(quantity_frame, text="数量:").pack(side=tk.LEFT, padx=(0, 10))
         
         self.quantity_var = tk.StringVar(value="1")
         quantity_spinbox = ttk.Spinbox(quantity_frame, from_=1, to=100000, 
@@ -151,19 +151,19 @@ class ProductSearchGUI:
         quantity_spinbox.pack(side=tk.LEFT, padx=(0, 20))
         
         # Add to pool button
-        ttk.Button(quantity_frame, text="Add to Pool", 
+        ttk.Button(quantity_frame, text="添加到池", 
                   command=self._add_to_pool).pack(side=tk.LEFT, padx=(0, 10))
         
         # Update quantity button (for existing items)
-        ttk.Button(quantity_frame, text="Update Quantity", 
+        ttk.Button(quantity_frame, text="更新数量", 
                   command=self._update_quantity).pack(side=tk.LEFT, padx=(0, 10))
         
         # Update warehouse button (for existing items)
-        ttk.Button(quantity_frame, text="Update Warehouse", 
+        ttk.Button(quantity_frame, text="更新仓库", 
                   command=self._update_warehouse).pack(side=tk.LEFT)
         
         # Product Pool section
-        pool_frame = ttk.LabelFrame(main_frame, text="Product Pool", padding="10")
+        pool_frame = ttk.LabelFrame(main_frame, text="产品池", padding="10")
         pool_frame.grid(row=2, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 10))
         pool_frame.columnconfigure(0, weight=1)
         pool_frame.rowconfigure(0, weight=1)
@@ -195,28 +195,28 @@ class ProductSearchGUI:
         pool_button_frame = ttk.Frame(pool_frame)
         pool_button_frame.grid(row=1, column=0, sticky=tk.W, pady=(10, 0))
         
-        ttk.Button(pool_button_frame, text="Remove Selected", 
+        ttk.Button(pool_button_frame, text="移除选中", 
                   command=self._remove_from_pool).pack(side=tk.LEFT, padx=(0, 10))
-        ttk.Button(pool_button_frame, text="Clear All", 
+        ttk.Button(pool_button_frame, text="清空全部", 
                   command=self._clear_pool).pack(side=tk.LEFT, padx=(0, 10))
         
         # Order name input
-        ttk.Label(pool_button_frame, text="Order Name:").pack(side=tk.LEFT, padx=(20, 5))
+        ttk.Label(pool_button_frame, text="订单名称:").pack(side=tk.LEFT, padx=(20, 5))
         self.order_name_var = tk.StringVar(value="factory")
         order_name_entry = ttk.Entry(pool_button_frame, textvariable=self.order_name_var, width=15)
         order_name_entry.pack(side=tk.LEFT, padx=(0, 10))
         
         # PO Import checkbox
         self.po_import_var = tk.BooleanVar(value=True)
-        po_import_checkbox = ttk.Checkbutton(pool_button_frame, text="Generate PO Import", 
+        po_import_checkbox = ttk.Checkbutton(pool_button_frame, text="生成采购导入", 
                                            variable=self.po_import_var)
         po_import_checkbox.pack(side=tk.LEFT, padx=(10, 10))
         
-        ttk.Button(pool_button_frame, text="Generate Command", 
+        ttk.Button(pool_button_frame, text="生成命令", 
                   command=self._generate_command).pack(side=tk.LEFT, padx=(10, 0))
         
         # Command output section
-        command_frame = ttk.LabelFrame(main_frame, text="Generated Command", padding="10")
+        command_frame = ttk.LabelFrame(main_frame, text="生成的命令", padding="10")
         command_frame.grid(row=3, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 10))
         command_frame.columnconfigure(0, weight=1)
         command_frame.rowconfigure(1, weight=1)
@@ -229,15 +229,15 @@ class ProductSearchGUI:
         button_frame = ttk.Frame(command_frame)
         button_frame.grid(row=1, column=0, sticky=tk.W)
         
-        ttk.Button(button_frame, text="Copy to Clipboard", 
+        ttk.Button(button_frame, text="复制到剪贴板", 
                   command=self._copy_command).pack(side=tk.LEFT, padx=(0, 10))
-        ttk.Button(button_frame, text="Execute Command", 
+        ttk.Button(button_frame, text="执行命令", 
                   command=self._execute_command).pack(side=tk.LEFT, padx=(0, 10))
-        ttk.Button(button_frame, text="Clear", 
+        ttk.Button(button_frame, text="清空", 
                   command=self._clear_command).pack(side=tk.LEFT)
         
         # Status bar
-        self.status_var = tk.StringVar(value=f"Loaded {len(self.products)} products")
+        self.status_var = tk.StringVar(value=f"已加载 {len(self.products)} 个产品")
         status_bar = ttk.Label(main_frame, textvariable=self.status_var, relief=tk.SUNKEN)
         status_bar.grid(row=4, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(10, 0))
         
@@ -309,7 +309,7 @@ class ProductSearchGUI:
     def _add_to_pool(self):
         """Add selected product to the pool"""
         if not hasattr(self, 'selected_product'):
-            messagebox.showwarning("Warning", "Please select a product first")
+            messagebox.showwarning("警告", "请先选择一个产品")
             return
             
         try:
@@ -317,7 +317,7 @@ class ProductSearchGUI:
             if quantity <= 0:
                 raise ValueError("Quantity must be positive")
         except ValueError as e:
-            messagebox.showerror("Error", f"Invalid quantity: {e}")
+            messagebox.showerror("错误", f"无效数量: {e}")
             return
         
         sku = self.selected_product["sku"]
@@ -335,12 +335,12 @@ class ProductSearchGUI:
     def _update_quantity(self):
         """Update quantity for existing product in pool"""
         if not hasattr(self, 'selected_product'):
-            messagebox.showwarning("Warning", "Please select a product first")
+            messagebox.showwarning("警告", "请先选择一个产品")
             return
             
         sku = self.selected_product["sku"]
         if sku not in self.product_pool:
-            messagebox.showwarning("Warning", f"Product {sku} is not in the pool. Use 'Add to Pool' instead.")
+            messagebox.showwarning("警告", f"产品 {sku} 不在池中。请使用'添加到池'。")
             return
             
         try:
@@ -348,7 +348,7 @@ class ProductSearchGUI:
             if quantity <= 0:
                 raise ValueError("Quantity must be positive")
         except ValueError as e:
-            messagebox.showerror("Error", f"Invalid quantity: {e}")
+            messagebox.showerror("错误", f"无效数量: {e}")
             return
         
         self.product_pool[sku]["quantity"] = quantity
@@ -358,12 +358,12 @@ class ProductSearchGUI:
     def _update_warehouse(self):
         """Update warehouse for existing product in pool"""
         if not hasattr(self, 'selected_product'):
-            messagebox.showwarning("Warning", "Please select a product first")
+            messagebox.showwarning("警告", "请先选择一个产品")
             return
             
         sku = self.selected_product["sku"]
         if sku not in self.product_pool:
-            messagebox.showwarning("Warning", f"Product {sku} is not in the pool. Use 'Add to Pool' instead.")
+            messagebox.showwarning("警告", f"产品 {sku} 不在池中。请使用'添加到池'。")
             return
         
         # Open warehouse selection dialog
@@ -435,13 +435,13 @@ class ProductSearchGUI:
                 self.status_var.set(f"Updated {sku} warehouse to {new_warehouse}")
                 popup.destroy()
             else:
-                messagebox.showwarning("Warning", "Please select a warehouse")
+                messagebox.showwarning("警告", "请选择一个仓库")
         
         def on_cancel():
             popup.destroy()
         
-        ttk.Button(button_frame, text="OK", command=on_ok).pack(side=tk.LEFT, padx=(0, 10))
-        ttk.Button(button_frame, text="Cancel", command=on_cancel).pack(side=tk.LEFT)
+        ttk.Button(button_frame, text="确定", command=on_ok).pack(side=tk.LEFT, padx=(0, 10))
+        ttk.Button(button_frame, text="取消", command=on_cancel).pack(side=tk.LEFT)
         
         # Handle double-click
         def on_double_click(event):
@@ -510,7 +510,7 @@ class ProductSearchGUI:
         """Remove selected item from pool"""
         selection = self.pool_tree.selection()
         if not selection:
-            messagebox.showwarning("Warning", "Please select an item to remove")
+            messagebox.showwarning("警告", "请选择要删除的项目")
             return
             
         # Get SKU from selected item
@@ -526,10 +526,10 @@ class ProductSearchGUI:
     def _clear_pool(self):
         """Clear all items from pool"""
         if not self.product_pool:
-            messagebox.showinfo("Info", "Pool is already empty")
+            messagebox.showinfo("信息", "池已经是空的")
             return
             
-        result = messagebox.askyesno("Confirm", "Are you sure you want to clear all items from the pool?")
+        result = messagebox.askyesno("确认", "您确定要清空池中的所有项目吗？")
         if result:
             self.product_pool.clear()
             self._refresh_pool_display()
@@ -538,7 +538,7 @@ class ProductSearchGUI:
     def _generate_command(self):
         """Generate the direct_sku_to_json.py command for all products in pool"""
         if not self.product_pool:
-            messagebox.showwarning("Warning", "Please add products to the pool first")
+            messagebox.showwarning("警告", "请先将产品添加到池中")
             return
         
         # Get order name
@@ -622,14 +622,14 @@ This command will:
                 pyperclip.copy(self.current_command)
                 self.status_var.set("Command copied to clipboard")
             except Exception as e:
-                messagebox.showerror("Error", f"Failed to copy to clipboard: {e}")
+                messagebox.showerror("错误", f"复制到剪贴板失败: {e}")
         else:
-            messagebox.showwarning("Warning", "No command to copy")
+            messagebox.showwarning("警告", "没有命令可复制")
     
     def _execute_command(self):
         """Execute the generated command"""
         if not hasattr(self, 'current_command'):
-            messagebox.showwarning("Warning", "No command to execute")
+            messagebox.showwarning("警告", "没有命令可执行")
             return
             
         try:
@@ -650,15 +650,15 @@ This command will:
             if result.stderr:
                 success_msg += f"\n\nWarnings:\n{result.stderr}"
                 
-            messagebox.showinfo("Success", success_msg)
+            messagebox.showinfo("成功", success_msg)
             self.status_var.set("Command executed successfully")
             
         except subprocess.CalledProcessError as e:
             error_msg = f"Command failed with exit code {e.returncode}\n\nError:\n{e.stderr}\n\nOutput:\n{e.stdout}"
-            messagebox.showerror("Execution Error", error_msg)
+            messagebox.showerror("执行错误", error_msg)
             
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to execute command: {e}")
+            messagebox.showerror("错误", f"执行命令失败: {e}")
     
     def _clear_command(self):
         """Clear the command display"""
