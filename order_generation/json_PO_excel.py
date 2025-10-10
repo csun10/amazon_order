@@ -47,8 +47,8 @@ def fill_workbook(template: Path, data: dict, json_filename: str = ""):
                 # If no number found, default to 30 days from today
                 delivery_date = datetime.now() + timedelta(days=30)
                 value = delivery_date.strftime('%Y年%m月%d日')
-        elif key == '订单号' and not value and json_filename:
-            # Extract order number from filename (e.g., "factory-1.json" -> "factory-1")
+        elif key == '订单号' and json_filename:
+            # Always use the filename stem as the order number (e.g., "25AM027-1.json" -> "25AM027-1")
             order_number = Path(json_filename).stem
             value = order_number
         # Handle color cards (色卡) - insert color images

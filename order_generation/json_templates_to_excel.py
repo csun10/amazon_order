@@ -45,8 +45,9 @@ class JsonTemplateToExcelConverter:
     
     def convert_json_to_excel(self, json_path: Path) -> Path:
         """Convert a single JSON template to Excel using json_PO_excel.py"""
-        # Generate output Excel filename based on JSON filename
-        excel_filename = json_path.stem + ".xlsx"
+        # Generate output Excel filename to match JSON filename exactly
+        json_stem = json_path.stem
+        excel_filename = json_stem + ".xlsx"
         excel_path = self.output_dir / excel_filename
         
         try:
