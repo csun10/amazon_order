@@ -139,11 +139,11 @@
   },
   "products": [
     {
-      "产品编号": "EC404-2-1-2",
+      "产品编号": "EC401-3",
       "产品名称": "",
       "产品图片": "",
-      "描述": "洗头刷细绿色双只装，FSC,350g白卡哑膜，",
-      "数量/个": 0,
+      "描述": "<TODO (value not filled - fill with product description/requirement #not product name/title from PO usually the second/third column in product table of PO file with description/requirement of the ordered product, mustfill*)>",
+      "数量/个": 4800,
       "单价": 0,
       "包装方式": ""
     }
