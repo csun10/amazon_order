@@ -459,12 +459,6 @@
           "ratio_accessory": "1"
         },
         {
-          "sku": "SSD",
-          "name": "norsewood鹿皮绒收缩袋",
-          "ratio_main": "1",
-          "ratio_accessory": "1"
-        },
-        {
           "sku": "ST1122-1-2",
           "name": "norsewood 方头猪鬃梳包装",
           "ratio_main": "1",
@@ -473,6 +467,12 @@
         {
           "sku": "ST1122-5",
           "name": "norsewood爪子刷 猪鬃梳",
+          "ratio_main": "1",
+          "ratio_accessory": "1"
+        },
+        {
+          "sku": "48-82P3-QSFG-1",
+          "name": "板梳收缩袋",
           "ratio_main": "1",
           "ratio_accessory": "1"
         }
@@ -1061,14 +1061,14 @@
           "ratio_accessory": "1"
         },
         {
-          "sku": "ST1122-1-3",
-          "name": "norsewood气垫猪鬃梳礼盒",
+          "sku": "ST1122-5",
+          "name": "norsewood爪子刷 猪鬃梳",
           "ratio_main": "1",
           "ratio_accessory": "1"
         },
         {
-          "sku": "ST1122-5",
-          "name": "norsewood爪子刷 猪鬃梳",
+          "sku": "ST1122-4",
+          "name": "Norsewood猪鬃气垫梳包装（天地盖）",
           "ratio_main": "1",
           "ratio_accessory": "1"
         }
@@ -1345,6 +1345,29 @@
           "name": "双头清洁刷",
           "ratio_main": "1",
           "ratio_accessory": "1"
+        },
+        {
+          "sku": "EEHB-NBB-5",
+          "name": "黑红猪鬃梳说明纸卡",
+          "ratio_main": "1",
+          "ratio_accessory": "1"
+        }
+      ]
+    },
+    "EE-RB-1.32.1": {
+      "name": "",
+      "accessories": [
+        {
+          "sku": "EE1.3#2.1-1",
+          "name": "EE1.3&2.1 铝桶包装烫金",
+          "ratio_main": "1",
+          "ratio_accessory": "1"
+        },
+        {
+          "sku": "EERB-FJ",
+          "name": "金色铝筒发夹",
+          "ratio_main": "1",
+          "ratio_accessory": "1"
         }
       ]
     },
@@ -1388,6 +1411,23 @@
         {
           "sku": "B10-GTS2-4JZ-BK-3",
           "name": "am800金色铝筒子配件发夹夹板",
+          "ratio_main": "1",
+          "ratio_accessory": "1"
+        }
+      ]
+    },
+    "EE321": {
+      "name": "",
+      "accessories": [
+        {
+          "sku": "EE321-1",
+          "name": "EE鬓角梳扁梳套装",
+          "ratio_main": "1",
+          "ratio_accessory": "1"
+        },
+        {
+          "sku": "EE321-2",
+          "name": "EE鬓角背头套装包装",
           "ratio_main": "1",
           "ratio_accessory": "1"
         }

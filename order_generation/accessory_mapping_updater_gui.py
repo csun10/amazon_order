@@ -140,11 +140,11 @@ class AccessoryMappingUpdaterGUI:
         
         # Define expected columns and their variables
         self.column_vars = {
-            "主产品SKU": tk.StringVar(value="主产品SKU"),
+            "主产品SKU": tk.StringVar(value="*SKU"),
             "辅料SKU": tk.StringVar(value="辅料SKU"),
-            "辅料名称": tk.StringVar(value="辅料名称"),
-            "主产品数量": tk.StringVar(value="主产品数量"),
-            "辅料数量": tk.StringVar(value="辅料数量")
+            "辅料名称": tk.StringVar(value="辅料品名"),
+            "主产品数量": tk.StringVar(value="辅料比例(主料)"),
+            "辅料数量": tk.StringVar(value="辅料比例(辅料)")
         }
         
         for i, (label, var) in enumerate(self.column_vars.items()):
