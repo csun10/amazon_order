@@ -57,7 +57,7 @@ class ExcelToJsonConverter:
         """Load accessory mapping to get product names"""
         mapping_path = self.root_dir / "docs" / "accessory_mapping.json"
         try:
-            with open(mapping_path, "r", encoding="utf-8") as f:
+            with open(mapping_path, "r", encoding="utf-8-sig") as f:
                 data = json.load(f)
                 return data.get("products", {})
         except FileNotFoundError:
