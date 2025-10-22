@@ -142,7 +142,16 @@
       "产品编号": "EEHB-NBB-1B",
       "产品名称": "",
       "产品图片": "order_generation/images/accessories/EEHB-NBB-1B.jpg",
-      "描述": "黑色",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "黑色",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
       "单价": 0.45,
       "包装方式": ""

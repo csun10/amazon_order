@@ -142,7 +142,16 @@
       "产品编号": "EEHB-NBB-2",
       "产品名称": "黑色棘皮绒",
       "产品图片": "order_generation/images/accessories/EEHB-NBB-2.jpg",
-      "描述": "12*25黑色棘皮绒单面，黑色棉绳，烫金logo",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "12*25黑色棘皮绒单面，黑色棉绳，烫金logo",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
       "单价": 1.37,
       "包装方式": ""

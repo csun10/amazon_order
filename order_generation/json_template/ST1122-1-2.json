@@ -142,7 +142,16 @@
       "产品编号": "ST1122-1-2",
       "产品名称": "norsewood 方头猪鬃梳包装",
       "产品图片": "order_generation/images/accessories/ST1122-1-2.jpg",
-      "描述": "飞机壳板梳猪鬃梳包装500g白卡哑膜",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "飞机壳板梳猪鬃梳包装500g白卡哑膜",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
       "单价": 0.93,
       "包装方式": ""

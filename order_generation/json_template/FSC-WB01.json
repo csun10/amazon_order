@@ -142,7 +142,16 @@
       "产品编号": "FSC-WB01",
       "产品名称": "FSC漂白榉木头梳（木针）",
       "产品图片": "order_generation/images/products/FSC-WB01.jpg",
-      "描述": "FSC认证榉木材质，木针按摩梳，配套包装。",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "FSC认证榉木材质，木针按摩梳，配套包装。",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
       "单价": 1.2,
       "包装方式": "按PO要求"

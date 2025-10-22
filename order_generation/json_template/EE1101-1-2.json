@@ -142,7 +142,16 @@
       "产品编号": "EE1101-1-2",
       "产品名称": "",
       "产品图片": "order_generation/images/accessories/EE1101-1-2.jpg",
-      "描述": "鳄鱼夹板，双面印刷",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "鳄鱼夹板，双面印刷",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
       "单价": 0.19,
       "包装方式": ""

@@ -142,7 +142,16 @@
       "产品编号": "ECSB-TPR1",
       "产品名称": "洗头刷TPR绿色",
       "产品图片": "order_generation/images/products/ECSB-TPR1.jpg",
-      "描述": "TPR材质洗头刷，绿色款，随附发泡海绵及包装。",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "TPR材质洗头刷，绿色款，随附发泡海绵及包装。",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
       "单价": 2.04,
       "包装方式": "按PO要求"

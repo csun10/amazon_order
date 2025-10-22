@@ -142,7 +142,16 @@
       "产品编号": "EEHB-NBB-1C",
       "产品名称": "咖啡色发绳",
       "产品图片": "order_generation/images/accessories/EEHB-NBB-1C.jpg",
-      "描述": "浅咖色",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "浅咖色",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
       "单价": 0.45,
       "包装方式": ""

@@ -142,7 +142,16 @@
       "产品编号": "BB101-2-1",
       "产品名称": "boxxbrush盒子pet",
       "产品图片": "",
-      "描述": "boxxbrush PET盒彩印30丝",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "boxxbrush PET盒彩印30丝",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
       "单价": 1.16,
       "包装方式": "送应发鼎艺"

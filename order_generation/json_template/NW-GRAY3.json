@@ -142,7 +142,16 @@
       "产品编号": "NW-GRAY3",
       "产品名称": "norsewood灰色榉木气垫梳木针（bass）",
       "产品图片": "order_generation/images/products/NW-GRAY3.jpg",
-      "描述": "灰色榉木木针气垫梳，附清洁刷、雪梨纸、logo贴纸和鹿皮绒收缩袋",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "灰色榉木木针气垫梳，附清洁刷、雪梨纸、logo贴纸和鹿皮绒收缩袋",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
       "单价": 2.93,
       "包装方式": "散货"

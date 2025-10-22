@@ -142,7 +142,16 @@
       "产品编号": "EC-D1-CYAN",
       "产品名称": "化妆刷大头 CYAN",
       "产品图片": "order_generation/images/products/EC-D1-CYAN.jpg",
-      "描述": "青色大头化妆刷，刷毛柔软，用于散粉",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "青色大头化妆刷，刷毛柔软，用于散粉",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
       "单价": 3,
       "包装方式": "单支入袋"

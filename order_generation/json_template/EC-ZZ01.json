@@ -142,7 +142,16 @@
       "产品编号": "EC-ZZ01",
       "产品名称": "ECOED麦桔杆通风猪鬃梳",
       "产品图片": "order_generation/images/products/EC-ZZ01.jpg",
-      "描述": "麦桔杆通风猪鬃梳",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "麦桔杆通风猪鬃梳",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
       "单价": 8.25,
       "包装方式": "鱼骨梳包装"

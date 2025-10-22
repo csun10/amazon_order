@@ -142,7 +142,16 @@
       "产品编号": "EC404",
       "产品名称": "Ecoed洗头刷绿色单只装细针",
       "产品图片": "order_generation/images/products/EC404.jpg",
-      "描述": "老款细针洗头刷TPEE，硬度55，颜色2404C绿色，顶部印白色logo",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "老款细针洗头刷TPEE，硬度55，颜色2404C绿色，顶部印白色logo",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
       "单价": 1.75,
       "包装方式": "纸盒"

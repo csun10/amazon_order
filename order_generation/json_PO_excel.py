@@ -7,6 +7,8 @@ from pathlib import Path
 try:
     from openpyxl import load_workbook
     from openpyxl.drawing.image import Image
+    from openpyxl.cell.rich_text import TextBlock, CellRichText
+    from openpyxl.cell.text import InlineFont
 except ModuleNotFoundError as exc:  # pragma: no cover - dependency missing in tests
     raise SystemExit("openpyxl and pillow are required to run this script") from exc
 
@@ -19,6 +21,74 @@ COLUMN_MAP = {
     '单价': 'E',
     '包装方式': 'G',
 }
+
+
+def create_rich_text_from_json(description_data):
+    """
+    Convert JSON rich text format to openpyxl CellRichText object.
+    
+    Args:
+        description_data: Always expects rich text format:
+                         {
+                           "type": "rich_text",
+                           "content": [
+                             {
+                               "text": "text content",
+                               "bold": true/false,
+                               "color": "RRGGBB" (hex color)
+                             },
+                             ...
+                           ]
+                         }
+                         
+                         Plain text strings are automatically converted to 
+                         single-block rich text format during processing.
+    
+    Returns:
+        CellRichText object for multi-block content, or string for single plain block
+    """
+    # Convert plain text to rich text format for uniform processing
+    if isinstance(description_data, str):
+        description_data = {
+            "type": "rich_text",
+            "content": [{
+                "text": description_data,
+                "bold": False,
+                "color": "000000"
+            }]
+        }
+    
+    # Handle rich text format (now the only expected format)
+    if isinstance(description_data, dict) and description_data.get('type') == 'rich_text':
+        content = description_data.get('content', [])
+        
+        # If single block with default formatting, return as plain text
+        if (len(content) == 1 and 
+            not content[0].get('bold', False) and 
+            content[0].get('color', '000000') == '000000'):
+            return content[0].get('text', '')
+        
+        # Create rich text for multiple blocks or formatted content
+        rich_text = CellRichText()
+        
+        for content_block in content:
+            text = content_block.get('text', '')
+            bold = content_block.get('bold', False)
+            color = content_block.get('color', '000000')  # Default to black
+            
+            # Ensure color is in proper format (6 hex digits)
+            if not color.startswith('00') and len(color) == 6:
+                color = '00' + color  # Add alpha channel for openpyxl
+            
+            # Create font with specified formatting
+            font = InlineFont(b=bold, color=color)
+            text_block = TextBlock(font, text)
+            rich_text.append(text_block)
+        
+        return rich_text
+    
+    # Fallback to string representation for unknown formats
+    return str(description_data)
 
 
 def fill_workbook(template: Path, data: dict, json_filename: str = ""):
@@ -147,6 +217,10 @@ def fill_workbook(template: Path, data: dict, json_filename: str = ""):
                             ws[f"{col}{row}"] = f"[图片错误] {product[key]}: {e}"
                     else:
                         ws[f"{col}{row}"] = f"[图片未找到] {product[key]}"
+                elif key == '描述':
+                    # Handle rich text formatting for descriptions
+                    rich_text_value = create_rich_text_from_json(product[key])
+                    ws[f"{col}{row}"] = rich_text_value
                 else:
                     ws[f"{col}{row}"] = product[key]
         qty = product.get('数量/个')
@@ -172,7 +246,7 @@ def main(argv: list[str]) -> int:
     out_path = Path(argv[2])
     template = Path(__file__).resolve().parent / 'docs' / 'empty_base_template.xlsx'
 
-    with open(json_path, 'r', encoding='utf-8') as f:
+    with open(json_path, 'r', encoding='utf-8-sig') as f:
         data = json.load(f)
 
     wb = fill_workbook(template, data, json_path.name)

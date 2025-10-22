@@ -3,6 +3,24 @@
 This repository contains scripts and templates for producing purchase orders in
 Excel from JSON templates and SKU requests.
 
+## 🆕 Rich Text Formatting Support
+
+The workflow now supports rich text formatting in product descriptions (描述 field). You can apply bold formatting and text colors directly in Excel, which will be preserved when converting to JSON and then to final Excel output.
+
+**Key Features:**
+- **Excel-based formatting** - Use Excel's built-in bold and color tools
+- **Automatic detection** - Scripts automatically detect and preserve formatting
+- **Text-based tags** - Alternative method using `[BOLD:RED]text[/BOLD]` format  
+- **Backward compatibility** - Existing plain text descriptions continue to work
+- **Complete pipeline** - Excel → JSON → Excel formatting preservation
+
+**Quick Start:**
+1. Format text in Excel using Ctrl+B (bold) and font colors
+2. Run `python excel_to_json_template.py your_file.xlsx` to extract formatting
+3. Use generated JSON templates with `python json_PO_excel.py template.json output.xlsx`
+
+See `order_generation/docs/excel_rich_text_guide.md` for detailed instructions.
+
 ## Directory Structure
 
 - `order_generation/docs/` – base Excel template, accessory mappings, and

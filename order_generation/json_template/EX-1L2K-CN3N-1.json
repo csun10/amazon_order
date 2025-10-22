@@ -142,7 +142,16 @@
       "产品编号": "EX-1L2K-CN3N-1",
       "产品名称": "蜂窝梳包装",
       "产品图片": "order_generation/images/accessories/EX-1L2K-CN3N-1.jpg",
-      "描述": "蜂窝梳包装 ST1122-3",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "蜂窝梳包装 ST1122-3",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
       "单价": 1.0,
       "包装方式": ""

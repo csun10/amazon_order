@@ -142,7 +142,16 @@
       "产品编号": "SSD",
       "产品名称": "norsewood鹿皮绒收缩袋",
       "产品图片": "order_generation/images/accessories/SSD.jpg",
-      "描述": "15*20黑色棘皮绒单面，黑色棉绳，双色logo，N字母烫金",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "15*20黑色棘皮绒单面，黑色棉绳，双色logo，N字母烫金",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
       "单价": 1.3,
       "包装方式": "散货"

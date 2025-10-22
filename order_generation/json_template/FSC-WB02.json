@@ -142,7 +142,16 @@
       "产品编号": "FSC-WB02",
       "产品名称": "FSC漂白榉木头梳(尼龙针)",
       "产品图片": "order_generation/images/products/FSC-WB02.jpg",
-      "描述": "FSC漂白榉木头梳，尼龙针款，常规尺寸",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "FSC漂白榉木头梳，尼龙针款，常规尺寸",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
       "单价": 0,
       "包装方式": "N/A"
