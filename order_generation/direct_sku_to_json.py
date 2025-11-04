@@ -45,7 +45,8 @@ EXCEL_OUTPUT_DIR = ROOT / "PO_excel_export"
 
 
 def _load_accessory_mapping() -> Dict[str, List[dict]]:
-    with open(MAPPING_PATH, "r", encoding="utf-8") as f:
+    # Use utf-8-sig to tolerate files that contain a BOM
+    with open(MAPPING_PATH, "r", encoding="utf-8-sig") as f:
         data = json.load(f)
     lookup: Dict[str, List[dict]] = {}
     
@@ -122,7 +123,9 @@ def generate_factory_jsons(pairs: Dict[str, int], input_name: str = "factory") -
         if not template_path.exists():
             print(f"warning: template for {sku} not found", flush=True)
             continue
-        with open(template_path, "r", encoding="utf-8") as f:
+        # Use utf-8-sig when reading template JSON to tolerate BOMs produced
+        # by some editors/sources when the file was saved as UTF-8 with BOM.
+        with open(template_path, "r", encoding="utf-8-sig") as f:
             data = json.load(f)
         for product in data.get("products", []):
             product["数量/个"] = qty
@@ -178,9 +181,19 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
 
 def main(argv: List[str] | None = None) -> int:
     ns = parse_args(argv)
+    # backward-compat: allow a trailing encoding token (e.g. UTF8) supplied
+    # as a positional argument in older usage. If present, strip it and
+    # normalize to an encoding value. Otherwise enforce even number of
+    # sku/quantity pairs.
+    encoding = "utf-8"
     if len(ns.items) % 2:
-        print("error: expected even number of arguments", flush=True)
-        return 1
+        last = ns.items[-1]
+        if isinstance(last, str) and last.lower().replace('-', '').replace('_', '') in ("utf8", "utf"):
+            encoding = "utf-8"
+            ns.items = ns.items[:-1]
+        else:
+            print("error: expected even number of arguments", flush=True)
+            return 1
     requests = {ns.items[i]: int(ns.items[i + 1]) for i in range(0, len(ns.items), 2)}
     paths = generate_factory_jsons(requests, ns.name)
     for p in paths:
@@ -190,6 +203,9 @@ def main(argv: List[str] | None = None) -> int:
     if ns.po_import:
         try:
             from fill_po_import import fill_po_import_for_order
+            # If the fill_po_import helper accepts an encoding parameter in future,
+            # we can pass it here. For now, keep backward compatibility and
+            # call with existing signature.
             po_import_path = fill_po_import_for_order(ns.name, warehouse=ns.warehouse)
             print(f"\nAlso generated PO import file: {po_import_path}")
         except ImportError:

@@ -27,7 +27,8 @@ OUTPUT_DIR = ROOT / "PO_import_filled"
 
 def load_json_file(json_path: Path) -> Dict[str, Any]:
     """Load a JSON file and return its contents."""
-    with open(json_path, "r", encoding="utf-8") as f:
+    # tolerate files with BOM
+    with open(json_path, "r", encoding="utf-8-sig") as f:
         return json.load(f)
 
 
@@ -86,6 +87,14 @@ def create_po_import_data(json_files: List[Path], order_name: str = "factory", w
             product_warehouse = warehouse_mapping.get(product_sku, warehouse)
             
             # Create a row for each product
+            # Normalize description: accept both plain string and rich_text dict
+            desc = product.get("描述", "")
+            if isinstance(desc, dict) and desc.get("type") == "rich_text":
+                # join the text runs into a single plain string for PO import
+                desc_text = "".join(seg.get("text", "") for seg in desc.get("content", []))
+            else:
+                desc_text = desc if desc is not None else ""
+
             row = {
                 "*标识号": batch_id,  # Different for each factory JSON (1, 2, 3, ...)
                 "采购单号": order_number,  # Order name + number from filename
@@ -121,7 +130,7 @@ def create_po_import_data(json_files: List[Path], order_name: str = "factory", w
                 "*含税单价": product.get("单价", 0),  # From JSON product data
                 "税率": "",
                 "预计到货时间": "",
-                "产品备注": product.get("描述", ""),  # From JSON product data
+                "产品备注": desc_text,  # From JSON product data (normalized)
                 "更新报价": ""
             }
             po_rows.append(row)
