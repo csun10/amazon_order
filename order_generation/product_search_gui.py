@@ -77,6 +77,23 @@ class ProductSearchGUI:
             print(f"Error loading warehouse options: {e}")
             return ["默认仓库"]
     
+    def _load_accessory_mapping(self) -> Dict[str, List[Dict]]:
+        """Load accessory mapping to show what accessories will be automatically included"""
+        try:
+            mapping_file = Path(__file__).resolve().parent / "docs" / "accessory_mapping.json"
+            with open(mapping_file, 'r', encoding='utf-8-sig') as f:
+                data = json.load(f)
+            
+            lookup = {}
+            if "products" in data:
+                for sku, product_info in data["products"].items():
+                    lookup[sku] = product_info.get("accessories", [])
+            
+            return lookup
+        except Exception as e:
+            print(f"Error loading accessory mapping: {e}")
+            return {}
+    
     def _create_widgets(self):
         """Create all GUI widgets"""
         # Main frame
@@ -555,8 +572,12 @@ class ProductSearchGUI:
             # Create warehouse mapping file for backend
             self._create_warehouse_mapping_file(order_name)
         
+        # Load accessory mapping to show what will be automatically included
+        accessory_mapping = self._load_accessory_mapping()
+        
         total_value = 0
         product_details = []
+        all_items_count = 0  # Including accessories
         
         for sku, item in self.product_pool.items():
             product = item["product"]
@@ -565,9 +586,23 @@ class ProductSearchGUI:
             unit_price = product["price"]
             total_price = unit_price * quantity
             total_value += total_price
+            all_items_count += quantity
             
             command_parts.extend([sku, str(quantity)])
             product_details.append(f"- {sku}: {quantity} × ¥{unit_price} = ¥{total_price:,.2f} ({product['name']}) [仓库: {warehouse}]")
+            
+            # Show accessories that will be automatically added
+            accessories = accessory_mapping.get(sku, [])
+            if accessories:
+                product_details.append(f"  └─ 自动包含配件:")
+                for acc in accessories:
+                    acc_sku = acc.get("sku", "")
+                    acc_name = acc.get("name", "")
+                    ratio_main = int(acc.get("ratio_main", 1))
+                    ratio_acc = int(acc.get("ratio_accessory", 1))
+                    acc_qty = quantity * ratio_acc // ratio_main
+                    all_items_count += acc_qty
+                    product_details.append(f"     • {acc_sku}: {acc_qty} ({acc_name})")
         
         command = " ".join(command_parts)
         
@@ -581,9 +616,9 @@ Product Details:
 
 Order Summary:
 - Order Name: {order_name}
-- Total Products: {len(self.product_pool)}
-- Total Items: {sum(item['quantity'] for item in self.product_pool.values())}
-- Total Value: ¥{total_value:,.2f}
+- Total Products (main): {len(self.product_pool)}
+- Total Items (with accessories): {all_items_count}
+- Total Value (main products): ¥{total_value:,.2f}
 
 This command will:
 1. Generate {order_name}-1.json, {order_name}-2.json, etc. (grouped by supplier/factory)
