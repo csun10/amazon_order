@@ -6,7 +6,7 @@
     },
     "G3": {
       "key": "订单号",
-      "value": ""
+      "value": "NW-GRAY1"
     },
     "B4": {
       "key": "电话：",
@@ -14,7 +14,7 @@
     },
     "G4": {
       "key": "日期",
-      "value": "2025年08月27日"
+      "value": "2025年10月21日"
     },
     "B5": {
       "key": "联系人：",
@@ -34,15 +34,15 @@
     },
     "B14": {
       "key": "交货时间",
-      "value": "15"
+      "value": "15天"
     },
     "F14": {
       "key": "色卡",
-      "value": "N/A"
+      "value": "[色卡图片未找到] N/A"
     },
     "G14": {
       "key": "Logo",
-      "value": "N/A"
+      "value": "[Logo图片未找到] N/A"
     },
     "B15": {
       "key": "箱规",
@@ -50,11 +50,11 @@
     },
     "F15": {
       "key": "色卡1",
-      "value": "N/A"
+      "value": "[色卡图片未找到] N/A"
     },
     "G15": {
       "key": "Logo1",
-      "value": "N/A"
+      "value": "[Logo图片未找到] N/A"
     },
     "B16": {
       "key": "产前确认样",
@@ -62,11 +62,11 @@
     },
     "F16": {
       "key": "色卡2",
-      "value": "N/A"
+      "value": "[色卡图片未找到] N/A"
     },
     "G16": {
       "key": "Logo2",
-      "value": "N/A"
+      "value": "[Logo图片未找到] N/A"
     },
     "B17": {
       "key": "出货样",
@@ -74,19 +74,19 @@
     },
     "F17": {
       "key": "色卡3",
-      "value": "N/A"
+      "value": "[色卡图片未找到] N/A"
     },
     "G17": {
       "key": "Logo3",
-      "value": "N/A"
+      "value": "[Logo图片未找到] N/A"
     },
     "F18": {
       "key": "色卡4",
-      "value": "N/A"
+      "value": "[色卡图片未找到] N/A"
     },
     "G18": {
       "key": "Logo4",
-      "value": "N/A"
+      "value": "[Logo图片未找到] N/A"
     },
     "A19": {
       "key": "注意事项：1",
@@ -140,7 +140,6 @@
   "products": [
     {
       "产品编号": "NW-GRAY1",
-      "产品名称": "norsewood灰色榉木气垫猪鬃梳（bass）",
       "产品图片": "order_generation/images/products/NW-GRAY1.jpg",
       "描述": {
         "type": "rich_text",
@@ -153,8 +152,9 @@
         ]
       },
       "数量/个": 0,
-      "单价": 0,
-      "包装方式": "N/A"
+      "单价": 0.0,
+      "包装方式": "N/A",
+      "产品名称": "norsewood灰色猪鬃梳"
     }
   ],
   "footer": {

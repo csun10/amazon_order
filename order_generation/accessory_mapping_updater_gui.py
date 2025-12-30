@@ -427,18 +427,17 @@ class AccessoryMappingUpdaterGUI:
             new_products = set(self.new_mapping.get("products", {}).keys())
             
             added_products = new_products - current_products
-            removed_products = current_products - new_products
             updated_products = current_products & new_products
             
-            preview_lines.append(f"SUMMARY:")
+            preview_lines.append(f"SUMMARY (ADD/UPDATE ONLY):")
             preview_lines.append(f"  Products to add: {len(added_products)}")
-            preview_lines.append(f"  Products to remove: {len(removed_products)}")
             preview_lines.append(f"  Products to update: {len(updated_products)}")
+            preview_lines.append(f"  Existing products preserved: {len(current_products) - len(updated_products)}")
             preview_lines.append("")
             
             # Show details
             if added_products:
-                preview_lines.append("NEW PRODUCTS:")
+                preview_lines.append("NEW PRODUCTS TO ADD:")
                 for sku in sorted(added_products)[:10]:  # Show first 10
                     product = self.new_mapping["products"][sku]
                     acc_count = len(product.get("accessories", []))
@@ -447,14 +446,14 @@ class AccessoryMappingUpdaterGUI:
                     preview_lines.append(f"  ... and {len(added_products) - 10} more")
                 preview_lines.append("")
             
-            if removed_products:
-                preview_lines.append("PRODUCTS TO BE REMOVED:")
-                for sku in sorted(removed_products)[:10]:  # Show first 10
-                    product = self.current_mapping["products"][sku]
+            if updated_products:
+                preview_lines.append("PRODUCTS TO UPDATE (first 10):")
+                for sku in sorted(updated_products)[:10]:
+                    product = self.new_mapping["products"][sku]
                     acc_count = len(product.get("accessories", []))
-                    preview_lines.append(f"  - {sku}: {product.get('name', 'No name')} ({acc_count} accessories)")
-                if len(removed_products) > 10:
-                    preview_lines.append(f"  ... and {len(removed_products) - 10} more")
+                    preview_lines.append(f"  * {sku}: {product.get('name', 'No name')} ({acc_count} accessories)")
+                if len(updated_products) > 10:
+                    preview_lines.append(f"  ... and {len(updated_products) - 10} more")
                 preview_lines.append("")
             
             # Show sample of new mapping
@@ -558,7 +557,7 @@ class AccessoryMappingUpdaterGUI:
             messagebox.showerror("Error", f"Failed to create backup: {e}")
     
     def _apply_changes(self):
-        """Apply the new mapping"""
+        """Apply the new mapping - merges with existing (add/update only, no removal)"""
         if not self.new_mapping:
             messagebox.showwarning("Warning", "No new mapping generated. Please generate preview first.")
             return
@@ -566,26 +565,59 @@ class AccessoryMappingUpdaterGUI:
         # Confirm with user
         result = messagebox.askyesno(
             "Confirm Changes",
-            "This will update the accessory mapping file. Do you want to continue?\n\n"
-            "It's recommended to create a backup first."
+            "This will ADD/UPDATE products in the accessory mapping file.\n"
+            "Existing products not in this file will be preserved.\n\n"
+            "Do you want to continue?"
         )
         
         if not result:
             return
         
         try:
-            # Write new mapping
+            # Merge new mapping with current mapping (add/update only)
+            merged_mapping = self.current_mapping.copy()
+            if "products" not in merged_mapping:
+                merged_mapping["products"] = {}
+            
+            new_products = self.new_mapping.get("products", {})
+            
+            for product_sku, product_data in new_products.items():
+                if product_sku in merged_mapping["products"]:
+                    # Update existing product - merge accessories
+                    existing_product = merged_mapping["products"][product_sku]
+                    
+                    # Update name if provided and not empty
+                    if product_data.get("name"):
+                        existing_product["name"] = product_data["name"]
+                    
+                    # Merge accessories - update existing, add new
+                    existing_accessories = {acc["sku"]: acc for acc in existing_product.get("accessories", [])}
+                    new_accessories = product_data.get("accessories", [])
+                    
+                    for new_acc in new_accessories:
+                        acc_sku = new_acc["sku"]
+                        existing_accessories[acc_sku] = new_acc
+                    
+                    existing_product["accessories"] = list(existing_accessories.values())
+                else:
+                    # Add new product
+                    merged_mapping["products"][product_sku] = product_data
+            
+            # Write merged mapping
             with open(self.mapping_file, 'w', encoding='utf-8') as f:
-                json.dump(self.new_mapping, f, ensure_ascii=False, indent=2)
+                json.dump(merged_mapping, f, ensure_ascii=False, indent=2)
             
             # Update current mapping
-            self.current_mapping = self.new_mapping.copy()
+            self.current_mapping = merged_mapping
             
             # Refresh displays
             self._refresh_current_mapping()
             
-            messagebox.showinfo("Success", "Accessory mapping updated successfully!")
-            self.status_var.set("Mapping updated successfully")
+            updated_count = len(new_products)
+            messagebox.showinfo("Success", 
+                              f"Accessory mapping updated successfully!\n\n"
+                              f"Updated/Added {updated_count} product(s)")
+            self.status_var.set(f"Mapping updated: {updated_count} products")
             
         except Exception as e:
             messagebox.showerror("Error", f"Failed to apply changes: {e}")

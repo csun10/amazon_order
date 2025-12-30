@@ -6,7 +6,7 @@
     },
     "G3": {
       "key": "订单号",
-      "value": ""
+      "value": "EC1601"
     },
     "B4": {
       "key": "电话：",
@@ -14,7 +14,7 @@
     },
     "G4": {
       "key": "日期",
-      "value": "2024-02-22 00:00:00"
+      "value": "2025年10月21日"
     },
     "B5": {
       "key": "联系人：",
@@ -34,15 +34,15 @@
     },
     "B14": {
       "key": "交货时间",
-      "value": "45"
+      "value": "45天"
     },
     "F14": {
       "key": "色卡",
-      "value": "pantone address 1"
+      "value": "[色卡图片未找到] pantone address 1"
     },
     "G14": {
       "key": "Logo",
-      "value": "logo address 1"
+      "value": "[Logo图片未找到] logo address 1"
     },
     "B15": {
       "key": "箱规",
@@ -50,11 +50,11 @@
     },
     "F15": {
       "key": "色卡1",
-      "value": "pantone address 2"
+      "value": "[色卡图片未找到] pantone address 2"
     },
     "G15": {
       "key": "Logo1",
-      "value": "logo address 2"
+      "value": "[Logo图片未找到] logo address 2"
     },
     "B16": {
       "key": "产前确认样",
@@ -62,11 +62,11 @@
     },
     "F16": {
       "key": "色卡2",
-      "value": "pantone address 3"
+      "value": "[色卡图片未找到] pantone address 3"
     },
     "G16": {
       "key": "Logo2",
-      "value": "logo address 3"
+      "value": "[Logo图片未找到] logo address 3"
     },
     "B17": {
       "key": "出货样",
@@ -74,19 +74,19 @@
     },
     "F17": {
       "key": "色卡3",
-      "value": "pantone address 4"
+      "value": "[色卡图片未找到] pantone address 4"
     },
     "G17": {
       "key": "Logo3",
-      "value": "logo address 4"
+      "value": "[Logo图片未找到] logo address 4"
     },
     "F18": {
       "key": "色卡4",
-      "value": "pantone address 5"
+      "value": "[色卡图片未找到] pantone address 5"
     },
     "G18": {
       "key": "Logo4",
-      "value": "logo address 5"
+      "value": "[Logo图片未找到] logo address 5"
     },
     "A19": {
       "key": "注意事项：1",
@@ -140,7 +140,7 @@
   "products": [
     {
       "产品编号": "EC1601",
-      "产品图片": "product address_1",
+      "产品图片": "[图片未找到] product address_1",
       "描述": {
         "type": "rich_text",
         "content": [

@@ -19,6 +19,7 @@ import subprocess
 import sys
 from pathlib import Path
 from typing import Dict, List, Tuple
+from datetime import datetime, timedelta
 import pyperclip  # For clipboard functionality
 
 class ProductSearchGUI:
@@ -26,6 +27,9 @@ class ProductSearchGUI:
         self.root = root
         self.root.title("亚马逊订单产品搜索")
         self.root.geometry("1000x800")
+        
+        # Auto-sync recent PO_excel files to JSON templates before loading products
+        self._auto_sync_recent_excel()
         
         # Load product data
         self.products = self._load_products()
@@ -35,6 +39,60 @@ class ProductSearchGUI:
         
         # Create GUI elements
         self._create_widgets()
+    
+    def _auto_sync_recent_excel(self):
+        """Auto-sync top 3 most recent PO_excel files to JSON templates"""
+        try:
+            from excel_to_json_template import ExcelToJsonConverter
+            
+            po_excel_dir = Path(__file__).resolve().parent / "PO_excel"
+            if not po_excel_dir.exists():
+                return
+            
+            # Get all Excel files with modification times
+            excel_files = []
+            
+            for excel_file in po_excel_dir.glob("*.xlsx"):
+                # Skip temporary Excel files
+                if excel_file.name.startswith('~$') or excel_file.name.startswith('test_'):
+                    continue
+                
+                mod_time = datetime.fromtimestamp(excel_file.stat().st_mtime)
+                excel_files.append((excel_file, mod_time))
+            
+            if not excel_files:
+                return
+            
+            # Sort by modification time (newest first) and take only top 3
+            excel_files.sort(key=lambda x: x[1], reverse=True)
+            files_to_sync = excel_files[:3]
+            
+            print(f"\n[Auto-Sync] Updating top 3 most recent PO_excel files to JSON...")
+            
+            converter = ExcelToJsonConverter()
+            sync_count = 0
+            
+            for excel_file, mod_time in files_to_sync:
+                try:
+                    json_files = converter.convert_excel_to_json(excel_file)
+                    if json_files:
+                        time_ago = datetime.now() - mod_time
+                        days_ago = time_ago.days
+                        if days_ago == 0:
+                            time_str = f"{time_ago.seconds // 3600}h ago"
+                        else:
+                            time_str = f"{days_ago}d ago"
+                        
+                        print(f"  [OK] {excel_file.name} ({time_str}) -> {len(json_files)} JSON file(s)")
+                        sync_count += 1
+                except Exception as e:
+                    print(f"  [WARN] Failed to sync {excel_file.name}: {e}")
+            
+            if sync_count > 0:
+                print(f"[Auto-Sync] Successfully synced {sync_count} file(s)\n")
+                
+        except Exception as e:
+            print(f"[Auto-Sync] Warning: Auto-sync failed: {e}")
         
     def _load_products(self) -> List[Dict]:
         """Load all products from JSON templates"""

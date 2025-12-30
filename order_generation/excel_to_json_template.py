@@ -55,14 +55,40 @@ class ExcelToJsonConverter:
         self.accessory_map = self._load_accessory_mapping()
         
     def _load_accessory_mapping(self) -> Dict[str, Dict]:
-        """Load accessory mapping to get product names"""
+        """Load accessory mapping to get product names - includes both main products and accessories"""
         mapping_path = self.root_dir / "docs" / "accessory_mapping.json"
         try:
             with open(mapping_path, "r", encoding="utf-8-sig") as f:
                 data = json.load(f)
-                return data.get("products", {})
+                products_data = data.get("products", {})
+                
+                # Build a flat mapping of all SKUs (main products + accessories)
+                flat_mapping = {}
+                
+                # Add main products
+                for sku, product_info in products_data.items():
+                    flat_mapping[sku] = {
+                        "name": product_info.get("name", ""),
+                        "is_accessory": False
+                    }
+                    
+                    # Add all accessories for this main product
+                    for accessory in product_info.get("accessories", []):
+                        acc_sku = accessory.get("sku", "")
+                        acc_name = accessory.get("name", "")
+                        if acc_sku:
+                            flat_mapping[acc_sku] = {
+                                "name": acc_name,
+                                "is_accessory": True,
+                                "parent_sku": sku
+                            }
+                
+                return flat_mapping
         except FileNotFoundError:
             print(f"Warning: {mapping_path} not found. Product names may not be populated.")
+            return {}
+        except Exception as e:
+            print(f"Warning: Error loading accessory mapping: {e}")
             return {}
     
     def _find_image_path(self, sku: str) -> Optional[str]:
@@ -717,11 +743,34 @@ class ExcelToJsonConverter:
                 else:
                     product[field] = value
             
-            # Add product name from accessory mapping if available
+            # Add product name with priority:
+            # 1. From accessory mapping (most reliable)
+            # 2. From existing JSON template (preserve user data) - CRITICAL for search
+            # 3. Default to empty string
+            product_name_set = False
             if sku in self.accessory_map:
                 product["产品名称"] = self.accessory_map[sku]["name"]
-            elif "产品名称" not in product:
-                product["产品名称"] = ""  # Default empty name
+                product_name_set = True
+            
+            # Always try to preserve name from existing JSON template
+            # This is critical for maintaining searchability
+            if not product_name_set:
+                existing_json_path = self.template_dir / f"{sku}.json"
+                if existing_json_path.exists():
+                    try:
+                        with open(existing_json_path, "r", encoding="utf-8-sig") as f:
+                            existing_data = json.load(f)
+                        if existing_data.get("products") and len(existing_data["products"]) > 0:
+                            existing_name = existing_data["products"][0].get("产品名称", "")
+                            if existing_name:  # Only use if not empty
+                                product["产品名称"] = existing_name
+                                product_name_set = True
+                    except Exception:
+                        pass
+            
+            # Set to empty string only if we couldn't find a name anywhere
+            if not product_name_set:
+                product["产品名称"] = ""
             
             products.append(product)
             row += 1
@@ -784,6 +833,30 @@ class ExcelToJsonConverter:
             
             # Generate one JSON file per unique product SKU
             for sku, product in products_by_sku.items():
+                # Preserve existing product name from JSON template if it exists
+                # This is CRITICAL - Excel files don't contain product names, so we must preserve from JSON
+                output_path = self.template_dir / f"{sku}.json"
+                if output_path.exists():
+                    try:
+                        with open(output_path, "r", encoding="utf-8-sig") as f:
+                            existing_data = json.load(f)
+                        # Preserve the product name from existing JSON
+                        if existing_data.get("products") and len(existing_data["products"]) > 0:
+                            existing_name = existing_data["products"][0].get("产品名称", "")
+                            if existing_name:  # Only overwrite if we found a non-empty name
+                                product["产品名称"] = existing_name
+                            # If product doesn't have 产品名称 yet and existing is empty, check accessory map
+                            elif "产品名称" not in product and sku in self.accessory_map:
+                                product["产品名称"] = self.accessory_map[sku]["name"]
+                    except Exception as e:
+                        print(f"  Warning: Could not preserve product name from existing JSON: {e}")
+                        # Try accessory map as fallback
+                        if "产品名称" not in product and sku in self.accessory_map:
+                            product["产品名称"] = self.accessory_map[sku]["name"]
+                elif sku in self.accessory_map:
+                    # No existing JSON, try accessory map
+                    product["产品名称"] = self.accessory_map[sku]["name"]
+                
                 # Create JSON structure
                 json_data = {
                     "cells": cells,
@@ -792,8 +865,6 @@ class ExcelToJsonConverter:
                 }
                 
                 # Save to json_template directory
-                output_path = self.template_dir / f"{sku}.json"
-                
                 with open(output_path, "w", encoding="utf-8") as f:
                     json.dump(json_data, f, ensure_ascii=False, indent=2)
                 
@@ -1042,11 +1113,11 @@ class ExcelToJsonGUI:
                     total_generated += len(generated_files)
                     
                     if generated_files:
-                        self._log(f"  ✓ 生成了 {len(generated_files)} 个JSON模板")
+                        self._log(f"  [OK] 生成了 {len(generated_files)} 个JSON模板")
                         for json_file in generated_files:
                             self._log(f"    - {json_file.name}")
                     else:
-                        self._log(f"  ⚠ 未生成模板（未找到产品）")
+                        self._log(f"  [!] 未生成模板（未找到产品）")
                         
                 except Exception as e:
                     self._log(f"  ✗ 错误: {e}")

@@ -87,11 +87,11 @@ class JsonTemplateToExcelConverter:
             try:
                 excel_path = self.convert_json_to_excel(json_path)
                 converted_files.append(excel_path)
-                print(f"✓ {json_path.name} -> {excel_path.name}")
+                print(f"[OK] {json_path.name} -> {excel_path.name}")
                 
             except Exception as e:
                 failed_files.append(json_path)
-                print(f"✗ {json_path.name} -> FAILED: {e}")
+                print(f"[FAIL] {json_path.name} -> FAILED: {e}")
         
         # Print summary
         print("-" * 50)
@@ -125,10 +125,10 @@ class JsonTemplateToExcelConverter:
             try:
                 excel_path = self.convert_json_to_excel(json_path)
                 converted_files.append(excel_path)
-                print(f"✓ {json_path.name} -> {excel_path.name}")
+                print(f"[OK] {json_path.name} -> {excel_path.name}")
                 
             except Exception as e:
-                print(f"✗ {json_path.name} -> FAILED: {e}")
+                print(f"[FAIL] {json_path.name} -> FAILED: {e}")
         
         return converted_files
 

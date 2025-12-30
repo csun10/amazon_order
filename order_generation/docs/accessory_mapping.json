@@ -1,4 +1,4 @@
-﻿{
+{
   "products": {
     "B10-MJB2-BK": {
       "name": "木头脚挫2只装 Foot Scraper Pedicure Foot File, Professional Foot Rasp File Foot Scrubber, Premium Callus Remover for Feet to Remove Dead Skin, Hard Skin, Cracked Heels, Perfect Foot Care Pedicure Tools (2 Pack)",
@@ -141,7 +141,7 @@
       ]
     },
     "3T-MBP4-WAZR": {
-      "name": "",
+      "name": "ecoed 可降解三支装",
       "accessories": [
         {
           "sku": "RB05-27-01",
@@ -152,7 +152,7 @@
       ]
     },
     "large": {
-      "name": "",
+      "name": "Ecoed铝筒（大）",
       "accessories": [
         {
           "sku": "US-BR01-02",
@@ -169,7 +169,7 @@
       ]
     },
     "small": {
-      "name": "",
+      "name": "Ecoed铝筒（小）",
       "accessories": [
         {
           "sku": "US-BR01-02",
@@ -208,7 +208,7 @@
       ]
     },
     "Elasticbrush03": {
-      "name": "",
+      "name": "ecoed 可降解绿色鱼骨梳",
       "accessories": [
         {
           "sku": "EC221-1-1",
@@ -219,7 +219,7 @@
       ]
     },
     "Elasticbrush04": {
-      "name": "",
+      "name": "ecoed 可降解黄色鱼骨梳",
       "accessories": [
         {
           "sku": "EC221-2-1",
@@ -230,7 +230,7 @@
       ]
     },
     "FSC-WB01": {
-      "name": "",
+      "name": "ecoed木针按摩梳",
       "accessories": [
         {
           "sku": "FSC-WB02-1",
@@ -241,7 +241,7 @@
       ]
     },
     "FSC-WB02": {
-      "name": "",
+      "name": "ecoed木针按摩梳",
       "accessories": [
         {
           "sku": "FSC-WB02-1",
@@ -252,7 +252,7 @@
       ]
     },
     "ST1122-1": {
-      "name": "",
+      "name": "norsewood气垫猪鬃梳（手柄）",
       "accessories": [
         {
           "sku": "US-RB01-01",
@@ -316,7 +316,7 @@
       ]
     },
     "C7523": {
-      "name": "",
+      "name": "EE黑色弹性漆铝筒45cm",
       "accessories": [
         {
           "sku": "EYJ",
@@ -439,7 +439,7 @@
       ]
     },
     "DE-RQQ1-W67Q": {
-      "name": "",
+      "name": "ecoed长柄猪鬃梳",
       "accessories": [
         {
           "sku": "DE-RQQ1-W67Q-1",
@@ -644,7 +644,7 @@
       ]
     },
     "C7526": {
-      "name": "",
+      "name": "EE1.3&1.7 铝桶",
       "accessories": [
         {
           "sku": "EYJ",
@@ -701,7 +701,7 @@
       ]
     },
     "5V-GW44-8VVX": {
-      "name": "",
+      "name": "Ecoed洗头刷粉色细针单只",
       "accessories": [
         {
           "sku": "EC401-3",
@@ -718,7 +718,7 @@
       ]
     },
     "2EC-Pink": {
-      "name": "",
+      "name": "Ecoed洗头刷粉色两只装细针",
       "accessories": [
         {
           "sku": "EC401-3",
@@ -735,7 +735,7 @@
       ]
     },
     "2EC-Blue": {
-      "name": "",
+      "name": "Ecoed洗头刷蓝色两只装细针",
       "accessories": [
         {
           "sku": "EC401-3",
@@ -769,7 +769,7 @@
       ]
     },
     "2EC-Yellow": {
-      "name": "",
+      "name": "Ecoed洗头刷黄色两只装细针",
       "accessories": [
         {
           "sku": "EC401-3",
@@ -786,7 +786,7 @@
       ]
     },
     "0O-TK37-GTR9": {
-      "name": "",
+      "name": "ecoed指甲挑圆筒包装",
       "accessories": [
         {
           "sku": "EC-502-1",
@@ -797,7 +797,7 @@
       ]
     },
     "EC205": {
-      "name": "",
+      "name": "Ecoed可降解铝筒三支装",
       "accessories": [
         {
           "sku": "EC205-1-1",
@@ -899,7 +899,7 @@
       ]
     },
     "EC405-3-Pink": {
-      "name": "",
+      "name": "Ecoed洗头刷粉色单只装粗针",
       "accessories": [
         {
           "sku": "EC401-3",
@@ -916,7 +916,7 @@
       ]
     },
     "EC405-3-Grey": {
-      "name": "",
+      "name": "Ecoed洗头刷原色单只装粗针",
       "accessories": [
         {
           "sku": "EC401-3",
@@ -944,7 +944,7 @@
       ]
     },
     "7A-D31U-0BLD": {
-      "name": "",
+      "name": "NORSEWOOD 浴刷套装",
       "accessories": [
         {
           "sku": "NWZJ-01",
@@ -1000,7 +1000,7 @@
       ]
     },
     "ECSB-2Green": {
-      "name": "",
+      "name": "Ecoed洗头刷绿色两只装细针",
       "accessories": [
         {
           "sku": "EC401-3",
@@ -1017,7 +1017,7 @@
       ]
     },
     "ECSB-2Blue": {
-      "name": "",
+      "name": "Ecoed洗头刷蓝色两只装细针",
       "accessories": [
         {
           "sku": "EC401-3",
@@ -1086,7 +1086,7 @@
       ]
     },
     "NW-GRAY1": {
-      "name": "",
+      "name": "norsewood灰色猪鬃梳",
       "accessories": [
         {
           "sku": "US-RB01-01",
@@ -1115,7 +1115,7 @@
       ]
     },
     "NW-GRAY2": {
-      "name": "",
+      "name": "norsewood深灰色猪鬃梳",
       "accessories": [
         {
           "sku": "US-RB01-01",
@@ -1144,7 +1144,7 @@
       ]
     },
     "NW-GRAY3": {
-      "name": "",
+      "name": "norsewood浅灰色猪鬃梳",
       "accessories": [
         {
           "sku": "US-RB01-01",
@@ -1173,7 +1173,7 @@
       ]
     },
     "EERB2.11.7": {
-      "name": "",
+      "name": "ellen evyse黑色弹性漆铝筒2只装1.7/2.1in",
       "accessories": [
         {
           "sku": "EYJ",
@@ -1219,7 +1219,7 @@
       ]
     },
     "ECSB-TPR1": {
-      "name": "",
+      "name": "Ecoed洗头刷TPR绿色",
       "accessories": [
         {
           "sku": "EC401-3",
@@ -1275,7 +1275,7 @@
       ]
     },
     "AM-MN01": {
-      "name": "",
+      "name": "伸缩梳",
       "accessories": [
         {
           "sku": "AM-MN01-1",
@@ -1303,7 +1303,7 @@
       ]
     },
     "AMCB-black": {
-      "name": "",
+      "name": "AM800猪鬃卷发通风梳",
       "accessories": [
         {
           "sku": "AMCB-black-1",
@@ -1314,7 +1314,7 @@
       ]
     },
     "EEHB-NBB": {
-      "name": "黑红猪鬃气垫梳",
+      "name": "EE黑红猪鬃气垫梳",
       "accessories": [
         {
           "sku": "EEHB-NBB-1C",
@@ -1355,7 +1355,7 @@
       ]
     },
     "EE-RB-1.32.1": {
-      "name": "",
+      "name": "EE铝桶发夹组合装1.3&2.1in",
       "accessories": [
         {
           "sku": "EE1.3#2.1-1",
@@ -1372,7 +1372,7 @@
       ]
     },
     "AMCB-Pink": {
-      "name": "",
+      "name": "胶皮黑人卷发梳粉色",
       "accessories": [
         {
           "sku": "AM413-2-1",
@@ -1417,7 +1417,7 @@
       ]
     },
     "EE321": {
-      "name": "",
+      "name": "EE鬓角梳套装",
       "accessories": [
         {
           "sku": "EE321-1",
@@ -1434,7 +1434,7 @@
       ]
     },
     "AMCB-01": {
-      "name": "",
+      "name": "尼龙卷发定型梳粉色",
       "accessories": [
         {
           "sku": "AMCB-01-1",
@@ -1479,6 +1479,28 @@
         {
           "sku": "SSD",
           "name": "norsewood鹿皮绒收缩袋",
+          "ratio_main": "1",
+          "ratio_accessory": "1"
+        }
+      ]
+    },
+    "ECO-DHB-Purple": {
+      "name": "",
+      "accessories": [
+        {
+          "sku": "ECO-DHB-Purple-1",
+          "name": "OK梳包装（紫色）",
+          "ratio_main": "1",
+          "ratio_accessory": "1"
+        }
+      ]
+    },
+    "ECO-DHB-Pink": {
+      "name": "",
+      "accessories": [
+        {
+          "sku": "ECO-DHB-Pink-1",
+          "name": "OK梳包装（粉色）",
           "ratio_main": "1",
           "ratio_accessory": "1"
         }

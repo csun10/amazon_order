@@ -6,7 +6,7 @@
     },
     "G3": {
       "key": "订单号",
-      "value": "25AM029-1"
+      "value": "EE-RB-1.32.1"
     },
     "B4": {
       "key": "电话：",
@@ -14,7 +14,7 @@
     },
     "G4": {
       "key": "日期",
-      "value": "2025年10月13日"
+      "value": "2025年10月09日"
     },
     "B5": {
       "key": "联系人：",
@@ -34,7 +34,7 @@
     },
     "B14": {
       "key": "交货时间",
-      "value": "2025年11月27日"
+      "value": "45天"
     },
     "F14": {
       "key": "色卡",
@@ -90,7 +90,7 @@
     },
     "A19": {
       "key": "注意事项：1",
-      "value": ""
+      "value": "玫瑰金和金色各4800"
     },
     "A20": {
       "key": "2：",
@@ -98,11 +98,11 @@
     },
     "A21": {
       "key": "3：",
-      "value": ""
+      "value": "外箱唛印刷4面"
     },
     "A22": {
       "key": "4：",
-      "value": ""
+      "value": "大货样每款每色2只"
     },
     "A23": {
       "key": "5：",
@@ -145,186 +145,16 @@
         "type": "rich_text",
         "content": [
           {
-            "text": "套装直径",
-            "bold": true,
-            "color": "000000"
-          },
-          {
-            "text": "55mm&35mm",
-            "bold": true,
-            "color": "000000"
-          },
-          {
-            "text": "，尼龙",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "66",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "黑色同",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "OG essential+1%",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "负离子，黑色",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "TPR",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "手柄（最硬）",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "+ELLEN ",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "印字，顶盖黑色，中筒黑色弹性漆",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "+THERMIC ",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "印字，印字颜色同印字寄样，圆孔铝桶玫瑰金色电镀同寄样，尾针金色注塑，剪刷丝，穿毛，",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "打磨",
-            "bold": true,
-            "color": "000000"
-          },
-          {
-            "text": "尼龙丝断面边缘",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "(",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "打磨样品需要寄样确认！！），，",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "尼龙丝出峰",
-            "bold": true,
-            "color": "FF0000"
-          },
-          {
-            "text": "1cm ,",
-            "bold": true,
-            "color": "FF0000"
-          },
-          {
-            "text": "混丝",
-            "bold": true,
-            "color": "FF0000"
-          },
-          {
-            "text": "0.6 +0.4mm",
-            "bold": true,
-            "color": "FF0000"
-          },
-          {
-            "text": "混丝比例各一半",
-            "bold": true,
-            "color": "FF0000"
-          },
-          {
-            "text": "，尼龙丝品质都要同",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "MO",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "头梳",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": ",",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "手柄印",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "logo. ",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "和",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "EE214",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "进纸卡盒包装，套",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "opp",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "袋，两只装附带",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "4",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "只发夹。尾针电镀玫瑰金色",
+            "text": "铝桶刷配金色发夹，玫瑰金与金色各4800",
             "bold": false,
             "color": "000000"
           }
         ]
       },
-      "数量/个": 2400,
+      "数量/个": 0,
       "单价": 18.38,
       "包装方式": "纸卡包装",
-      "产品名称": ""
+      "产品名称": "EE铝桶发夹组合装1.3&2.1in"
     }
   ],
   "footer": {

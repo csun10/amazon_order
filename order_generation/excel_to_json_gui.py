@@ -298,11 +298,11 @@ class EnhancedExcelToJsonGUI:
             excel_name = excel_file.stem  # Name without extension
             
             if excel_name in json_files:
-                status = "✓ 已匹配"
+                status = "[OK] 已匹配"
                 matched_count += 1
                 tags = ('matched',)
             else:
-                status = "✗ 未匹配"
+                status = "[X] 未匹配"
                 tags = ('unmatched',)
             
             json_name = f"{excel_name}.json" if excel_name in json_files else "无对应JSON"
@@ -509,14 +509,14 @@ class EnhancedExcelToJsonGUI:
                         if json_name in generated_names:
                             successful_conversions += 1
                             total_generated += len(generated_files)
-                            self._log(f"  ✓ 成功更新: {json_name}.json")
+                            self._log(f"  [OK] 成功更新: {json_name}.json")
                             if len(generated_files) > 1:
-                                self._log(f"  ℹ 同时生成了 {len(generated_files)} 个JSON文件:")
+                                self._log(f"  [i] 同时生成了 {len(generated_files)} 个JSON文件:")
                                 for gf in generated_files:
                                     self._log(f"    - {gf.name}")
                         else:
-                            self._log(f"  ⚠ Excel文件生成了JSON，但未包含目标文件: {json_name}.json")
-                            self._log(f"  ℹ 实际生成的文件:")
+                            self._log(f"  [!] Excel文件生成了JSON，但未包含目标文件: {json_name}.json")
+                            self._log(f"  [i] 实际生成的文件:")
                             for gf in generated_files:
                                 self._log(f"    - {gf.name}")
                             total_generated += len(generated_files)
@@ -579,14 +579,14 @@ class EnhancedExcelToJsonGUI:
                     if result.returncode == 0:
                         if output_file.exists():
                             successful_conversions += 1
-                            self._log(f"  ✓ 成功生成: {excel_name}.xlsx")
+                            self._log(f"  [OK] 成功生成: {excel_name}.xlsx")
                         else:
-                            self._log(f"  ⚠ 脚本执行成功但文件未生成")
+                            self._log(f"  [!] 脚本执行成功但文件未生成")
                     else:
-                        self._log(f"  ✗ 转换失败: {result.stderr}")
+                        self._log(f"  [FAIL] 转换失败: {result.stderr}")
                         
                 except Exception as e:
-                    self._log(f"  ✗ 转换失败: {str(e)}")
+                    self._log(f"  [FAIL] 转换失败: {str(e)}")
                 
                 # Small delay to update UI
                 self.root.after(10)
@@ -665,14 +665,14 @@ class EnhancedExcelToJsonGUI:
                         if json_name in generated_names:
                             successful_conversions += 1
                             total_generated += len(generated_files)
-                            self._log(f"  ✓ 成功更新: {json_name}.json")
+                            self._log(f"  [OK] 成功更新: {json_name}.json")
                             if len(generated_files) > 1:
-                                self._log(f"  ℹ 同时生成了 {len(generated_files)} 个JSON文件:")
+                                self._log(f"  [i] 同时生成了 {len(generated_files)} 个JSON文件:")
                                 for gf in generated_files:
                                     self._log(f"    - {gf.name}")
                         else:
-                            self._log(f"  ⚠ 未生成目标JSON文件: {json_name}.json")
-                            self._log(f"  ℹ 实际生成的文件: {', '.join(generated_names) if generated_names else '无'}")
+                            self._log(f"  [!] 未生成目标JSON文件: {json_name}.json")
+                            self._log(f"  [i] 实际生成的文件: {', '.join(generated_names) if generated_names else '无'}")
                             total_generated += len(generated_files)
                     else:
                         self._log(f"  ✗ 未生成任何JSON文件（Excel可能无有效数据）")

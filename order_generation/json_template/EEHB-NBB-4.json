@@ -6,15 +6,15 @@
     },
     "G3": {
       "key": "订单号",
-      "value": "25AM034-1"
+      "value": "EEHB-NBB-4"
     },
     "B4": {
       "key": "电话：",
-      "value": "18067420259"
+      "value": ""
     },
     "G4": {
       "key": "日期",
-      "value": "2025年11月04日"
+      "value": "2025年10月21日"
     },
     "B5": {
       "key": "联系人：",
@@ -34,7 +34,7 @@
     },
     "B14": {
       "key": "交货时间",
-      "value": "2031年05月22日"
+      "value": "45天"
     },
     "F14": {
       "key": "色卡",
@@ -90,7 +90,7 @@
     },
     "A19": {
       "key": "注意事项：1",
-      "value": "表面处理干净光滑，不能有划痕，做大货前先确认大货样"
+      "value": "表面处理干净光滑，不能有划痕，注塑残留毛刺"
     },
     "A20": {
       "key": "2：",
@@ -145,16 +145,71 @@
         "type": "rich_text",
         "content": [
           {
-            "text": "清洁刷，注塑体黑色，植毛黑色尼龙毛，0.7mm直径，长度25mm，定制Norsewood滑块logo，产品做哑光，logo处做亮光。需打样再做货",
+            "text": "清洁刷，注塑体黑色，植毛黑色尼龙毛，",
+            "bold": false,
+            "color": "000000"
+          },
+          {
+            "text": "0.7mm",
+            "bold": false,
+            "color": "000000"
+          },
+          {
+            "text": "直径，长度",
+            "bold": false,
+            "color": "000000"
+          },
+          {
+            "text": "25mm",
+            "bold": false,
+            "color": "000000"
+          },
+          {
+            "text": "，定制",
+            "bold": false,
+            "color": "000000"
+          },
+          {
+            "text": "\n",
+            "bold": false,
+            "color": "000000"
+          },
+          {
+            "text": "Ellen Evyse",
+            "bold": false,
+            "color": "FF0000"
+          },
+          {
+            "text": "滑块",
+            "bold": false,
+            "color": "FF0000"
+          },
+          {
+            "text": "logo",
+            "bold": false,
+            "color": "FF0000"
+          },
+          {
+            "text": "，产品做哑光，",
+            "bold": false,
+            "color": "000000"
+          },
+          {
+            "text": "logo",
+            "bold": false,
+            "color": "000000"
+          },
+          {
+            "text": "处做亮光。需打样再做货",
             "bold": false,
             "color": "000000"
           }
         ]
       },
-      "数量/个": 6000,
+      "数量/个": 0,
       "单价": 0.64,
       "包装方式": "",
-      "产品名称": ""
+      "产品名称": "双头清洁刷"
     }
   ],
   "footer": {
