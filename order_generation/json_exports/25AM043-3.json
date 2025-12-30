@@ -2,11 +2,11 @@
   "cells": {
     "B3": {
       "key": "供货商：",
-      "value": "XX印刷厂"
+      "value": "盐城市艳丽工艺品有限公司"
     },
     "G3": {
       "key": "订单号",
-      "value": "25AM034-4"
+      "value": ""
     },
     "B4": {
       "key": "电话：",
@@ -14,11 +14,11 @@
     },
     "G4": {
       "key": "日期",
-      "value": "2025年11月04日"
+      "value": "2025年08月27日"
     },
     "B5": {
       "key": "联系人：",
-      "value": "XX印刷厂"
+      "value": ""
     },
     "G5": {
       "key": "订单安排人",
@@ -34,7 +34,7 @@
     },
     "B14": {
       "key": "交货时间",
-      "value": "2025年11月11日"
+      "value": "15"
     },
     "F14": {
       "key": "色卡",
@@ -139,26 +139,26 @@
   },
   "products": [
     {
-      "产品编号": "EEHB-NBB-3",
-      "产品图片": "order_generation/images/accessories/EEHB-NBB-3.jpg",
+      "产品编号": "EEHB-NBB-2",
+      "产品名称": "黑色棘皮绒",
+      "产品图片": "order_generation/images/accessories/EEHB-NBB-2.jpg",
       "描述": {
         "type": "rich_text",
         "content": [
           {
-            "text": "猪鬃红色胶皮天地盖礼盒，盖子logo烫金，表面磨砂材质",
+            "text": "12*25黑色棘皮绒单面，黑色棉绳，烫金logo",
             "bold": false,
             "color": "000000"
           }
         ]
       },
-      "数量/个": 6000,
-      "单价": 2.93,
-      "包装方式": "",
-      "产品名称": ""
+      "数量/个": 4800,
+      "单价": 1.37,
+      "包装方式": ""
     }
   ],
   "footer": {
     "buyer": "宁波品秀美容科技有限公司",
-    "supplier": "XX印刷厂"
+    "supplier": "盐城市艳丽工艺品有限公司"
   }
 }
