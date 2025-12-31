@@ -29,6 +29,11 @@ from pathlib import Path
 from typing import Dict, List, Any, Optional, Tuple
 from datetime import datetime
 import traceback
+import urllib.request
+import urllib.parse
+import urllib.error
+from threading import Thread
+import time
 
 try:
     from openpyxl import load_workbook
@@ -91,6 +96,11 @@ class AccessoryMappingUpdaterGUI:
         current_frame = ttk.Frame(notebook)
         notebook.add(current_frame, text="Current Mapping")
         self._create_current_mapping_tab(current_frame)
+        
+        # Image Download Tab
+        image_frame = ttk.Frame(notebook)
+        notebook.add(image_frame, text="Image Download")
+        self._create_image_download_tab(image_frame)
         
         # Status bar
         status_bar = ttk.Label(self.root, textvariable=self.status_var, relief=tk.SUNKEN)
@@ -227,6 +237,247 @@ class AccessoryMappingUpdaterGUI:
         
         # Load initial mapping display
         self._refresh_current_mapping()
+    
+    def _create_image_download_tab(self, parent):
+        """Create image download tab"""
+        # Instructions
+        instructions = ttk.LabelFrame(parent, text="Instructions", padding="10")
+        instructions.pack(fill=tk.X, padx=10, pady=10)
+        
+        instruction_text = (
+            "Select Excel files containing SKU and image URL columns:\n"
+            "- 产品管理-辅料列表-*.xlsx (Accessory list with images)\n"
+            "- 导出产品-按SKU-*.xlsx (Product list with images)\n\n"
+            "Images will be downloaded to:\n"
+            "- order_generation/images/accessories/ (for accessory SKUs)\n"
+            "- order_generation/images/products/ (for product SKUs)"
+        )
+        ttk.Label(instructions, text=instruction_text, justify=tk.LEFT).pack()
+        
+        # File selection
+        file_section = ttk.LabelFrame(parent, text="File Selection", padding="10")
+        file_section.pack(fill=tk.X, padx=10, pady=10)
+        
+        self.image_files_var = tk.StringVar(value="No files selected")
+        self.image_files = []
+        
+        ttk.Label(file_section, textvariable=self.image_files_var, wraplength=800).pack(pady=5)
+        
+        button_frame = ttk.Frame(file_section)
+        button_frame.pack(pady=5)
+        ttk.Button(button_frame, text="Select Excel Files", command=self._browse_image_files).pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="Clear Selection", command=self._clear_image_files).pack(side=tk.LEFT, padx=5)
+        
+        # Download options
+        options_section = ttk.LabelFrame(parent, text="Download Options", padding="10")
+        options_section.pack(fill=tk.X, padx=10, pady=10)
+        
+        self.overwrite_var = tk.BooleanVar(value=False)
+        ttk.Checkbutton(options_section, text="Overwrite existing images", variable=self.overwrite_var).pack(anchor=tk.W)
+        
+        # Progress section
+        progress_section = ttk.LabelFrame(parent, text="Download Progress", padding="10")
+        progress_section.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        self.image_progress_var = tk.StringVar(value="Ready to download")
+        ttk.Label(progress_section, textvariable=self.image_progress_var).pack(pady=5)
+        
+        self.image_progress_bar = ttk.Progressbar(progress_section, mode='determinate')
+        self.image_progress_bar.pack(fill=tk.X, padx=5, pady=5)
+        
+        # Log area
+        log_frame = ttk.Frame(progress_section)
+        log_frame.pack(fill=tk.BOTH, expand=True, pady=5)
+        
+        self.image_log = scrolledtext.ScrolledText(log_frame, height=15, wrap=tk.WORD)
+        self.image_log.pack(fill=tk.BOTH, expand=True)
+        
+        # Download button
+        ttk.Button(progress_section, text="Start Download", command=self._start_image_download).pack(pady=10)
+    
+    def _browse_image_files(self):
+        """Browse for Excel files with image URLs"""
+        filetypes = [("Excel files", "*.xlsx *.xls"), ("All files", "*.*")]
+        
+        filenames = filedialog.askopenfilenames(
+            title="Select Excel files with image data",
+            filetypes=filetypes
+        )
+        
+        if filenames:
+            self.image_files = [Path(f) for f in filenames]
+            file_list = "\n".join([f.name for f in self.image_files])
+            self.image_files_var.set(f"Selected {len(self.image_files)} file(s):\n{file_list}")
+            self._log_image(f"[i] Selected {len(self.image_files)} file(s)")
+    
+    def _clear_image_files(self):
+        """Clear selected files"""
+        self.image_files = []
+        self.image_files_var.set("No files selected")
+        self._log_image("[i] File selection cleared")
+    
+    def _log_image(self, message):
+        """Log message to image download log"""
+        timestamp = datetime.now().strftime("%H:%M:%S")
+        self.image_log.insert(tk.END, f"[{timestamp}] {message}\n")
+        self.image_log.see(tk.END)
+        self.root.update_idletasks()
+    
+    def _start_image_download(self):
+        """Start image download in background thread"""
+        if not self.image_files:
+            messagebox.showwarning("Warning", "Please select Excel files first")
+            return
+        
+        if not OPENPYXL_AVAILABLE:
+            messagebox.showerror("Error", "openpyxl is required for reading Excel files")
+            return
+        
+        # Run in separate thread to avoid blocking UI
+        thread = Thread(target=self._download_images_from_excel, daemon=True)
+        thread.start()
+    
+    def _download_images_from_excel(self):
+        """Download images from Excel files"""
+        try:
+            self._log_image("[i] Starting image download process...")
+            
+            # Ensure image directories exist
+            accessories_dir = self.base_path / "images" / "accessories"
+            products_dir = self.base_path / "images" / "products"
+            accessories_dir.mkdir(parents=True, exist_ok=True)
+            products_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Load current mapping to determine product vs accessory
+            accessory_skus = set()
+            if self.current_mapping and "products" in self.current_mapping:
+                for product_data in self.current_mapping["products"].values():
+                    if "accessories" in product_data:
+                        for acc in product_data["accessories"]:
+                            if "accessory_sku" in acc:
+                                accessory_skus.add(acc["accessory_sku"])
+            
+            self._log_image(f"[i] Loaded {len(accessory_skus)} accessory SKUs from mapping")
+            
+            all_images = []
+            
+            # Parse all Excel files
+            for excel_file in self.image_files:
+                self._log_image(f"[i] Reading file: {excel_file.name}")
+                images_from_file = self._parse_excel_for_images(excel_file)
+                all_images.extend(images_from_file)
+                self._log_image(f"[i] Found {len(images_from_file)} image entries in {excel_file.name}")
+            
+            if not all_images:
+                self._log_image("[!] No images found in the selected files")
+                self.image_progress_var.set("No images found")
+                return
+            
+            # Download images
+            total = len(all_images)
+            self.image_progress_bar['maximum'] = total
+            success_count = 0
+            skip_count = 0
+            error_count = 0
+            
+            for idx, (sku, image_url) in enumerate(all_images, 1):
+                # Determine target directory
+                if sku in accessory_skus:
+                    target_dir = accessories_dir
+                    folder_name = "accessories"
+                else:
+                    target_dir = products_dir
+                    folder_name = "products"
+                
+                # Try to determine file extension from URL
+                parsed_url = urllib.parse.urlparse(image_url)
+                path = parsed_url.path
+                ext = Path(path).suffix if path else ".jpg"
+                if not ext or len(ext) > 5:
+                    ext = ".jpg"  # Default to .jpg if no valid extension
+                
+                target_file = target_dir / f"{sku}{ext}"
+                
+                # Check if file exists
+                if target_file.exists() and not self.overwrite_var.get():
+                    self._log_image(f"[i] Skip {sku} - file already exists")
+                    skip_count += 1
+                else:
+                    # Download image
+                    try:
+                        urllib.request.urlretrieve(image_url, target_file)
+                        self._log_image(f"[OK] {sku} -> {folder_name}/{target_file.name}")
+                        success_count += 1
+                    except Exception as e:
+                        self._log_image(f"[FAIL] {sku} - {str(e)}")
+                        error_count += 1
+                
+                # Update progress
+                self.image_progress_bar['value'] = idx
+                self.image_progress_var.set(f"Progress: {idx}/{total} (Success: {success_count}, Skip: {skip_count}, Error: {error_count})")
+                time.sleep(0.05)  # Small delay to avoid overwhelming the server
+            
+            # Final summary
+            self._log_image("\n" + "="*50)
+            self._log_image("[i] Download Complete!")
+            self._log_image(f"[i] Total: {total}")
+            self._log_image(f"[i] Success: {success_count}")
+            self._log_image(f"[i] Skipped: {skip_count}")
+            self._log_image(f"[i] Errors: {error_count}")
+            self.image_progress_var.set(f"Complete - Success: {success_count}, Skip: {skip_count}, Error: {error_count}")
+            
+        except Exception as e:
+            self._log_image(f"[FAIL] Error during download: {str(e)}")
+            self._log_image(traceback.format_exc())
+            self.image_progress_var.set("Error occurred")
+    
+    def _parse_excel_for_images(self, excel_file: Path) -> List[Tuple[str, str]]:
+        """Parse Excel file to extract SKU and image URL pairs"""
+        results = []
+        
+        try:
+            wb = load_workbook(excel_file, data_only=True)
+            
+            for sheet_name in wb.sheetnames:
+                sheet = wb[sheet_name]
+                
+                # Find SKU and image URL columns
+                sku_col = None
+                image_col = None
+                
+                # Check first row for headers
+                for col_idx, cell in enumerate(sheet[1], 1):
+                    if cell.value:
+                        header = str(cell.value).strip()
+                        # Look for SKU column
+                        if header in ["SKU", "sku", "产品SKU", "SKU编号"]:
+                            sku_col = col_idx
+                        # Look for image URL column
+                        elif header in ["主图", "图片", "图片链接", "image", "Image", "主图链接"]:
+                            image_col = col_idx
+                
+                if sku_col and image_col:
+                    self._log_image(f"[i] Found columns in '{sheet_name}': SKU=Col{sku_col}, Image=Col{image_col}")
+                    
+                    # Read data rows
+                    for row_idx in range(2, sheet.max_row + 1):
+                        sku_cell = sheet.cell(row_idx, sku_col)
+                        image_cell = sheet.cell(row_idx, image_col)
+                        
+                        if sku_cell.value and image_cell.value:
+                            sku = str(sku_cell.value).strip()
+                            image_url = str(image_cell.value).strip()
+                            
+                            # Validate URL
+                            if image_url.startswith(("http://", "https://")):
+                                results.append((sku, image_url))
+            
+            wb.close()
+            
+        except Exception as e:
+            self._log_image(f"[FAIL] Error parsing {excel_file.name}: {str(e)}")
+        
+        return results
     
     def _browse_file(self):
         """Browse for Excel file"""

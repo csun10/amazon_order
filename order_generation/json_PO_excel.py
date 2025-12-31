@@ -173,8 +173,8 @@ def fill_workbook(template: Path, data: dict, json_filename: str = ""):
                         orig_width, orig_height = pil_img.size
                     
                     img = Image(str(logo_img_path))
-                    # Set appropriate size for logo (similar to color card)
-                    target_height_px = 60
+                    # Set appropriate size for logo
+                    target_height_px = 80
                     scale = target_height_px / orig_height
                     img.height = target_height_px
                     img.width = int(orig_width * scale)
