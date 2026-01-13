@@ -54,7 +54,7 @@
     },
     "G15": {
       "key": "Logo1",
-      "value": ""
+      "value": "ECOED_shampoo_brush.png"
     },
     "B16": {
       "key": "产前确认样",
@@ -145,14 +145,64 @@
         "type": "rich_text",
         "content": [
           {
-            "text": "细针洗头刷TPEE，硬度55，注意控制针头毛边，顶部印白色logo，颜色699C粉色，一盒两只",
+            "text": "细针洗头刷",
+            "bold": false,
+            "color": "000000"
+          },
+          {
+            "text": "TPEE",
+            "bold": false,
+            "color": "000000"
+          },
+          {
+            "text": "，硬度",
+            "bold": false,
+            "color": "000000"
+          },
+          {
+            "text": "55",
+            "bold": false,
+            "color": "000000"
+          },
+          {
+            "text": "，注意控制针头毛边，顶部印白色",
+            "bold": false,
+            "color": "000000"
+          },
+          {
+            "text": "logo",
+            "bold": false,
+            "color": "000000"
+          },
+          {
+            "text": "，",
+            "bold": false,
+            "color": "000000"
+          },
+          {
+            "text": "颜色",
+            "bold": true,
+            "color": "FF0000"
+          },
+          {
+            "text": "699C",
+            "bold": true,
+            "color": "FF0000"
+          },
+          {
+            "text": "粉色",
+            "bold": true,
+            "color": "FF0000"
+          },
+          {
+            "text": "，一盒两只",
             "bold": false,
             "color": "000000"
           }
         ]
       },
       "数量/个": 0,
-      "单价": 3.5,
+      "单价": 3.49,
       "包装方式": "",
       "产品名称": "Ecoed洗头刷粉色两只装细针"
     }
