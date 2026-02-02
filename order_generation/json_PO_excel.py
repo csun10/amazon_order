@@ -135,10 +135,10 @@ def fill_workbook(template: Path, data: dict, json_filename: str = ""):
             if color_img_path.exists():
                 try:
                     from PIL import Image as PILImage
-                    # Verify image can be opened by Pillow
+                    # Verify image can be opened by Pillow and get size
                     with PILImage.open(color_img_path) as pil_img:
-                        pil_img.verify()
                         orig_width, orig_height = pil_img.size
+                        pil_img.verify()  # Verify after getting size
                     
                     img = Image(str(color_img_path))
                     # Set appropriate size for color card (smaller than product images)
@@ -167,10 +167,10 @@ def fill_workbook(template: Path, data: dict, json_filename: str = ""):
             if logo_img_path.exists():
                 try:
                     from PIL import Image as PILImage
-                    # Verify image can be opened by Pillow
+                    # Verify image can be opened by Pillow and get size
                     with PILImage.open(logo_img_path) as pil_img:
-                        pil_img.verify()
                         orig_width, orig_height = pil_img.size
+                        pil_img.verify()  # Verify after getting size
                     
                     img = Image(str(logo_img_path))
                     # Set appropriate size for logo
@@ -199,6 +199,10 @@ def fill_workbook(template: Path, data: dict, json_filename: str = ""):
                 if key == '产品图片':
                     # Use SKU (产品编号) to construct image path, check multiple directories
                     sku = product.get('产品编号', '')
+                    
+                    # Security: Remove any path separators from SKU to prevent directory traversal
+                    sku = Path(sku).name if sku else ''
+                    
                     # Try products directory first, then accessories directory
                     img_path = template.parent.parent / 'images' / 'products' / f'{sku}.jpg'
                     if not img_path.exists():
@@ -208,8 +212,8 @@ def fill_workbook(template: Path, data: dict, json_filename: str = ""):
                         try:
                             # Verify image can be opened by Pillow and get size
                             with PILImage.open(img_path) as pil_img:
-                                pil_img.verify()
                                 orig_width, orig_height = pil_img.size
+                                pil_img.verify()  # Verify after getting size
                             img = Image(str(img_path))
                             # openpyxl row height is in points (1 point = 1/72 inch),
                             # and image.height is in pixels. Excel's default DPI is 96.
@@ -327,8 +331,8 @@ def main(argv: list[str]) -> int:
                 print()
                 print("=" * 70)
                 return 1
-    except:
-        pass
+    except Exception as e:
+        print(f"Warning: Could not validate output path: {e}")
     
     # Auto-correct if user provides just a filename (no directory path)
     # Check if the output path doesn't include PO_excel_export and is just a filename
@@ -339,14 +343,30 @@ def main(argv: list[str]) -> int:
         print(f"      {out_path}")
     
     template = Path(__file__).resolve().parent / 'docs' / 'empty_base_template.xlsx'
+    
+    # Verify template exists
+    if not template.exists():
+        print(f"ERROR: Template file not found: {template}")
+        return 1
 
-    with open(json_path, 'r', encoding='utf-8-sig') as f:
-        data = json.load(f)
+    try:
+        with open(json_path, 'r', encoding='utf-8-sig') as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        print(f"ERROR: JSON file not found: {json_path}")
+        return 1
+    except json.JSONDecodeError as e:
+        print(f"ERROR: Invalid JSON format in {json_path}: {e}")
+        return 1
 
-    wb = fill_workbook(template, data, json_path.name)
-    wb.save(out_path)
-    print(f"[OK] Generated: {out_path}")
-    return 0
+    try:
+        wb = fill_workbook(template, data, json_path.name)
+        wb.save(out_path)
+        print(f"[OK] Generated: {out_path}")
+        return 0
+    except Exception as e:
+        print(f"ERROR: Failed to generate Excel file: {e}")
+        return 1
 
 
 if __name__ == '__main__':
