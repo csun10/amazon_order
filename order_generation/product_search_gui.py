@@ -28,7 +28,7 @@ class ProductSearchGUI:
         self.root.title("亚马逊订单产品搜索")
         self.root.geometry("1000x800")
         
-        # Auto-sync recent PO_excel files to JSON templates before loading products
+        # Auto-sync recent PO_excel_template files to JSON templates before loading products
         self._auto_sync_recent_excel()
         
         # Load product data
@@ -41,11 +41,11 @@ class ProductSearchGUI:
         self._create_widgets()
     
     def _auto_sync_recent_excel(self):
-        """Auto-sync top 3 most recent PO_excel files to JSON templates"""
+        """Auto-sync top 3 most recent PO_excel_template files to JSON templates"""
         try:
             from excel_to_json_template import ExcelToJsonConverter
             
-            po_excel_dir = Path(__file__).resolve().parent / "PO_excel"
+            po_excel_dir = Path(__file__).resolve().parent / "PO_excel_template"
             if not po_excel_dir.exists():
                 return
             
@@ -67,7 +67,7 @@ class ProductSearchGUI:
             excel_files.sort(key=lambda x: x[1], reverse=True)
             files_to_sync = excel_files[:3]
             
-            print(f"\n[Auto-Sync] Updating top 3 most recent PO_excel files to JSON...")
+            print(f"\n[Auto-Sync] Updating top 3 most recent PO_excel_template files to JSON...")
             
             converter = ExcelToJsonConverter()
             sync_count = 0

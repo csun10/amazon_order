@@ -44,7 +44,7 @@ python direct_sku_to_json.py --name 25AM027 48-82P3-QSFG 800 Elasticbrush01 500 
 
 ### 3. Update JSON Templates from Excel
 
-After editing Excel files in `PO_excel/`:
+After editing Excel files in `PO_excel_template/`:
 
 ```bash
 cd order_generation
@@ -54,7 +54,7 @@ python excel_to_json_template.py
 Or double-click the script to launch GUI.
 
 **What it does:**
-- Reads Excel files from `PO_excel/`
+- Reads Excel files from `PO_excel_template/`
 - Updates corresponding JSON templates in `json_template/`
 - Preserves rich text formatting
 
@@ -99,7 +99,7 @@ python accessory_mapping_updater_gui.py
 | Directory | Purpose | Edit? |
 |-----------|---------|-------|
 | `json_template/` | Product templates (one per SKU) | ✅ Yes - via `excel_to_json_template.py` |
-| `PO_excel/` | **Source** Excel files | ✅ Yes - manual edits allowed |
+| `PO_excel_template/` | **Source** Excel template files | ✅ Yes - manual edits allowed |
 | `PO_excel_export/` | **Generated** Excel files | ❌ No - auto-generated |
 | `json_exports/` | Temporary order JSON | ❌ No - auto-generated |
 | `PO_import_filled/` | ERP import files | ❌ No - auto-generated |
@@ -174,9 +174,9 @@ python script_name.py
 - Place image in `images/products/{SKU}.jpg` or `images/accessories/{SKU}.jpg`
 - Filename must match SKU exactly
 
-### ❌ "Cannot generate files into PO_excel/ folder"
+### ❌ "Cannot generate files into PO_excel_template/ folder"
 **Solution:** Script auto-corrects to `PO_excel_export/`
-- Keep source files in `PO_excel/`
+- Keep source template files in `PO_excel_template/`
 - Generated files go to `PO_excel_export/`
 
 ### ❌ GUI won't start
@@ -201,7 +201,7 @@ pip install -r requirements.txt
 - Edit files in `PO_excel_export/` (they're auto-generated)
 - Manually edit `accessory_mapping.json` (use GUI)
 - Delete files from `json_template/` without backup
-- Mix up `PO_excel/` (source) with `PO_excel_export/` (output)
+- Mix up `PO_excel_template/` (source) with `PO_excel_export/` (output)
 - Manually edit JSON buyer field (edit Excel B69 instead)
 
 ---
@@ -225,7 +225,7 @@ Morning:
 
 Afternoon:
 4. Review generated Excel files
-5. Make any manual edits in PO_excel/
+5. Make any manual edits in PO_excel_template/
 6. Run excel_to_json_template.py to sync changes
 
 Weekly:
@@ -244,7 +244,7 @@ As needed:
 **Buyer information is stored in Excel templates (cell B69):**
 
 ### **How to Update Buyer:**
-1. Open `PO_excel/{SKU}.xlsx`
+1. Open `PO_excel_template/{SKU}.xlsx`
 2. Edit cell B69 (采购方)
 3. Save Excel file
 4. Run `excel_to_json_template.py` to update JSON

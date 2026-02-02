@@ -318,17 +318,17 @@ def main(argv: list[str]) -> int:
     # Ensure PO_excel_export directory exists
     po_excel_export_dir.mkdir(exist_ok=True)
     
-    # Check if output path is trying to write to PO_excel folder
+    # Check if output path is trying to write to PO_excel_template folder
     try:
         resolved_out = out_path.resolve()
-        if 'PO_excel' in str(resolved_out) and 'PO_excel_export' not in str(resolved_out):
-            # User is trying to write to PO_excel folder (but not PO_excel_export)
-            if resolved_out.parent.name == 'PO_excel':
+        if 'PO_excel_template' in str(resolved_out) and 'PO_excel_export' not in str(resolved_out):
+            # User is trying to write to PO_excel_template folder (but not PO_excel_export)
+            if resolved_out.parent.name == 'PO_excel_template':
                 print("=" * 70)
-                print("ERROR: Cannot generate files into PO_excel/ folder!")
+                print("ERROR: Cannot generate files into PO_excel_template/ folder!")
                 print("=" * 70)
                 print()
-                print("The PO_excel/ folder is reserved for source Excel files.")
+                print("The PO_excel_template/ folder is reserved for source Excel template files.")
                 print("Generated files must go to PO_excel_export/ folder.")
                 print()
                 print("Correct usage:")

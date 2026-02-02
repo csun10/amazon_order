@@ -36,7 +36,7 @@ Generated Excel (B69) + PO Import (采购方 column)
 
 1. **Open the Excel template:**
    ```
-   order_generation/PO_excel/{SKU}.xlsx
+   order_generation/PO_excel_template/{SKU}.xlsx
    ```
 
 2. **Edit cell B69** (采购方/Buyer):
@@ -106,7 +106,7 @@ Generated Excel (B69) + PO Import (采购方 column)
    ```
 
 2. **Edit Excel templates:**
-   - Open each `PO_excel/{SKU}.xlsx`
+   - Open each `PO_excel_template/{SKU}.xlsx`
    - Update B69 with correct buyer
    - Save
 
@@ -183,7 +183,7 @@ python direct_sku_to_json.py --name test --po-import SKU 100
 
 ### **Source (Edit These):**
 ```
-order_generation/PO_excel/{SKU}.xlsx        # Excel templates (edit B69)
+order_generation/PO_excel_template/{SKU}.xlsx        # Excel templates (edit B69)
 ```
 
 ### **Generated (Auto-Updated):**

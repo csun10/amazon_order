@@ -50,7 +50,7 @@ amazon_order/
 │   │
 │   ├── json_template/                  # JSON templates (one per SKU)
 │   ├── json_exports/                   # Generated order JSON files
-│   ├── PO_excel/                       # Source Excel files (manual edits)
+│   ├── PO_excel_template/              # Source Excel template files (manual edits)
 │   ├── PO_excel_export/                # Generated Excel files (output)
 │   └── PO_import_filled/               # Generated ERP import files
 │
@@ -165,7 +165,7 @@ This generates:
 
 When you manually edit an Excel order file:
 
-1. **Save edited file** in `PO_excel/` folder
+1. **Save edited file** in `PO_excel_template/` folder
 
 2. **Convert to JSON template:**
    ```bash
@@ -305,7 +305,7 @@ Supported colors: RED, BLUE, GREEN, BLACK, YELLOW, ORANGE, PURPLE, or hex codes 
 ## ⚠️ Important Notes
 
 ### Directory Usage
-- **`PO_excel/`** - Store **source** Excel files (manual edits)
+- **`PO_excel_template/`** - Store **source** Excel template files (manual edits)
 - **`PO_excel_export/`** - **Generated** Excel files (auto-created, do not edit)
 - **`json_template/`** - One JSON file per SKU (product templates)
 - **`json_exports/`** - Temporary order JSON files (factory-grouped)
