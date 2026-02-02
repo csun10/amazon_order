@@ -37,7 +37,7 @@ amazon_order/
 │   ├── docs/
 │   │   ├── accessory_mapping.json      # Product-accessory relationships
 │   │   ├── empty_base_template.xlsx    # Base Excel template
-│   │   ├── PO_import_empty.xlsx        # PO import template for ERP
+│   │   ├── PO_import_template.xlsx    # PO import template for ERP
 │   │   ├── Storage.txt                 # Warehouse list
 │   │   ├── order_template.md           # JSON template format guide
 │   │   └── excel_rich_text_guide.md    # Rich text formatting guide
@@ -341,7 +341,7 @@ Supported colors: RED, BLUE, GREEN, BLACK, YELLOW, ORANGE, PURPLE, or hex codes 
 ### PO Import not generating
 - Add `--po-import` flag when using CLI
 - Check "生成采购导入" checkbox in GUI
-- Verify `docs/PO_import_empty.xlsx` template exists
+- Verify `docs/PO_import_template.xlsx` template exists
 
 ---
 

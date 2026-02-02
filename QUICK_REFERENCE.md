@@ -121,7 +121,7 @@ python accessory_mapping_updater_gui.py
 
 **Purpose:** Base template for all Excel orders
 
-### `docs/PO_import_empty.xlsx`
+### `docs/PO_import_template.xlsx`
 **When to edit:** Only if ERP import format changes
 
 **Purpose:** Template for ERP PO import files
