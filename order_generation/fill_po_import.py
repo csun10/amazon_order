@@ -18,14 +18,6 @@ from typing import Dict, List, Any
 
 import openpyxl
 
-# Import buyer mapping functionality
-try:
-    from buyer_mapping import get_buyer_for_sku, BUYER_PINXIU
-except ImportError:
-    print("Warning: buyer_mapping module not available, using default buyer")
-    get_buyer_for_sku = lambda sku: None
-    BUYER_PINXIU = "宁波品秀美容科技有限公司"
-
 
 ROOT = Path(__file__).resolve().parent
 JSON_EXPORTS_DIR = ROOT / "json_exports"
@@ -89,15 +81,20 @@ def create_po_import_data(json_files: List[Path], order_name: str = "factory", w
         # Each factory JSON gets a different *标识号 (1, 2, 3, ...)
         batch_id = str(factory_index)
         
+        # Get buyer from JSON template footer (set in Excel template B69)
+        json_buyer = json_data.get("footer", {}).get("buyer", "")
+        
         for product in products:
             # Get warehouse for this specific product
             product_sku = product.get("产品编号", "")
             product_warehouse = warehouse_mapping.get(product_sku, warehouse)
             
-            # Determine buyer for this product (only for parent products)
-            product_buyer = get_buyer_for_sku(product_sku)
-            # If not a parent product or no buyer mapping found, leave blank
-            buyer_value = product_buyer if product_buyer else ""
+            # Check if this product is a parent product (has its own template)
+            template_path = ROOT / "json_template" / f"{product_sku}.json"
+            is_parent = template_path.exists()
+            
+            # Only set buyer for parent products (leave blank for accessories)
+            buyer_value = json_buyer if is_parent else ""
             
             # Create a row for each product
             # Normalize description: accept both plain string and rich_text dict

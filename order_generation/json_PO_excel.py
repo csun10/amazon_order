@@ -13,14 +13,6 @@ try:
 except ModuleNotFoundError as exc:  # pragma: no cover - dependency missing in tests
     raise SystemExit("openpyxl and pillow are required to run this script") from exc
 
-# Import buyer mapping functionality
-try:
-    from buyer_mapping import get_buyer_for_sku, BUYER_PINXIU
-except ImportError:
-    print("Warning: buyer_mapping module not available, using default buyer")
-    get_buyer_for_sku = lambda sku: None
-    BUYER_PINXIU = "宁波品秀美容科技有限公司"
-
 PRODUCT_START_ROW = 7
 COLUMN_MAP = {
     '产品编号': 'A',
@@ -301,23 +293,9 @@ def fill_workbook(template: Path, data: dict, json_filename: str = ""):
 
     footer = data.get('footer', {})
     
-    # Determine buyer based on products in the order
-    # Check if any parent product SKUs are in this order
-    buyer = None
-    for product in data.get('products', []):
-        sku = product.get('产品编号')
-        if sku:
-            product_buyer = get_buyer_for_sku(sku)
-            if product_buyer:
-                buyer = product_buyer
-                break  # Use the first parent product's buyer
-    
-    # If no buyer determined from products, use footer or default
-    if not buyer:
-        buyer = footer.get('buyer', BUYER_PINXIU)
-    
-    # Set buyer in Excel
-    ws['B69'] = buyer
+    # Use buyer from JSON template (stored in footer)
+    if 'buyer' in footer:
+        ws['B69'] = footer['buyer']
     
     # Set supplier
     if 'supplier' in footer:
