@@ -422,6 +422,8 @@ class ProductSearchGUI:
             quantity = int(self.quantity_var.get())
             if quantity <= 0:
                 raise ValueError("Quantity must be positive")
+            if quantity > 1000000:
+                raise ValueError("Quantity cannot exceed 1,000,000 (please check if this is correct)")
         except ValueError as e:
             messagebox.showerror("错误", f"无效数量: {e}")
             return

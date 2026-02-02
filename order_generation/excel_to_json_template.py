@@ -465,7 +465,7 @@ class ExcelToJsonConverter:
                 if hasattr(ws.parent, 'worksheets'):
                     try:
                         worksheet_index = ws.parent.worksheets.index(ws) + 1
-                    except:
+                    except (ValueError, AttributeError):
                         worksheet_index = 1
                 
                 # Read worksheet XML
@@ -790,8 +790,9 @@ class ExcelToJsonConverter:
                 footer["buyer"] = buyer
             if supplier:
                 footer["supplier"] = supplier
-        except:
-            pass
+        except (IndexError, AttributeError) as e:
+            # Footer cells may not exist in all Excel files
+            print(f"Debug: Could not read footer cells: {e}")
         
         return footer
     
@@ -1016,11 +1017,21 @@ class ExcelToJsonGUI:
         
         if files:
             added_count = 0
+            invalid_files = []
             for file_path in files:
+                # Validate file extension
+                path = Path(file_path)
+                if path.suffix.lower() not in ['.xlsx', '.xls']:
+                    invalid_files.append(path.name)
+                    continue
+                    
                 if file_path not in self.selected_files:
                     self.selected_files.append(file_path)
-                    self.file_listbox.insert(tk.END, Path(file_path).name)
+                    self.file_listbox.insert(tk.END, path.name)
                     added_count += 1
+            
+            if invalid_files:
+                messagebox.showwarning("警告", f"以下文件不是Excel格式，已跳过:\n" + "\n".join(invalid_files))
             
             self._log(f"添加了 {added_count} 个文件")
             self.status_var.set(f"已选择 {len(self.selected_files)} 个文件")
@@ -1080,7 +1091,8 @@ class ExcelToJsonGUI:
         """Recursively disable all widgets"""
         try:
             widget.configure(state='disabled')
-        except:
+        except (tk.TclError, AttributeError):
+            # Some widgets don't support state configuration
             pass
         for child in widget.winfo_children():
             self._disable_widgets(child)
@@ -1089,7 +1101,8 @@ class ExcelToJsonGUI:
         """Recursively enable all widgets"""
         try:
             widget.configure(state='normal')
-        except:
+        except (tk.TclError, AttributeError):
+            # Some widgets don't support state configuration
             pass
         for child in widget.winfo_children():
             self._enable_widgets(child)
