@@ -9,6 +9,7 @@ Input product SKUs and quantities to automatically generate:
 - Factory-grouped Excel order files with rich text formatting
 - Required accessories based on parent-child relationships
 - PO import files for ERP synchronization
+- **Automatic buyer assignment** based on product listings (JIXIU vs PINXIU)
 
 ### 2. **Template Management** (Excel ↔ JSON with Rich Text)
 - Convert Excel files to JSON templates with full rich text support
@@ -19,6 +20,12 @@ Input product SKUs and quantities to automatically generate:
 - Import accessory relationships from ERP Excel exports
 - Update product-accessory mappings
 - Download product images from ERP
+
+### 4. **Dual-Buyer Support** (NEW)
+- Automatically distinguishes between two buyers based on SKU listings
+- 宁波集秀美容科技有限公司 (JIXIUBeauty-US)
+- 宁波品秀美容科技有限公司 (PinxiuBeautyUS-US-US-US)
+- Parent products auto-assigned, accessories left blank
 
 ---
 
@@ -114,9 +121,10 @@ This generates:
 |--------|---------|
 | `product_search_gui.py` | **Main GUI** - Search products, select quantities, generate orders |
 | `direct_sku_to_json.py` | **CLI tool** - Generate orders from SKU/quantity pairs |
-| `json_PO_excel.py` | Convert JSON templates to Excel files |
+| `json_PO_excel.py` | Convert JSON templates to Excel files (with buyer assignment) |
 | `merge_json_templates.py` | Merge multiple JSON templates by factory |
-| `fill_po_import.py` | Generate ERP PO import Excel files |
+| `fill_po_import.py` | Generate ERP PO import Excel files (with buyer field) |
+| `buyer_mapping.py` | **NEW** - Manage SKU to buyer mappings |
 
 ### Template Management
 | Script | Purpose |
@@ -258,6 +266,15 @@ Defines product-accessory relationships:
 ```
 
 **Ratio Example:** If `ratio_main=1` and `ratio_accessory=2`, ordering 100 main products includes 200 accessories.
+
+### `docs/Listing20260202-876789694451576832.xlsx` (NEW)
+Maps SKUs to buyers for dual-buyer support:
+- **JIXIUBeauty-US** → 宁波集秀美容科技有限公司 (66 SKUs)
+- **PinxiuBeautyUS-US-US-US** → 宁波品秀美容科技有限公司 (74 SKUs)
+
+**Auto-applied to:**
+- Excel template footer (cell B69)
+- PO import 采购方 field (parent products only)
 
 ### `docs/Storage.txt`
 List of available warehouses (one per line):

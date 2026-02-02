@@ -18,6 +18,14 @@ from typing import Dict, List, Any
 
 import openpyxl
 
+# Import buyer mapping functionality
+try:
+    from buyer_mapping import get_buyer_for_sku, BUYER_PINXIU
+except ImportError:
+    print("Warning: buyer_mapping module not available, using default buyer")
+    get_buyer_for_sku = lambda sku: None
+    BUYER_PINXIU = "宁波品秀美容科技有限公司"
+
 
 ROOT = Path(__file__).resolve().parent
 JSON_EXPORTS_DIR = ROOT / "json_exports"
@@ -86,6 +94,11 @@ def create_po_import_data(json_files: List[Path], order_name: str = "factory", w
             product_sku = product.get("产品编号", "")
             product_warehouse = warehouse_mapping.get(product_sku, warehouse)
             
+            # Determine buyer for this product (only for parent products)
+            product_buyer = get_buyer_for_sku(product_sku)
+            # If not a parent product or no buyer mapping found, leave blank
+            buyer_value = product_buyer if product_buyer else ""
+            
             # Create a row for each product
             # Normalize description: accept both plain string and rich_text dict
             desc = product.get("描述", "")
@@ -100,7 +113,7 @@ def create_po_import_data(json_files: List[Path], order_name: str = "factory", w
                 "采购单号": order_number,  # Order name + number from filename
                 "*供应商": supplier,  # From JSON B3 value
                 "联系人": "",
-                "采购方": "",
+                "采购方": buyer_value,  # Buyer name from listing (only for parent products)
                 "联系方式": "",
                 "结算方式": "",
                 "预付比例": "",

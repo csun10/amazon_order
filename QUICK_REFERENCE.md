@@ -88,6 +88,7 @@ python accessory_mapping_updater_gui.py
 | `direct_sku_to_json.py` | CLI for order generation | **Daily** - Automated/batch orders |
 | `excel_to_json_template.py` | Excel → JSON converter | **After editing** Excel files |
 | `accessory_mapping_updater_gui.py` | ERP → System sync | **After ERP export** updates |
+| `buyer_mapping.py` | SKU → Buyer mapping (NEW) | **(Automatic)** Auto-assigns buyers |
 | `json_PO_excel.py` | JSON → Excel converter | **(Automatic)** Called by other scripts |
 | `merge_json_templates.py` | Merge JSON by factory | **(Automatic)** Called by other scripts |
 | `fill_po_import.py` | Generate PO import | **(Automatic)** Called by other scripts |
@@ -130,6 +131,12 @@ python accessory_mapping_updater_gui.py
 **When to edit:** When warehouse list changes
 
 **Purpose:** List of available warehouses (one per line)
+
+### `docs/Listing20260202-876789694451576832.xlsx` (NEW)
+**When to edit:** After ERP listing export
+
+**Purpose:** Maps SKUs to buyers (JIXIU vs PINXIU)  
+**Auto-applied:** Buyer field in Excel (B69) and PO import (采购方)
 
 ---
 
@@ -189,12 +196,14 @@ pip install -r requirements.txt
 - Backup `accessory_mapping.json` before updates
 - Place images in correct folders with SKU names
 - Test generated Excel files before sending
+- **NEW:** Update listing file when product catalogs change
 
 ### ❌ DON'T:
 - Edit files in `PO_excel_export/` (they're auto-generated)
 - Manually edit `accessory_mapping.json` (use GUI)
 - Delete files from `json_template/` without backup
 - Mix up `PO_excel/` (source) with `PO_excel_export/` (output)
+- **NEW:** Manually edit buyer assignments (automatic from listing)
 
 ---
 
@@ -224,6 +233,29 @@ Weekly:
 7. Export product data from ERP
 8. Run accessory_mapping_updater_gui.py
 9. Update accessory relationships
+10. Update listing file if product catalogs change
+```
+
+---
+
+## 🆕 Buyer Mapping (NEW Feature)
+
+**Automatic buyer assignment for dual-company orders:**
+
+- **集秀 (JIXIU):** 宁波集秀美容科技有限公司 → JIXIUBeauty-US listings
+- **品秀 (PINXIU):** 宁波品秀美容科技有限公司 → PinxiuBeautyUS-US-US-US listings
+
+**How it works:**
+1. System reads `docs/Listing20260202-876789694451576832.xlsx`
+2. Maps each parent SKU to its buyer
+3. Automatically fills:
+   - Excel template buyer field (B69)
+   - PO import 采购方 column (parent products only)
+4. Accessories left blank (will be updated later)
+
+**Test buyer mapping:**
+```bash
+python buyer_mapping.py
 ```
 
 ---
