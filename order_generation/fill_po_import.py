@@ -67,6 +67,36 @@ def create_po_import_data(json_files: List[Path], order_name: str = "factory", w
         except Exception as e:
             print(f"Error reading warehouse mapping: {e}")
     
+    # Extract the main parent SKU from the order name (e.g., "verify_ST1122-1" -> "ST1122-1")
+    # This works for both "verify_SKU" format and regular order names
+    main_parent_sku = None
+    if order_name.startswith("verify"):
+        # Extract SKU after "verify_" or "verify-"
+        parts = order_name.replace("verify_", "").replace("verify-", "").split("-")
+        # Try to find this in accessory_mapping as a parent
+        try:
+            with open(ROOT / "docs" / "accessory_mapping.json", 'r', encoding='utf-8-sig') as f:
+                acc_map = json.load(f)
+                parent_products = acc_map.get("products", {})
+                # Try different combinations of parts to find parent SKU
+                for i in range(len(parts), 0, -1):
+                    potential_sku = "-".join(parts[:i])
+                    if potential_sku in parent_products:
+                        main_parent_sku = potential_sku
+                        break
+        except:
+            pass
+    
+    # Get the buyer from the main parent product if identified
+    main_order_buyer = ""
+    if main_parent_sku:
+        try:
+            with open(ROOT / "json_template" / f"{main_parent_sku}.json", 'r', encoding='utf-8-sig') as f:
+                parent_data = json.load(f)
+                main_order_buyer = parent_data.get("footer", {}).get("buyer", "")
+        except:
+            pass
+    
     # Process each JSON file and assign incrementing *标识号
     for factory_index, json_file in enumerate(json_files, start=1):
         print(f"Processing {json_file.name}...")
@@ -76,25 +106,23 @@ def create_po_import_data(json_files: List[Path], order_name: str = "factory", w
         products = extract_products_from_json(json_data)
         
         # Extract order number from filename (e.g., "factory-1.json" -> "factory-1")
-        order_number = json_file.stem
+        # Replace underscores with dashes for ERP compatibility
+        order_number = json_file.stem.replace("_", "-")
         
         # Each factory JSON gets a different *标识号 (1, 2, 3, ...)
         batch_id = str(factory_index)
         
-        # Get buyer from JSON template footer (set in Excel template B69)
-        json_buyer = json_data.get("footer", {}).get("buyer", "")
+        # Use the main order buyer (from parent SKU) if available
+        order_buyer = main_order_buyer if main_order_buyer else json_data.get("footer", {}).get("buyer", "")
         
         for product in products:
             # Get warehouse for this specific product
             product_sku = product.get("产品编号", "")
             product_warehouse = warehouse_mapping.get(product_sku, warehouse)
             
-            # Check if this product is a parent product (has its own template)
-            template_path = ROOT / "json_template" / f"{product_sku}.json"
-            is_parent = template_path.exists()
-            
-            # Only set buyer for parent products (leave blank for accessories)
-            buyer_value = json_buyer if is_parent else ""
+            # Set buyer: ALL products in the same order get the same buyer (parent's buyer)
+            # This ensures consistent buyer information across the entire purchase order
+            buyer_value = order_buyer
             
             # Create a row for each product
             # Normalize description: accept both plain string and rich_text dict
