@@ -1,0 +1,241 @@
+#!/usr/bin/env python3
+"""Generate factory-grouped JSON templates from SKU/quantity pairs.
+
+This script automates steps 1, 2, and 4 of the "Handling Direct SKU Requests"
+section of the README. Provide pairs of `<sku> <quantity>` on the command line
+and it will:
+
+* look up accessory ratios in ``docs/accessory_mapping.json``;
+* set the ``数量/个`` field in each product template;
+* group templates by supplier (cell ``B3``) and merge items from the same
+  factory;
+* write the merged JSON files into ``json_exports/`` with custom naming.
+
+Example
+-------
+```
+python direct_sku_to_json.py --name myorder 48-82P3-QSFG 800 Elasticbrush01 500
+```
+
+This will generate files like myorder-1.json, myorder-2.json, etc.
+
+The resulting JSON files can then be converted to Excel using
+``json_PO_excel.py``.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+from typing import Dict, List
+
+from merge_json_templates import merge_json_templates
+
+
+ROOT = Path(__file__).resolve().parent
+TEMPLATE_DIR = ROOT / "json_template"
+MAPPING_PATH = ROOT / "docs" / "accessory_mapping.json"
+OUTPUT_DIR = ROOT / "json_exports"
+EXCEL_OUTPUT_DIR = ROOT / "PO_excel_export"
+
+
+def _load_accessory_mapping() -> Dict[str, List[dict]]:
+    # Use utf-8-sig to tolerate files that contain a BOM
+    with open(MAPPING_PATH, "r", encoding="utf-8-sig") as f:
+        data = json.load(f)
+    lookup: Dict[str, List[dict]] = {}
+    
+    # Handle the new accessory_mapping.json structure
+    if "products" in data:
+        for sku, product_info in data["products"].items():
+            lookup[sku] = product_info.get("accessories", [])
+    else:
+        # Fallback to the old complete_mapping.json structure
+        for parent in data.get("parents", {}).values():
+            for child in parent.get("children", []):
+                lookup[child["sku"]] = child.get("accessories", [])
+    
+    return lookup
+
+
+def _compute_all_items(requests: Dict[str, int], mapping: Dict[str, List[dict]]) -> Dict[str, int]:
+    result: Dict[str, int] = {}
+    for sku, qty in requests.items():
+        result[sku] = result.get(sku, 0) + qty
+        for acc in mapping.get(sku, []):
+            try:
+                main = int(acc.get("ratio_main", 1))
+                accessory = int(acc.get("ratio_accessory", 1))
+            except ValueError:
+                main = accessory = 1
+            
+            # Prevent division by zero
+            if main <= 0:
+                print(f"Warning: Invalid ratio_main={main} for accessory {acc.get('sku')}, defaulting to 1")
+                main = 1
+            
+            acc_qty = qty * accessory // main
+            acc_sku = acc.get("sku")
+            if acc_sku:
+                result[acc_sku] = result.get(acc_sku, 0) + acc_qty
+    return result
+
+
+def _sanitize(name: str) -> str:
+    safe = re.sub(r"[^A-Za-z0-9]+", "_", name).strip("_")
+    return safe or "factory"
+
+
+def _run_json_to_excel(json_path: Path) -> Path:
+    """Convert JSON file to Excel using json_PO_excel.py"""
+    EXCEL_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    excel_filename = json_path.stem + ".xlsx"
+    excel_path = EXCEL_OUTPUT_DIR / excel_filename
+    
+    json_po_excel_script = ROOT / "json_PO_excel.py"
+    
+    try:
+        # Run json_PO_excel.py as a subprocess
+        result = subprocess.run([
+            sys.executable, str(json_po_excel_script), 
+            str(json_path), str(excel_path)
+        ], check=True, capture_output=True, text=True)
+        
+        print(f"Generated Excel file: {excel_path}")
+        return excel_path
+        
+    except subprocess.CalledProcessError as e:
+        print(f"Error converting {json_path} to Excel: {e}")
+        print(f"stdout: {e.stdout}")
+        print(f"stderr: {e.stderr}")
+        raise
+    except Exception as e:
+        print(f"Unexpected error converting {json_path} to Excel: {e}")
+        raise
+
+
+def generate_factory_jsons(pairs: Dict[str, int], input_name: str = "factory") -> List[Path]:
+    mapping = _load_accessory_mapping()
+    all_items = _compute_all_items(pairs, mapping)
+    temp_files: Dict[str, List[Path]] = {}
+
+    for sku, qty in all_items.items():
+        template_path = TEMPLATE_DIR / f"{sku}.json"
+        if not template_path.exists():
+            print(f"warning: template for {sku} not found", flush=True)
+            continue
+        # Use utf-8-sig when reading template JSON to tolerate BOMs produced
+        # by some editors/sources when the file was saved as UTF-8 with BOM.
+        with open(template_path, "r", encoding="utf-8-sig") as f:
+            data = json.load(f)
+        for product in data.get("products", []):
+            product["数量/个"] = qty
+        factory = data.get("cells", {}).get("B3", {}).get("value", "factory")
+        tmp = tempfile.NamedTemporaryFile("w", delete=False, encoding="utf-8", suffix=".json")
+        json.dump(data, tmp, ensure_ascii=False, indent=2)
+        tmp.close()
+        temp_files.setdefault(factory, []).append(Path(tmp.name))
+
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    out_paths: List[Path] = []
+    excel_paths: List[Path] = []
+    factory_counter = 1
+    
+    for factory, paths in temp_files.items():
+        merged = merge_json_templates(paths)
+        out_path = OUTPUT_DIR / f"{input_name}-{factory_counter}.json"
+        with open(out_path, "w", encoding="utf-8") as f:
+            json.dump(merged, f, ensure_ascii=False, indent=2)
+        out_paths.append(out_path)
+        
+        # Automatically convert JSON to Excel
+        try:
+            excel_path = _run_json_to_excel(out_path)
+            excel_paths.append(excel_path)
+        except Exception as e:
+            print(f"Failed to convert {out_path} to Excel: {e}")
+        
+        factory_counter += 1
+        for p in paths:
+            try:
+                Path(p).unlink()
+            except OSError:
+                pass
+    
+    # Print summary
+    print(f"\nGenerated {len(out_paths)} JSON files and {len(excel_paths)} Excel files:")
+    for json_path, excel_path in zip(out_paths, excel_paths):
+        print(f"  JSON: {json_path}")
+        print(f"  Excel: {excel_path}")
+    
+    return out_paths
+
+
+def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--name", "-n", default="factory", help="Base name for output files (default: factory)")
+    parser.add_argument("--po-import", action="store_true", help="Also generate PO import Excel file")
+    parser.add_argument("--warehouse", "-w", default="默认仓库", help="Warehouse for PO import (default: 默认仓库)")
+    parser.add_argument("items", nargs="+", help="Pairs of <sku> <quantity>")
+    return parser.parse_args(argv)
+
+
+def main(argv: List[str] | None = None) -> int:
+    ns = parse_args(argv)
+    # backward-compat: allow a trailing encoding token (e.g. UTF8) supplied
+    # as a positional argument in older usage. If present, strip it and
+    # normalize to an encoding value. Otherwise enforce even number of
+    # sku/quantity pairs.
+    encoding = "utf-8"
+    if len(ns.items) % 2:
+        last = ns.items[-1]
+        if isinstance(last, str) and last.lower().replace('-', '').replace('_', '') in ("utf8", "utf"):
+            encoding = "utf-8"
+            ns.items = ns.items[:-1]
+        else:
+            print("error: expected even number of arguments", flush=True)
+            return 1
+    # Validate SKU-quantity pairs
+    requests = {}
+    for i in range(0, len(ns.items), 2):
+        sku = ns.items[i]
+        try:
+            qty = int(ns.items[i + 1])
+            if qty <= 0:
+                print(f"error: quantity for {sku} must be positive, got {qty}", flush=True)
+                return 1
+            if qty > 1000000:
+                print(f"warning: quantity for {sku} is very large ({qty}), please verify", flush=True)
+            requests[sku] = qty
+        except ValueError:
+            print(f"error: invalid quantity for {sku}: {ns.items[i + 1]}", flush=True)
+            return 1
+    
+    paths = generate_factory_jsons(requests, ns.name)
+    for p in paths:
+        print(p)
+    
+    # Generate PO import file if requested
+    if ns.po_import:
+        try:
+            from fill_po_import import fill_po_import_for_order
+            # If the fill_po_import helper accepts an encoding parameter in future,
+            # we can pass it here. For now, keep backward compatibility and
+            # call with existing signature.
+            po_import_path = fill_po_import_for_order(ns.name, warehouse=ns.warehouse)
+            print(f"\nAlso generated PO import file: {po_import_path}")
+        except ImportError:
+            print("\nWarning: Could not import fill_po_import module. PO import file not generated.")
+        except Exception as e:
+            print(f"\nError generating PO import file: {e}")
+    
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

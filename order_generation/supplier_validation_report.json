@@ -1,0 +1,578 @@
+{
+  "reference_file": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\docs\\Supplier20260202170516-876874265653952512.xlsx",
+  "valid_suppliers": [
+    "义乌俊曼",
+    "义乌市一柠饰品有限公司",
+    "义乌市喜美服饰有限公司",
+    "义乌市腾裕包装制品有限公司",
+    "伟翔塑业",
+    "佳硕尼龙丝",
+    "保定金洁源日用品制造有限公司",
+    "凯源印刷",
+    "吉秀制刷（已停用）",
+    "和鑫制刷厂",
+    "宁波吉秀美妆用品有限公司",
+    "宁波市应发鼎艺美发用品制造有限公司",
+    "宁波市柯莱威电子科技有限公司",
+    "宁波市海曙硕丰塑料五金制品有限公司",
+    "宁波泰丰机械有限公司",
+    "宁波瑾秀制刷科技有限公司",
+    "宁波百林斯日用品产品有限公司",
+    "宁波百林斯日用品有限公司",
+    "宁波鑫林达制刷有限公司",
+    "宁波锐为实业有限公司",
+    "常州百利基",
+    "广州华辉",
+    "广州市鑫唛子服装辅料有限公司",
+    "库存",
+    "廊坊振瑞美容美发用品有限公司",
+    "明宏沐浴",
+    "松溪县健洁刷业有限公司",
+    "泰禾制刷",
+    "浙江太平洋纸业有限公司",
+    "深圳市众拓印刷",
+    "深圳市怡劲手袋制品有限公司",
+    "温州中鹏",
+    "温州尚喜包装有限公司",
+    "温州恒浩包装有限公司",
+    "灿光五金制品",
+    "瑞安市诚叶美发用具有限公司",
+    "瑾秀制刷科技有限公司（停用",
+    "瑾秀塑业",
+    "盐城市国栋布艺包装材料有限公司",
+    "盐城市艳丽工艺品有限公司",
+    "臻亿源日化",
+    "艾盛电器",
+    "苍南县顺瀚纸罐有限公司",
+    "菲迪印刷",
+    "阳江市江城区三盛美容制品厂",
+    "阳江市江城区金蚂蚁工贸有限公司",
+    "阳江骏业",
+    "静远科技",
+    "高斯电器",
+    "龙港华蓝"
+  ],
+  "excel_templates": {
+    "total": 149,
+    "matches": 93,
+    "mismatches": [
+      {
+        "file": "AM413-3-1.xlsx",
+        "supplier": "XX印刷厂",
+        "cell": "B3"
+      },
+      {
+        "file": "AMSC-green.xlsx",
+        "supplier": "XX印刷厂",
+        "cell": "B3"
+      },
+      {
+        "file": "B10-JMY802-BU.xlsx",
+        "supplier": "宁波市艾盛电器有限公司",
+        "cell": "B3"
+      },
+      {
+        "file": "B10-JMY802-PK.xlsx",
+        "supplier": "宁波市艾盛电器有限公司",
+        "cell": "B3"
+      },
+      {
+        "file": "B10-MJB2-BK-1.xlsx",
+        "supplier": "阳江骏业工贸有限公司",
+        "cell": "B3"
+      },
+      {
+        "file": "B10-MJB2-BK.xlsx",
+        "supplier": "阳江骏业工贸有限公司",
+        "cell": "B3"
+      },
+      {
+        "file": "B10-MJB2-BK2.xlsx",
+        "supplier": "阳江骏业工贸有限公司",
+        "cell": "B3"
+      },
+      {
+        "file": "B10-MJQ1-BU.xlsx",
+        "supplier": "宁波市艾盛电器有限公司",
+        "cell": "B3"
+      },
+      {
+        "file": "B10-MJQ1-PK-01.xlsx",
+        "supplier": "XX印刷厂",
+        "cell": "B3"
+      },
+      {
+        "file": "B10-MJQ1-PK.xlsx",
+        "supplier": "宁波市艾盛电器有限公司",
+        "cell": "B3"
+      },
+      {
+        "file": "B10-ZMS3D-BR.xlsx",
+        "supplier": "吉秀制刷",
+        "cell": "B3"
+      },
+      {
+        "file": "B10-ZMS3D-NEW.xlsx",
+        "supplier": "吉秀制刷",
+        "cell": "B3"
+      },
+      {
+        "file": "BB101-2-1.xlsx",
+        "supplier": "XX印刷厂",
+        "cell": "B3"
+      },
+      {
+        "file": "BB101-2.xlsx",
+        "supplier": "XX印刷厂",
+        "cell": "B3"
+      },
+      {
+        "file": "BB101-3.xlsx",
+        "supplier": "XX印刷厂",
+        "cell": "B3"
+      },
+      {
+        "file": "EC-D1-CYAN.xlsx",
+        "supplier": "XX印刷厂",
+        "cell": "B3"
+      },
+      {
+        "file": "EC-D1-GREEN.xlsx",
+        "supplier": "XX印刷厂",
+        "cell": "B3"
+      },
+      {
+        "file": "EC-X2-PINK.xlsx",
+        "supplier": "XX印刷厂",
+        "cell": "B3"
+      },
+      {
+        "file": "EC04-GREEN.xlsx",
+        "supplier": "XX印刷厂",
+        "cell": "B3"
+      },
+      {
+        "file": "EC04-NATURAL.xlsx",
+        "supplier": "XX印刷厂",
+        "cell": "B3"
+      },
+      {
+        "file": "EC404-2-4.xlsx",
+        "supplier": "XX印刷厂",
+        "cell": "B3"
+      },
+      {
+        "file": "ECSB-8-1.xlsx",
+        "supplier": "XX印刷厂",
+        "cell": "B3"
+      },
+      {
+        "file": "FSC-WB01.xlsx",
+        "supplier": "宁波泰友进出口有限公司",
+        "cell": "B3"
+      },
+      {
+        "file": "FSC-WB02.xlsx",
+        "supplier": "N/A",
+        "cell": "B3"
+      },
+      {
+        "file": "NW-GRAY1.xlsx",
+        "supplier": "N/A",
+        "cell": "B3"
+      },
+      {
+        "file": "NW-GRAY2.xlsx",
+        "supplier": "N/A",
+        "cell": "B3"
+      },
+      {
+        "file": "ST1122-4.xlsx",
+        "supplier": "XX印刷厂",
+        "cell": "B3"
+      }
+    ],
+    "blank": [
+      {
+        "file": "AM413-2-1.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC-D1-NATURAL.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC-D1-PINK.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC-P3-CYAN - 副本.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC-P3-CYAN.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC-P3-GREEN.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC-P3-NATURAL.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC-P3-PINK.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC-X2-CYAN.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC-X2-GREEN.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC-X2-NATURAL.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC301-1-GR.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC301-1-PK.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC301-2-GR.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC301-2-PK.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC301-3-GR.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC301-3-PK.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC301-4-GR.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC301-4-PK.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC401-3.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC403-3.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC403.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC404-2-1-2.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC404-2-2-2.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC404-2-3-2.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC404-2-4-2.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC405-2-Grey.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC405-2-Pink.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      },
+      {
+        "file": "EC405-3-Blue.xlsx",
+        "supplier": "(BLANK)",
+        "cell": "B3"
+      }
+    ],
+    "errors": []
+  },
+  "json_templates": {
+    "total": 146,
+    "matches": 90,
+    "mismatches": [
+      {
+        "file": "AM413-3-1.json",
+        "supplier": "XX印刷厂"
+      },
+      {
+        "file": "AMSC-green.json",
+        "supplier": "XX印刷厂"
+      },
+      {
+        "file": "B10-JMY802-BU.json",
+        "supplier": "宁波市艾盛电器有限公司"
+      },
+      {
+        "file": "B10-JMY802-PK.json",
+        "supplier": "宁波市艾盛电器有限公司"
+      },
+      {
+        "file": "B10-MJB2-BK-1.json",
+        "supplier": "阳江骏业工贸有限公司"
+      },
+      {
+        "file": "B10-MJB2-BK.json",
+        "supplier": "阳江骏业工贸有限公司"
+      },
+      {
+        "file": "B10-MJB2-BK2.json",
+        "supplier": "阳江骏业工贸有限公司"
+      },
+      {
+        "file": "B10-MJQ1-BU.json",
+        "supplier": "宁波市艾盛电器有限公司"
+      },
+      {
+        "file": "B10-MJQ1-PK-01.json",
+        "supplier": "XX印刷厂"
+      },
+      {
+        "file": "B10-MJQ1-PK.json",
+        "supplier": "宁波市艾盛电器有限公司"
+      },
+      {
+        "file": "B10-ZMS3D-BR.json",
+        "supplier": "吉秀制刷"
+      },
+      {
+        "file": "B10-ZMS3D-NEW.json",
+        "supplier": "吉秀制刷"
+      },
+      {
+        "file": "BB101-2-1.json",
+        "supplier": "XX印刷厂"
+      },
+      {
+        "file": "BB101-2.json",
+        "supplier": "XX印刷厂"
+      },
+      {
+        "file": "BB101-3.json",
+        "supplier": "XX印刷厂"
+      },
+      {
+        "file": "EC-D1-CYAN.json",
+        "supplier": "XX印刷厂"
+      },
+      {
+        "file": "EC-D1-GREEN.json",
+        "supplier": "XX印刷厂"
+      },
+      {
+        "file": "EC-X2-PINK.json",
+        "supplier": "XX印刷厂"
+      },
+      {
+        "file": "EC04-GREEN.json",
+        "supplier": "XX印刷厂"
+      },
+      {
+        "file": "EC04-NATURAL.json",
+        "supplier": "XX印刷厂"
+      },
+      {
+        "file": "EC404-2-4.json",
+        "supplier": "XX印刷厂"
+      },
+      {
+        "file": "ECSB-8-1.json",
+        "supplier": "XX印刷厂"
+      },
+      {
+        "file": "FSC-WB01.json",
+        "supplier": "宁波泰友进出口有限公司"
+      },
+      {
+        "file": "FSC-WB02.json",
+        "supplier": "N/A"
+      },
+      {
+        "file": "NW-GRAY1.json",
+        "supplier": "N/A"
+      },
+      {
+        "file": "NW-GRAY2.json",
+        "supplier": "N/A"
+      },
+      {
+        "file": "ST1122-4.json",
+        "supplier": "XX印刷厂"
+      }
+    ],
+    "blank": [
+      {
+        "file": "AM413-2-1.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC-D1-NATURAL.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC-D1-PINK.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC-P3-CYAN.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC-P3-GREEN.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC-P3-NATURAL.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC-P3-PINK.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC-X2-CYAN.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC-X2-GREEN.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC-X2-NATURAL.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC301-1-GR.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC301-1-PK.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC301-2-GR.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC301-2-PK.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC301-3-GR.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC301-3-PK.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC301-4-GR.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC301-4-PK.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC401-3.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC403-3.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC403.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC404-2-1-2.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC404-2-2-2.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC404-2-3-2.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC404-2-4-2.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC405-2-Grey.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC405-2-Pink.json",
+        "supplier": "(BLANK)"
+      },
+      {
+        "file": "EC405-3-Blue.json",
+        "supplier": "(BLANK)"
+      }
+    ],
+    "errors": [
+      {
+        "file": "AM311.json",
+        "error": "ERROR: Expecting value: line 2 column 3 (char 4)"
+      }
+    ]
+  }
+}

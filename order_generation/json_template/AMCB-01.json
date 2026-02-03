@@ -2,19 +2,19 @@
   "cells": {
     "B3": {
       "key": "供货商：",
-      "value": ""
+      "value": "宁波瑾秀制刷科技有限公司"
     },
     "G3": {
       "key": "订单号",
-      "value": ""
+      "value": "AMCB-01"
     },
     "B4": {
       "key": "电话：",
-      "value": ""
+      "value": "电话: +86-574-27889688 传真: +86-574-27889677"
     },
     "G4": {
       "key": "日期",
-      "value": ""
+      "value": "2025年10月21日"
     },
     "B5": {
       "key": "联系人：",
@@ -22,11 +22,11 @@
     },
     "G5": {
       "key": "订单安排人",
-      "value": ""
+      "value": "孙诚昱"
     },
     "B12": {
       "key": "进仓地址：",
-      "value": ""
+      "value": "宁波鄞州福庆南路2520号 宁波泰丰机械有限公司，郑小姐，13605889085"
     },
     "B13": {
       "key": "付款方式",
@@ -34,11 +34,11 @@
     },
     "B14": {
       "key": "交货时间",
-      "value": ""
+      "value": "45天"
     },
     "F14": {
       "key": "色卡",
-      "value": ""
+      "value": "[色卡图片未找到] 204C.png"
     },
     "G14": {
       "key": "Logo",
@@ -90,66 +90,75 @@
     },
     "A19": {
       "key": "注意事项：1",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": "1：表面不得有污渍"
     },
     "A20": {
       "key": "2：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": "2：毛丝切面整齐"
     },
     "A21": {
       "key": "3：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": "3：外箱单边不得超过60cm，重量不得超过20公斤，装箱数不得超过100，不能有尾箱"
     },
     "A22": {
       "key": "4：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": "4：尼龙丝针注意不要大量明显弯曲"
     },
     "A23": {
       "key": "5：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": "5：染头不能有坑(2个以上），（有坑一律次品），不得有漏染"
     },
     "A24": {
       "key": "6：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": "6：染头不得粘连"
     },
     "A25": {
       "key": "7：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": "7：每个外箱需要贴2个标签FBA标签一个，货代标签一个"
     },
     "A26": {
       "key": "8：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     },
     "A27": {
       "key": "9：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     },
     "A28": {
       "key": "10：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     },
     "A29": {
       "key": "11：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     },
     "A30": {
       "key": "12：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     }
   },
   "products": [
     {
-      "产品编号": "",
-      "产品名称": "",
-      "产品图片": "",
-      "描述": "<TODO (value not filled - fill with product description/requirement #not product name/title from PO usually the second/third column in product table of PO file with description/requirement of the ordered product, mustfill*)>",
+      "产品编号": "AMCB-01",
+      "产品图片": "[图片未找到] [图片未找到]",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "2175，值直径0.8mm尼龙针+仿猪鬃，出锋17mm，\n产品颜色做204C，染头颜色204c",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
-      "单价": 0,
-      "包装方式": ""
+      "单价": 5.72,
+      "包装方式": "",
+      "产品名称": "尼龙卷发定型梳粉色"
     }
   ],
   "footer": {
     "buyer": "宁波品秀美容科技有限公司",
-    "supplier": ""
+    "supplier": "宁波瑾秀塑业有限公司"
   }
 }

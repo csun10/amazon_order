@@ -1,0 +1,113 @@
+File Type,File Name,Current Supplier,Issue Type,Recommended Action,Priority
+Excel,AM413-3-1.xlsx,XX印刷厂,Generic Placeholder,Replace with actual supplier (凯源印刷/深圳市众拓印刷/菲迪印刷),2
+Excel,AMSC-green.xlsx,XX印刷厂,Generic Placeholder,Replace with actual supplier (凯源印刷/深圳市众拓印刷/菲迪印刷),2
+Excel,B10-JMY802-BU.xlsx,宁波市艾盛电器有限公司,Incorrect Suffix,Change to: 艾盛电器,3
+Excel,B10-JMY802-PK.xlsx,宁波市艾盛电器有限公司,Incorrect Suffix,Change to: 艾盛电器,3
+Excel,B10-MJB2-BK-1.xlsx,阳江骏业工贸有限公司,Incorrect Suffix,Change to: 阳江骏业,3
+Excel,B10-MJB2-BK.xlsx,阳江骏业工贸有限公司,Incorrect Suffix,Change to: 阳江骏业,3
+Excel,B10-MJB2-BK2.xlsx,阳江骏业工贸有限公司,Incorrect Suffix,Change to: 阳江骏业,3
+Excel,B10-MJQ1-BU.xlsx,宁波市艾盛电器有限公司,Incorrect Suffix,Change to: 艾盛电器,3
+Excel,B10-MJQ1-PK-01.xlsx,XX印刷厂,Generic Placeholder,Replace with actual supplier (凯源印刷/深圳市众拓印刷/菲迪印刷),2
+Excel,B10-MJQ1-PK.xlsx,宁波市艾盛电器有限公司,Incorrect Suffix,Change to: 艾盛电器,3
+Excel,B10-ZMS3D-BR.xlsx,吉秀制刷,Missing Suffix,Change to: 吉秀制刷（已停用）,3
+Excel,B10-ZMS3D-NEW.xlsx,吉秀制刷,Missing Suffix,Change to: 吉秀制刷（已停用）,3
+Excel,BB101-2-1.xlsx,XX印刷厂,Generic Placeholder,Replace with actual supplier (凯源印刷/深圳市众拓印刷/菲迪印刷),2
+Excel,BB101-2.xlsx,XX印刷厂,Generic Placeholder,Replace with actual supplier (凯源印刷/深圳市众拓印刷/菲迪印刷),2
+Excel,BB101-3.xlsx,XX印刷厂,Generic Placeholder,Replace with actual supplier (凯源印刷/深圳市众拓印刷/菲迪印刷),2
+Excel,EC-D1-CYAN.xlsx,XX印刷厂,Generic Placeholder,Replace with actual supplier (凯源印刷/深圳市众拓印刷/菲迪印刷),2
+Excel,EC-D1-GREEN.xlsx,XX印刷厂,Generic Placeholder,Replace with actual supplier (凯源印刷/深圳市众拓印刷/菲迪印刷),2
+Excel,EC-X2-PINK.xlsx,XX印刷厂,Generic Placeholder,Replace with actual supplier (凯源印刷/深圳市众拓印刷/菲迪印刷),2
+Excel,EC04-GREEN.xlsx,XX印刷厂,Generic Placeholder,Replace with actual supplier (凯源印刷/深圳市众拓印刷/菲迪印刷),2
+Excel,EC04-NATURAL.xlsx,XX印刷厂,Generic Placeholder,Replace with actual supplier (凯源印刷/深圳市众拓印刷/菲迪印刷),2
+Excel,EC404-2-4.xlsx,XX印刷厂,Generic Placeholder,Replace with actual supplier (凯源印刷/深圳市众拓印刷/菲迪印刷),2
+Excel,ECSB-8-1.xlsx,XX印刷厂,Generic Placeholder,Replace with actual supplier (凯源印刷/深圳市众拓印刷/菲迪印刷),2
+Excel,FSC-WB01.xlsx,宁波泰友进出口有限公司,Not in ERP,Verify correct supplier (possibly 宁波泰丰机械有限公司),4
+Excel,FSC-WB02.xlsx,N/A,Placeholder,Fill in actual supplier name,4
+Excel,NW-GRAY1.xlsx,N/A,Placeholder,Fill in actual supplier name,4
+Excel,NW-GRAY2.xlsx,N/A,Placeholder,Fill in actual supplier name,4
+Excel,ST1122-4.xlsx,XX印刷厂,Generic Placeholder,Replace with actual supplier (凯源印刷/深圳市众拓印刷/菲迪印刷),2
+Excel,AM413-2-1.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC-D1-NATURAL.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC-D1-PINK.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC-P3-CYAN - 副本.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC-P3-CYAN.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC-P3-GREEN.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC-P3-NATURAL.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC-P3-PINK.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC-X2-CYAN.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC-X2-GREEN.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC-X2-NATURAL.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC301-1-GR.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC301-1-PK.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC301-2-GR.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC301-2-PK.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC301-3-GR.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC301-3-PK.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC301-4-GR.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC301-4-PK.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC401-3.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC403-3.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC403.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC404-2-1-2.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC404-2-2-2.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC404-2-3-2.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC404-2-4-2.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC405-2-Grey.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC405-2-Pink.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+Excel,EC405-3-Blue.xlsx,(BLANK),Blank Supplier,Fill in supplier name in cell B3,1
+JSON,AM311.json,ERROR,JSON Syntax Error,Fix JSON syntax error,5
+JSON,AM413-3-1.json,XX印刷厂,Generic Placeholder,Sync from Excel after fixing,2
+JSON,AMSC-green.json,XX印刷厂,Generic Placeholder,Sync from Excel after fixing,2
+JSON,B10-JMY802-BU.json,宁波市艾盛电器有限公司,Incorrect Suffix,Sync from Excel after fixing,3
+JSON,B10-JMY802-PK.json,宁波市艾盛电器有限公司,Incorrect Suffix,Sync from Excel after fixing,3
+JSON,B10-MJB2-BK-1.json,阳江骏业工贸有限公司,Incorrect Suffix,Sync from Excel after fixing,3
+JSON,B10-MJB2-BK.json,阳江骏业工贸有限公司,Incorrect Suffix,Sync from Excel after fixing,3
+JSON,B10-MJB2-BK2.json,阳江骏业工贸有限公司,Incorrect Suffix,Sync from Excel after fixing,3
+JSON,B10-MJQ1-BU.json,宁波市艾盛电器有限公司,Incorrect Suffix,Sync from Excel after fixing,3
+JSON,B10-MJQ1-PK-01.json,XX印刷厂,Generic Placeholder,Sync from Excel after fixing,2
+JSON,B10-MJQ1-PK.json,宁波市艾盛电器有限公司,Incorrect Suffix,Sync from Excel after fixing,3
+JSON,B10-ZMS3D-BR.json,吉秀制刷,Missing Suffix,Sync from Excel after fixing,3
+JSON,B10-ZMS3D-NEW.json,吉秀制刷,Missing Suffix,Sync from Excel after fixing,3
+JSON,BB101-2-1.json,XX印刷厂,Generic Placeholder,Sync from Excel after fixing,2
+JSON,BB101-2.json,XX印刷厂,Generic Placeholder,Sync from Excel after fixing,2
+JSON,BB101-3.json,XX印刷厂,Generic Placeholder,Sync from Excel after fixing,2
+JSON,EC-D1-CYAN.json,XX印刷厂,Generic Placeholder,Sync from Excel after fixing,2
+JSON,EC-D1-GREEN.json,XX印刷厂,Generic Placeholder,Sync from Excel after fixing,2
+JSON,EC-X2-PINK.json,XX印刷厂,Generic Placeholder,Sync from Excel after fixing,2
+JSON,EC04-GREEN.json,XX印刷厂,Generic Placeholder,Sync from Excel after fixing,2
+JSON,EC04-NATURAL.json,XX印刷厂,Generic Placeholder,Sync from Excel after fixing,2
+JSON,EC404-2-4.json,XX印刷厂,Generic Placeholder,Sync from Excel after fixing,2
+JSON,ECSB-8-1.json,XX印刷厂,Generic Placeholder,Sync from Excel after fixing,2
+JSON,FSC-WB01.json,宁波泰友进出口有限公司,Not in ERP,Sync from Excel after fixing,4
+JSON,FSC-WB02.json,N/A,Placeholder,Sync from Excel after fixing,4
+JSON,NW-GRAY1.json,N/A,Placeholder,Sync from Excel after fixing,4
+JSON,NW-GRAY2.json,N/A,Placeholder,Sync from Excel after fixing,4
+JSON,ST1122-4.json,XX印刷厂,Generic Placeholder,Sync from Excel after fixing,2
+JSON,AM413-2-1.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC-D1-NATURAL.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC-D1-PINK.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC-P3-CYAN.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC-P3-GREEN.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC-P3-NATURAL.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC-P3-PINK.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC-X2-CYAN.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC-X2-GREEN.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC-X2-NATURAL.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC301-1-GR.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC301-1-PK.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC301-2-GR.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC301-2-PK.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC301-3-GR.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC301-3-PK.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC301-4-GR.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC301-4-PK.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC401-3.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC403-3.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC403.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC404-2-1-2.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC404-2-2-2.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC404-2-3-2.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC404-2-4-2.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC405-2-Grey.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC405-2-Pink.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1
+JSON,EC405-3-Blue.json,(BLANK),Blank Supplier,Sync from Excel after fixing,1

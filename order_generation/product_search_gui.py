@@ -1,0 +1,781 @@
+#!/usr/bin/env python3
+"""
+Product Search GUI for Amazon Order Generation
+
+This script provides a graphical interface to search for products by 产品名称 (Product Name) 
+or 产品编号 (Product Code/SKU) and generate commands for direct_sku_to_json.py.
+
+Features:
+- Search products by name or SKU with dropdown suggestions
+- Input quantity for selected products
+- Generate and display the command to run direct_sku_to_json.py
+- Copy command to clipboard for easy execution
+"""
+
+import json
+import tkinter as tk
+from tkinter import ttk, messagebox, scrolledtext
+import subprocess
+import sys
+from pathlib import Path
+from typing import Dict, List, Tuple
+from datetime import datetime, timedelta
+import pyperclip  # For clipboard functionality
+
+class ProductSearchGUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("亚马逊订单产品搜索")
+        self.root.geometry("1000x800")
+        
+        # Auto-sync recent PO_excel_template files to JSON templates before loading products
+        self._auto_sync_recent_excel()
+        
+        # Load product data
+        self.products = self._load_products()
+        
+        # Initialize product pool/cart
+        self.product_pool = {}  # {sku: {'product': product_dict, 'quantity': int, 'warehouse': str}}
+        
+        # Create GUI elements
+        self._create_widgets()
+    
+    def _auto_sync_recent_excel(self):
+        """Auto-sync top 3 most recent PO_excel_template files to JSON templates"""
+        try:
+            from excel_to_json_template import ExcelToJsonConverter
+            
+            po_excel_dir = Path(__file__).resolve().parent / "PO_excel_template"
+            if not po_excel_dir.exists():
+                return
+            
+            # Get all Excel files with modification times
+            excel_files = []
+            
+            for excel_file in po_excel_dir.glob("*.xlsx"):
+                # Skip temporary Excel files
+                if excel_file.name.startswith('~$') or excel_file.name.startswith('test_'):
+                    continue
+                
+                mod_time = datetime.fromtimestamp(excel_file.stat().st_mtime)
+                excel_files.append((excel_file, mod_time))
+            
+            if not excel_files:
+                return
+            
+            # Sort by modification time (newest first) and take only top 3
+            excel_files.sort(key=lambda x: x[1], reverse=True)
+            files_to_sync = excel_files[:3]
+            
+            print(f"\n[Auto-Sync] Updating top 3 most recent PO_excel_template files to JSON...")
+            
+            converter = ExcelToJsonConverter()
+            sync_count = 0
+            
+            for excel_file, mod_time in files_to_sync:
+                try:
+                    json_files = converter.convert_excel_to_json(excel_file)
+                    if json_files:
+                        time_ago = datetime.now() - mod_time
+                        days_ago = time_ago.days
+                        if days_ago == 0:
+                            time_str = f"{time_ago.seconds // 3600}h ago"
+                        else:
+                            time_str = f"{days_ago}d ago"
+                        
+                        print(f"  [OK] {excel_file.name} ({time_str}) -> {len(json_files)} JSON file(s)")
+                        sync_count += 1
+                except Exception as e:
+                    print(f"  [WARN] Failed to sync {excel_file.name}: {e}")
+            
+            if sync_count > 0:
+                print(f"[Auto-Sync] Successfully synced {sync_count} file(s)\n")
+                
+        except Exception as e:
+            print(f"[Auto-Sync] Warning: Auto-sync failed: {e}")
+        
+    def _load_products(self) -> List[Dict]:
+        """Load all products from JSON templates"""
+        template_dir = Path(__file__).resolve().parent / "json_template"
+        products = []
+        
+        try:
+            for json_file in template_dir.glob("*.json"):
+                try:
+                    with open(json_file, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                    
+                    for product in data.get("products", []):
+                        product_info = {
+                            "sku": product.get("产品编号", ""),
+                            "name": product.get("产品名称", ""),
+                            "description": product.get("描述", ""),
+                            "price": product.get("单价", 0),
+                            "file": json_file.stem
+                        }
+                        if product_info["sku"]:  # Only add if SKU exists
+                            products.append(product_info)
+                            
+                except Exception as e:
+                    print(f"Error reading {json_file}: {e}")
+                    
+        except Exception as e:
+            messagebox.showerror("错误", f"加载产品失败: {e}")
+            
+        return products
+    
+    def _load_warehouse_options(self):
+        """Load warehouse options from Storage.txt"""
+        try:
+            storage_file = Path(__file__).resolve().parent / "docs" / "Storage.txt"
+            with open(storage_file, 'r', encoding='utf-8') as f:
+                warehouses = [line.strip() for line in f if line.strip()]
+            return warehouses
+        except Exception as e:
+            print(f"Error loading warehouse options: {e}")
+            return ["默认仓库"]
+    
+    def _load_accessory_mapping(self) -> Dict[str, List[Dict]]:
+        """Load accessory mapping to show what accessories will be automatically included"""
+        try:
+            mapping_file = Path(__file__).resolve().parent / "docs" / "accessory_mapping.json"
+            with open(mapping_file, 'r', encoding='utf-8-sig') as f:
+                data = json.load(f)
+            
+            lookup = {}
+            if "products" in data:
+                for sku, product_info in data["products"].items():
+                    lookup[sku] = product_info.get("accessories", [])
+            
+            return lookup
+        except Exception as e:
+            print(f"Error loading accessory mapping: {e}")
+            return {}
+    
+    def _create_widgets(self):
+        """Create all GUI widgets"""
+        # Main frame
+        main_frame = ttk.Frame(self.root, padding="10")
+        main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        
+        # Configure grid weights
+        self.root.columnconfigure(0, weight=1)
+        self.root.rowconfigure(0, weight=1)
+        main_frame.columnconfigure(1, weight=1)
+        
+        # Search section
+        search_frame = ttk.LabelFrame(main_frame, text="产品搜索", padding="10")
+        search_frame.grid(row=0, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(0, 10))
+        search_frame.columnconfigure(1, weight=1)
+        
+        # Search type selection
+        ttk.Label(search_frame, text="搜索方式:").grid(row=0, column=0, sticky=tk.W, padx=(0, 10))
+        
+        self.search_type = tk.StringVar(value="name")
+        search_type_frame = ttk.Frame(search_frame)
+        search_type_frame.grid(row=0, column=1, sticky=(tk.W, tk.E))
+        
+        ttk.Radiobutton(search_type_frame, text="产品名称", 
+                       variable=self.search_type, value="name",
+                       command=self._on_search_type_change).pack(side=tk.LEFT, padx=(0, 20))
+        ttk.Radiobutton(search_type_frame, text="产品编号", 
+                       variable=self.search_type, value="sku",
+                       command=self._on_search_type_change).pack(side=tk.LEFT)
+        
+        # Search entry with autocomplete
+        ttk.Label(search_frame, text="搜索:").grid(row=1, column=0, sticky=tk.W, padx=(0, 10), pady=(10, 0))
+        
+        self.search_var = tk.StringVar()
+        self.search_var.trace('w', self._on_search_change)
+        
+        self.search_entry = ttk.Entry(search_frame, textvariable=self.search_var, width=50)
+        self.search_entry.grid(row=1, column=1, sticky=(tk.W, tk.E), pady=(10, 0))
+        
+        # Dropdown for suggestions
+        self.suggestion_combo = ttk.Combobox(search_frame, width=70, state="readonly")
+        self.suggestion_combo.grid(row=2, column=1, sticky=(tk.W, tk.E), pady=(5, 0))
+        self.suggestion_combo.bind('<<ComboboxSelected>>', self._on_suggestion_select)
+        
+        # Selected product section
+        product_frame = ttk.LabelFrame(main_frame, text="已选产品", padding="10")
+        product_frame.grid(row=1, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(0, 10))
+        product_frame.columnconfigure(1, weight=1)
+        
+        # Product details
+        ttk.Label(product_frame, text="SKU:").grid(row=0, column=0, sticky=tk.W, padx=(0, 10))
+        self.sku_label = ttk.Label(product_frame, text="", foreground="blue")
+        self.sku_label.grid(row=0, column=1, sticky=tk.W)
+        
+        ttk.Label(product_frame, text="名称:").grid(row=1, column=0, sticky=tk.W, padx=(0, 10))
+        self.name_label = ttk.Label(product_frame, text="", wraplength=600)
+        self.name_label.grid(row=1, column=1, sticky=tk.W)
+        
+        ttk.Label(product_frame, text="Price:").grid(row=2, column=0, sticky=tk.W, padx=(0, 10))
+        self.price_label = ttk.Label(product_frame, text="")
+        self.price_label.grid(row=2, column=1, sticky=tk.W)
+        
+        # Quantity input and add button
+        quantity_frame = ttk.Frame(product_frame)
+        quantity_frame.grid(row=3, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(10, 0))
+        
+        ttk.Label(quantity_frame, text="数量:").pack(side=tk.LEFT, padx=(0, 10))
+        
+        self.quantity_var = tk.StringVar(value="1")
+        quantity_spinbox = ttk.Spinbox(quantity_frame, from_=1, to=100000, 
+                                     textvariable=self.quantity_var, width=10)
+        quantity_spinbox.pack(side=tk.LEFT, padx=(0, 20))
+        
+        # Add to pool button
+        ttk.Button(quantity_frame, text="添加到池", 
+                  command=self._add_to_pool).pack(side=tk.LEFT, padx=(0, 10))
+        
+        # Update quantity button (for existing items)
+        ttk.Button(quantity_frame, text="更新数量", 
+                  command=self._update_quantity).pack(side=tk.LEFT, padx=(0, 10))
+        
+        # Update warehouse button (for existing items)
+        ttk.Button(quantity_frame, text="更新仓库", 
+                  command=self._update_warehouse).pack(side=tk.LEFT)
+        
+        # Product Pool section
+        pool_frame = ttk.LabelFrame(main_frame, text="产品池", padding="10")
+        pool_frame.grid(row=2, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 10))
+        pool_frame.columnconfigure(0, weight=1)
+        pool_frame.rowconfigure(0, weight=1)
+        
+        # Create Treeview for product pool
+        columns = ('SKU', 'Product Name', 'Quantity', 'Unit Price', 'Total Price', 'Warehouse')
+        self.pool_tree = ttk.Treeview(pool_frame, columns=columns, show='headings', height=8)
+        
+        # Define headings
+        for col in columns:
+            self.pool_tree.heading(col, text=col)
+            
+        # Configure column widths
+        self.pool_tree.column('SKU', width=120)
+        self.pool_tree.column('Product Name', width=250)
+        self.pool_tree.column('Quantity', width=80)
+        self.pool_tree.column('Unit Price', width=80)
+        self.pool_tree.column('Total Price', width=100)
+        self.pool_tree.column('Warehouse', width=120)
+        
+        # Add scrollbar to treeview
+        pool_scrollbar = ttk.Scrollbar(pool_frame, orient=tk.VERTICAL, command=self.pool_tree.yview)
+        self.pool_tree.configure(yscrollcommand=pool_scrollbar.set)
+        
+        self.pool_tree.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        pool_scrollbar.grid(row=0, column=1, sticky=(tk.N, tk.S))
+        
+        # Pool control buttons
+        pool_button_frame = ttk.Frame(pool_frame)
+        pool_button_frame.grid(row=1, column=0, sticky=tk.W, pady=(10, 0))
+        
+        ttk.Button(pool_button_frame, text="移除选中", 
+                  command=self._remove_from_pool).pack(side=tk.LEFT, padx=(0, 10))
+        ttk.Button(pool_button_frame, text="清空全部", 
+                  command=self._clear_pool).pack(side=tk.LEFT, padx=(0, 10))
+        
+        # Order name input
+        ttk.Label(pool_button_frame, text="订单名称:").pack(side=tk.LEFT, padx=(20, 5))
+        self.order_name_var = tk.StringVar(value="factory")
+        order_name_entry = ttk.Entry(pool_button_frame, textvariable=self.order_name_var, width=15)
+        order_name_entry.pack(side=tk.LEFT, padx=(0, 10))
+        
+        # PO Import checkbox
+        self.po_import_var = tk.BooleanVar(value=True)
+        po_import_checkbox = ttk.Checkbutton(pool_button_frame, text="生成采购导入", 
+                                           variable=self.po_import_var)
+        po_import_checkbox.pack(side=tk.LEFT, padx=(10, 10))
+        
+        ttk.Button(pool_button_frame, text="生成命令", 
+                  command=self._generate_command).pack(side=tk.LEFT, padx=(10, 0))
+        
+        # Command output section
+        command_frame = ttk.LabelFrame(main_frame, text="生成的命令", padding="10")
+        command_frame.grid(row=3, column=0, columnspan=2, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 10))
+        command_frame.columnconfigure(0, weight=1)
+        command_frame.rowconfigure(1, weight=1)
+        
+        # Command display
+        self.command_text = scrolledtext.ScrolledText(command_frame, height=6, wrap=tk.WORD)
+        self.command_text.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 10))
+        
+        # Buttons
+        button_frame = ttk.Frame(command_frame)
+        button_frame.grid(row=1, column=0, sticky=tk.W)
+        
+        ttk.Button(button_frame, text="复制到剪贴板", 
+                  command=self._copy_command).pack(side=tk.LEFT, padx=(0, 10))
+        ttk.Button(button_frame, text="执行命令", 
+                  command=self._execute_command).pack(side=tk.LEFT, padx=(0, 10))
+        ttk.Button(button_frame, text="清空", 
+                  command=self._clear_command).pack(side=tk.LEFT)
+        
+        # Status bar
+        self.status_var = tk.StringVar(value=f"已加载 {len(self.products)} 个产品")
+        status_bar = ttk.Label(main_frame, textvariable=self.status_var, relief=tk.SUNKEN)
+        status_bar.grid(row=4, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(10, 0))
+        
+        # Initialize suggestions
+        self._update_suggestions()
+    
+    def _on_search_type_change(self):
+        """Handle search type change"""
+        self.search_var.set("")
+        self._update_suggestions()
+        
+    def _on_search_change(self, *args):
+        """Handle search text change"""
+        self._update_suggestions()
+        
+    def _update_suggestions(self):
+        """Update the suggestion dropdown based on search text and type"""
+        search_text = self.search_var.get().lower()
+        search_type = self.search_type.get()
+        
+        if search_type == "name":
+            filtered = [p for p in self.products 
+                       if search_text in p["name"].lower()]
+            suggestions = [f"{p['name']} ({p['sku']})" for p in filtered[:20]]
+        else:  # sku
+            filtered = [p for p in self.products 
+                       if search_text in p["sku"].lower()]
+            suggestions = [f"{p['sku']} - {p['name']}" for p in filtered[:20]]
+        
+        self.suggestion_combo['values'] = suggestions
+        if suggestions and not search_text:
+            self.suggestion_combo.set('')
+    
+    def _on_suggestion_select(self, event):
+        """Handle suggestion selection"""
+        selection = self.suggestion_combo.get()
+        if not selection:
+            return
+            
+        # Extract SKU from selection
+        if self.search_type.get() == "name":
+            # Format: "Product Name (SKU)"
+            sku = selection.split('(')[-1].rstrip(')')
+        else:
+            # Format: "SKU - Product Name"
+            sku = selection.split(' - ')[0]
+        
+        # Find the product
+        product = next((p for p in self.products if p["sku"] == sku), None)
+        if product:
+            self._display_product(product)
+    
+    def _display_product(self, product):
+        """Display selected product details"""
+        self.selected_product = product
+        self.sku_label.config(text=product["sku"])
+        self.name_label.config(text=product["name"])
+        self.price_label.config(text=f"¥{product['price']}")
+        
+        # If product is already in pool, show its current quantity
+        if product["sku"] in self.product_pool:
+            current_qty = self.product_pool[product["sku"]]["quantity"]
+            self.quantity_var.set(str(current_qty))
+            self.status_var.set(f"Selected: {product['sku']} - {product['name']} (Currently in pool: {current_qty})")
+        else:
+            self.quantity_var.set("1")
+            self.status_var.set(f"Selected: {product['sku']} - {product['name']}")
+    
+    def _add_to_pool(self):
+        """Add selected product to the pool"""
+        if not hasattr(self, 'selected_product'):
+            messagebox.showwarning("警告", "请先选择一个产品")
+            return
+            
+        try:
+            quantity = int(self.quantity_var.get())
+            if quantity <= 0:
+                raise ValueError("Quantity must be positive")
+        except ValueError as e:
+            messagebox.showerror("错误", f"无效数量: {e}")
+            return
+        
+        sku = self.selected_product["sku"]
+        
+        # Add or update product in pool
+        self.product_pool[sku] = {
+            "product": self.selected_product,
+            "quantity": quantity,
+            "warehouse": "默认仓库"  # Default warehouse for new products
+        }
+        
+        self._refresh_pool_display()
+        self.status_var.set(f"Added {quantity} × {sku} to pool")
+    
+    def _update_quantity(self):
+        """Update quantity for existing product in pool"""
+        if not hasattr(self, 'selected_product'):
+            messagebox.showwarning("警告", "请先选择一个产品")
+            return
+            
+        sku = self.selected_product["sku"]
+        if sku not in self.product_pool:
+            messagebox.showwarning("警告", f"产品 {sku} 不在池中。请使用'添加到池'。")
+            return
+            
+        try:
+            quantity = int(self.quantity_var.get())
+            if quantity <= 0:
+                raise ValueError("Quantity must be positive")
+            if quantity > 1000000:
+                raise ValueError("Quantity cannot exceed 1,000,000 (please check if this is correct)")
+        except ValueError as e:
+            messagebox.showerror("错误", f"无效数量: {e}")
+            return
+        
+        self.product_pool[sku]["quantity"] = quantity
+        self._refresh_pool_display()
+        self.status_var.set(f"Updated {sku} quantity to {quantity}")
+    
+    def _update_warehouse(self):
+        """Update warehouse for existing product in pool"""
+        if not hasattr(self, 'selected_product'):
+            messagebox.showwarning("警告", "请先选择一个产品")
+            return
+            
+        sku = self.selected_product["sku"]
+        if sku not in self.product_pool:
+            messagebox.showwarning("警告", f"产品 {sku} 不在池中。请使用'添加到池'。")
+            return
+        
+        # Open warehouse selection dialog
+        self._select_warehouse_for_product(sku)
+    
+    def _select_warehouse_for_product(self, sku):
+        """Open warehouse selection dialog for specific product"""
+        # Create popup window
+        popup = tk.Toplevel(self.root)
+        popup.title(f"Select Warehouse for {sku}")
+        popup.geometry("350x400")
+        popup.resizable(False, False)
+        
+        # Make it modal
+        popup.transient(self.root)
+        popup.grab_set()
+        
+        # Center the popup
+        popup.update_idletasks()
+        x = (popup.winfo_screenwidth() // 2) - (350 // 2)
+        y = (popup.winfo_screenheight() // 2) - (400 // 2)
+        popup.geometry(f"350x400+{x}+{y}")
+        
+        # Load warehouse options
+        warehouses = self._load_warehouse_options()
+        current_warehouse = self.product_pool[sku]["warehouse"]
+        
+        # Create UI elements
+        ttk.Label(popup, text=f"Select warehouse for {sku}:", font=("Arial", 12, "bold")).pack(pady=(10, 5))
+        
+        # Current selection display
+        current_label = ttk.Label(popup, text=f"Current: {current_warehouse}", 
+                                foreground="blue")
+        current_label.pack(pady=(0, 10))
+        
+        # Listbox for warehouse selection
+        frame = ttk.Frame(popup)
+        frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=(0, 10))
+        
+        listbox = tk.Listbox(frame, font=("Arial", 10))
+        scrollbar = ttk.Scrollbar(frame, orient=tk.VERTICAL, command=listbox.yview)
+        listbox.config(yscrollcommand=scrollbar.set)
+        
+        listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        
+        # Populate listbox
+        for warehouse in warehouses:
+            listbox.insert(tk.END, warehouse)
+            
+        # Select current warehouse
+        try:
+            current_index = warehouses.index(current_warehouse)
+            listbox.selection_set(current_index)
+            listbox.see(current_index)
+        except ValueError:
+            pass
+        
+        # Button frame
+        button_frame = ttk.Frame(popup)
+        button_frame.pack(pady=10)
+        
+        def on_ok():
+            selection = listbox.curselection()
+            if selection:
+                new_warehouse = warehouses[selection[0]]
+                self.product_pool[sku]["warehouse"] = new_warehouse
+                self._refresh_pool_display()
+                self.status_var.set(f"Updated {sku} warehouse to {new_warehouse}")
+                popup.destroy()
+            else:
+                messagebox.showwarning("警告", "请选择一个仓库")
+        
+        def on_cancel():
+            popup.destroy()
+        
+        ttk.Button(button_frame, text="确定", command=on_ok).pack(side=tk.LEFT, padx=(0, 10))
+        ttk.Button(button_frame, text="取消", command=on_cancel).pack(side=tk.LEFT)
+        
+        # Handle double-click
+        def on_double_click(event):
+            on_ok()
+        
+        listbox.bind("<Double-Button-1>", on_double_click)
+        
+        # Handle Enter key
+        def on_enter(event):
+            on_ok()
+        
+        popup.bind("<Return>", on_enter)
+        popup.bind("<Escape>", lambda e: on_cancel())
+        
+        # Focus on listbox
+        listbox.focus_set()
+    
+    def _create_warehouse_mapping_file(self, order_name):
+        """Create warehouse mapping file for backend processing"""
+        import json
+        from pathlib import Path
+        
+        # Create mapping of SKU to warehouse
+        warehouse_mapping = {}
+        for sku, item in self.product_pool.items():
+            warehouse_mapping[sku] = item.get("warehouse", "默认仓库")
+        
+        # Save to temporary file
+        mapping_file = Path(__file__).resolve().parent / f"warehouse_mapping_{order_name}.json"
+        with open(mapping_file, 'w', encoding='utf-8') as f:
+            json.dump(warehouse_mapping, f, ensure_ascii=False, indent=2)
+        
+        print(f"Created warehouse mapping file: {mapping_file}")
+    
+    def _refresh_pool_display(self):
+        """Refresh the product pool display"""
+        # Clear existing items
+        for item in self.pool_tree.get_children():
+            self.pool_tree.delete(item)
+        
+        # Add current pool items
+        total_value = 0
+        for sku, item in self.product_pool.items():
+            product = item["product"]
+            quantity = item["quantity"]
+            warehouse = item.get("warehouse", "默认仓库")  # Default if not set
+            unit_price = product["price"]
+            total_price = unit_price * quantity
+            total_value += total_price
+            
+            self.pool_tree.insert('', 'end', values=(
+                sku,
+                product["name"][:40] + ("..." if len(product["name"]) > 40 else ""),
+                quantity,
+                f"¥{unit_price}",
+                f"¥{total_price:,.2f}",
+                warehouse
+            ))
+        
+        # Update frame title with count and total
+        pool_count = len(self.product_pool)
+        pool_frame = self.pool_tree.master
+        pool_frame.configure(text=f"Product Pool ({pool_count} items, Total: ¥{total_value:,.2f})")
+    
+    def _remove_from_pool(self):
+        """Remove selected item from pool"""
+        selection = self.pool_tree.selection()
+        if not selection:
+            messagebox.showwarning("警告", "请选择要删除的项目")
+            return
+            
+        # Get SKU from selected item
+        item = self.pool_tree.item(selection[0])
+        sku = item['values'][0]
+        
+        # Remove from pool
+        if sku in self.product_pool:
+            del self.product_pool[sku]
+            self._refresh_pool_display()
+            self.status_var.set(f"Removed {sku} from pool")
+    
+    def _clear_pool(self):
+        """Clear all items from pool"""
+        if not self.product_pool:
+            messagebox.showinfo("信息", "池已经是空的")
+            return
+            
+        result = messagebox.askyesno("确认", "您确定要清空池中的所有项目吗？")
+        if result:
+            self.product_pool.clear()
+            self._refresh_pool_display()
+            self.status_var.set("Cleared all items from pool")
+    
+    def _generate_command(self):
+        """Generate the direct_sku_to_json.py command for all products in pool"""
+        if not self.product_pool:
+            messagebox.showwarning("警告", "请先将产品添加到池中")
+            return
+        
+        # Get order name
+        order_name = self.order_name_var.get().strip()
+        if not order_name:
+            order_name = "factory"
+        
+        # Build command with all SKU-quantity pairs
+        command_parts = ["python", "direct_sku_to_json.py", "--name", order_name]
+        
+        # Add PO import flag if checked
+        if self.po_import_var.get():
+            command_parts.append("--po-import")
+            # Create warehouse mapping file for backend
+            self._create_warehouse_mapping_file(order_name)
+        
+        # Load accessory mapping to show what will be automatically included
+        accessory_mapping = self._load_accessory_mapping()
+        
+        total_value = 0
+        product_details = []
+        all_items_count = 0  # Including accessories
+        
+        for sku, item in self.product_pool.items():
+            product = item["product"]
+            quantity = item["quantity"]
+            warehouse = item.get("warehouse", "默认仓库")
+            unit_price = product["price"]
+            total_price = unit_price * quantity
+            total_value += total_price
+            all_items_count += quantity
+            
+            command_parts.extend([sku, str(quantity)])
+            product_details.append(f"- {sku}: {quantity} × ¥{unit_price} = ¥{total_price:,.2f} ({product['name']}) [仓库: {warehouse}]")
+            
+            # Show accessories that will be automatically added
+            accessories = accessory_mapping.get(sku, [])
+            if accessories:
+                product_details.append(f"  └─ 自动包含配件:")
+                for acc in accessories:
+                    acc_sku = acc.get("sku", "")
+                    acc_name = acc.get("name", "")
+                    ratio_main = int(acc.get("ratio_main", 1))
+                    ratio_acc = int(acc.get("ratio_accessory", 1))
+                    acc_qty = quantity * ratio_acc // ratio_main
+                    all_items_count += acc_qty
+                    product_details.append(f"     • {acc_sku}: {acc_qty} ({acc_name})")
+        
+        command = " ".join(command_parts)
+        
+        # Display command with details
+        details = f"""Command to generate order for {len(self.product_pool)} products:
+
+{command}
+
+Product Details:
+{chr(10).join(product_details)}
+
+Order Summary:
+- Order Name: {order_name}
+- Total Products (main): {len(self.product_pool)}
+- Total Items (with accessories): {all_items_count}
+- Total Value (main products): ¥{total_value:,.2f}
+
+This command will:
+1. Generate {order_name}-1.json, {order_name}-2.json, etc. (grouped by supplier/factory)
+2. Automatically convert to Excel format ({order_name}-1.xlsx, {order_name}-2.xlsx, etc.)
+3. Apply current date ({self._get_current_date()}) and delivery date calculations
+4. Include all required accessories based on accessory mapping"""
+
+        if self.po_import_var.get():
+            # Get unique warehouses used
+            warehouses_used = set(item.get("warehouse", "默认仓库") for item in self.product_pool.values())
+            warehouse_list = ", ".join(sorted(warehouses_used))
+            details += f"""
+5. Generate PO import Excel file: PO_import_{order_name}.xlsx (warehouses: {warehouse_list})"""
+
+        details += """
+"""
+        
+        self.command_text.delete(1.0, tk.END)
+        self.command_text.insert(1.0, details)
+        
+        # Store command for copying/execution
+        self.current_command = command
+        
+        total_items = sum(item['quantity'] for item in self.product_pool.values())
+        self.status_var.set(f"Generated command for {len(self.product_pool)} products ({total_items} total items)")
+    
+    def _get_current_date(self):
+        """Get current date in Chinese format"""
+        from datetime import datetime
+        return datetime.now().strftime('%Y年%m月%d日')
+    
+    def _copy_command(self):
+        """Copy command to clipboard"""
+        if hasattr(self, 'current_command'):
+            try:
+                pyperclip.copy(self.current_command)
+                self.status_var.set("Command copied to clipboard")
+            except Exception as e:
+                messagebox.showerror("错误", f"复制到剪贴板失败: {e}")
+        else:
+            messagebox.showwarning("警告", "没有命令可复制")
+    
+    def _execute_command(self):
+        """Execute the generated command"""
+        if not hasattr(self, 'current_command'):
+            messagebox.showwarning("警告", "没有命令可执行")
+            return
+            
+        try:
+            # Change to the script directory
+            script_dir = Path(__file__).resolve().parent
+            
+            # Execute command
+            result = subprocess.run(
+                self.current_command.split(),
+                cwd=script_dir,
+                capture_output=True,
+                text=True,
+                check=True
+            )
+            
+            # Show success message with output
+            success_msg = f"Command executed successfully!\n\nOutput:\n{result.stdout}"
+            if result.stderr:
+                success_msg += f"\n\nWarnings:\n{result.stderr}"
+                
+            messagebox.showinfo("成功", success_msg)
+            self.status_var.set("Command executed successfully")
+            
+        except subprocess.CalledProcessError as e:
+            error_msg = f"Command failed with exit code {e.returncode}\n\nError:\n{e.stderr}\n\nOutput:\n{e.stdout}"
+            messagebox.showerror("执行错误", error_msg)
+            
+        except Exception as e:
+            messagebox.showerror("错误", f"执行命令失败: {e}")
+    
+    def _clear_command(self):
+        """Clear the command display"""
+        self.command_text.delete(1.0, tk.END)
+        if hasattr(self, 'current_command'):
+            delattr(self, 'current_command')
+        self.status_var.set("Command cleared")
+
+
+def main():
+    """Main function to run the GUI"""
+    try:
+        # Check if pyperclip is available
+        import pyperclip
+    except ImportError:
+        print("Warning: pyperclip not installed. Clipboard functionality will not work.")
+        print("Install it with: pip install pyperclip")
+    
+    root = tk.Tk()
+    app = ProductSearchGUI(root)
+    root.mainloop()
+
+
+if __name__ == "__main__":
+    main()

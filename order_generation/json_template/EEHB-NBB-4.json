@@ -2,11 +2,11 @@
   "cells": {
     "B3": {
       "key": "供货商：",
-      "value": ""
+      "value": "宁波瑾秀制刷科技有限公司"
     },
     "G3": {
       "key": "订单号",
-      "value": ""
+      "value": "EEHB-NBB-4"
     },
     "B4": {
       "key": "电话：",
@@ -14,15 +14,15 @@
     },
     "G4": {
       "key": "日期",
-      "value": ""
+      "value": "2025年10月21日"
     },
     "B5": {
       "key": "联系人：",
-      "value": ""
+      "value": "多多"
     },
     "G5": {
       "key": "订单安排人",
-      "value": ""
+      "value": "郑遥杰"
     },
     "B12": {
       "key": "进仓地址：",
@@ -34,7 +34,7 @@
     },
     "B14": {
       "key": "交货时间",
-      "value": ""
+      "value": "45天"
     },
     "F14": {
       "key": "色卡",
@@ -90,66 +90,75 @@
     },
     "A19": {
       "key": "注意事项：1",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": "表面处理干净光滑，不能有划痕，注塑残留毛刺"
     },
     "A20": {
       "key": "2：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     },
     "A21": {
       "key": "3：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     },
     "A22": {
       "key": "4：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     },
     "A23": {
       "key": "5：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     },
     "A24": {
       "key": "6：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     },
     "A25": {
       "key": "7：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     },
     "A26": {
       "key": "8：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     },
     "A27": {
       "key": "9：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     },
     "A28": {
       "key": "10：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     },
     "A29": {
       "key": "11：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     },
     "A30": {
       "key": "12：",
-      "value": "<TODO put note or addtional requirement here>"
+      "value": ""
     }
   },
   "products": [
     {
-      "产品编号": "",
-      "产品名称": "",
-      "产品图片": "",
-      "描述": "<TODO (value not filled - fill with product description/requirement #not product name/title from PO usually the second/third column in product table of PO file with description/requirement of the ordered product, mustfill*)>",
+      "产品编号": "EEHB-NBB-4",
+      "产品图片": "order_generation/images/accessories/EEHB-NBB-4.jpg",
+      "描述": {
+        "type": "rich_text",
+        "content": [
+          {
+            "text": "清洁刷，注塑体黑色，植毛黑色尼龙毛，0.7mm直径，长度25mm，定制\nEllen Evyse滑块logo，产品做哑光，logo处做亮光。需打样再做货",
+            "bold": false,
+            "color": "000000"
+          }
+        ]
+      },
       "数量/个": 0,
-      "单价": 0,
-      "包装方式": ""
+      "单价": 0.64,
+      "包装方式": "",
+      "产品名称": "双头清洁刷"
     }
   ],
   "footer": {
-    "buyer": "宁波品秀美容科技有限公司",
-    "supplier": ""
+    "buyer": "宁波集秀美容科技有限公司",
+    "supplier": "宁波瑾秀制刷科技有限公司"
   }
 }
