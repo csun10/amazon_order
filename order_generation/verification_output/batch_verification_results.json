@@ -1,0 +1,272 @@
+{
+  "summary": {
+    "total": 25,
+    "success": 23,
+    "partial": 0,
+    "skipped": 2,
+    "error": 0
+  },
+  "details": [
+    {
+      "sku": "Elasticbrush01",
+      "sales": 3088,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_Elasticbrush01-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_Elasticbrush01-2.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_Elasticbrush01.xlsx"
+    },
+    {
+      "sku": "EEHB-NBB",
+      "sales": 2418,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_EEHB-NBB-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_EEHB-NBB-2.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_EEHB-NBB-3.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_EEHB-NBB-4.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_EEHB-NBB.xlsx"
+    },
+    {
+      "sku": "ST1122-1",
+      "sales": 1782,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ST1122-1-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ST1122-1-2.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ST1122-1-3.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ST1122-1-4.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ST1122-1-5.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ST1122-1-6.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ST1122-1-7.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ST1122-1-8.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_ST1122-1.xlsx"
+    },
+    {
+      "sku": "ZQ-R8SK-ROL2",
+      "sales": 675,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ZQ-R8SK-ROL2-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ZQ-R8SK-ROL2-2.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ZQ-R8SK-ROL2-3.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_ZQ-R8SK-ROL2.xlsx"
+    },
+    {
+      "sku": "B10-MJB2-BK",
+      "sales": 730,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_B10-MJB2-BK-1.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_B10-MJB2-BK.xlsx"
+    },
+    {
+      "sku": "EC404",
+      "sales": 935,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_EC404-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_EC404-2.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_EC404-3.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_EC404.xlsx"
+    },
+    {
+      "sku": "B10-MJB2-BK2",
+      "sales": 180,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_B10-MJB2-BK2-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_B10-MJB2-BK2-2.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_B10-MJB2-BK2.xlsx"
+    },
+    {
+      "sku": "ZW-YI7D-KWFL",
+      "sales": 855,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ZW-YI7D-KWFL-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ZW-YI7D-KWFL-2.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ZW-YI7D-KWFL-3.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_ZW-YI7D-KWFL.xlsx"
+    },
+    {
+      "sku": "48-82P3-QSFG",
+      "sales": 154,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_48-82P3-QSFG-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_48-82P3-QSFG-2.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_48-82P3-QSFG-3.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_48-82P3-QSFG-4.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_48-82P3-QSFG.xlsx"
+    },
+    {
+      "sku": "Elasticbrush02",
+      "sales": 973,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_Elasticbrush02-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_Elasticbrush02-2.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_Elasticbrush02.xlsx"
+    },
+    {
+      "sku": "Elasticbrush06",
+      "sales": 1138,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_Elasticbrush06-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_Elasticbrush06-2.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_Elasticbrush06.xlsx"
+    },
+    {
+      "sku": "EE-RB-1.32.1",
+      "sales": 189,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_EE-RB-1.32.1-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_EE-RB-1.32.1-2.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_EE-RB-1.32.1-3.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_EE-RB-1.32.1.xlsx"
+    },
+    {
+      "sku": "AMCB-Pink",
+      "sales": 21,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_AMCB-Pink-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_AMCB-Pink-2.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_AMCB-Pink.xlsx"
+    },
+    {
+      "sku": "2EC-Green",
+      "sales": 221,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_2EC-Green-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_2EC-Green-2.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_2EC-Green.xlsx"
+    },
+    {
+      "sku": "17-A1KN-KJGW",
+      "sales": 341,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_17-A1KN-KJGW-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_17-A1KN-KJGW-2.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_17-A1KN-KJGW.xlsx"
+    },
+    {
+      "sku": "AMCB-black",
+      "sales": 77,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_AMCB-black-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_AMCB-black-2.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_AMCB-black.xlsx"
+    },
+    {
+      "sku": "ST1122-3",
+      "sales": 89,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ST1122-3-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ST1122-3-2.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ST1122-3-3.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ST1122-3-4.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ST1122-3-5.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ST1122-3-6.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_ST1122-3-7.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_ST1122-3.xlsx"
+    },
+    {
+      "sku": "5V-GW44-8VVX",
+      "sales": 364,
+      "status": "SKIPPED",
+      "reason": "Template not found"
+    },
+    {
+      "sku": "2EC-Pink",
+      "sales": 101,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_2EC-Pink-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_2EC-Pink-2.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_2EC-Pink.xlsx"
+    },
+    {
+      "sku": "EE321",
+      "sales": 20,
+      "status": "SKIPPED",
+      "reason": "Template not found"
+    },
+    {
+      "sku": "AMCB-Blue",
+      "sales": 18,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_AMCB-Blue-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_AMCB-Blue-2.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_AMCB-Blue.xlsx"
+    },
+    {
+      "sku": "Elasticbrush05",
+      "sales": 401,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_Elasticbrush05-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_Elasticbrush05-2.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_Elasticbrush05.xlsx"
+    },
+    {
+      "sku": "2EC-Blue",
+      "sales": 100,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_2EC-Blue-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_2EC-Blue-2.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_2EC-Blue.xlsx"
+    },
+    {
+      "sku": "7S-HA5T-5D0X",
+      "sales": 380,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_7S-HA5T-5D0X-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_7S-HA5T-5D0X-2.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_7S-HA5T-5D0X-3.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_7S-HA5T-5D0X.xlsx"
+    },
+    {
+      "sku": "2EC-Yellow",
+      "sales": 54,
+      "status": "SUCCESS",
+      "json_files": [
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_2EC-Yellow-1.json",
+        "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\json_exports\\verify_2EC-Yellow-2.json"
+      ],
+      "po_import": "C:\\Users\\Cheng\\Desktop\\1-19\\amazon_order\\order_generation\\PO_import_filled\\PO_import_verify_2EC-Yellow.xlsx"
+    }
+  ]
+}
