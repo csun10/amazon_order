@@ -145,59 +145,9 @@
         "type": "rich_text",
         "content": [
           {
-            "text": "手柄表面电镀处理尽量光亮，黑色手柄做防静电处理。\n\n气垫颜色（打样确认色），植猪鬃毛，梳针颜色黑色防静电，植",
+            "text": "手柄表面电镀处理尽量光亮，黑色手柄做防静电处理。\n\n气垫颜色（打样确认色），植猪鬃毛，梳针颜色黑色防静电，植0.8 mm细尼龙针染头和梳针颜色一致，染头尽量偏小（视觉效果染头和梳针一体）梳针做防静电处理。\n\nLOGO：ellen evyse 颜色印金，注意LOGO颜色光泽度，与2025.11.20签样一致",
             "bold": false,
             "color": "000000"
-          },
-          {
-            "text": "0.8 mm",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "细尼龙针染头和梳针颜色一致，染头尽量偏小（视觉效果染头和梳针一体）梳针做防静电处理。\n\n",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "LOGO",
-            "bold": true,
-            "color": "FF0000"
-          },
-          {
-            "text": "：",
-            "bold": true,
-            "color": "FF0000"
-          },
-          {
-            "text": "ellen evyse ",
-            "bold": true,
-            "color": "FF0000"
-          },
-          {
-            "text": "颜色印金，注意",
-            "bold": true,
-            "color": "FF0000"
-          },
-          {
-            "text": "LOGO",
-            "bold": true,
-            "color": "FF0000"
-          },
-          {
-            "text": "颜色光泽度，与",
-            "bold": true,
-            "color": "FF0000"
-          },
-          {
-            "text": "2025.11.20",
-            "bold": true,
-            "color": "FF0000"
-          },
-          {
-            "text": "签样一致",
-            "bold": true,
-            "color": "FF0000"
           }
         ]
       },
@@ -208,7 +158,7 @@
     }
   ],
   "footer": {
-    "buyer": "宁波品秀美容科技有限公司",
+    "buyer": "宁波集秀美容科技有限公司",
     "supplier": "宁波瑾秀制刷科技有限公司"
   }
 }

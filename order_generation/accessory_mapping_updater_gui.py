@@ -492,7 +492,13 @@ class AccessoryMappingUpdaterGUI:
         )
         
         if filename:
-            self.selected_file = Path(filename)
+            file_path = Path(filename)
+            # Validate file extension
+            if file_path.suffix.lower() not in ['.xlsx', '.xls']:
+                messagebox.showwarning("警告", f"Selected file is not an Excel file: {file_path.suffix}\nPlease select a .xlsx or .xls file.")
+                return
+            
+            self.selected_file = file_path
             self.file_path_var.set(str(self.selected_file))
             self._load_sheet_names()
             self.status_var.set(f"File selected: {self.selected_file.name}")
@@ -530,7 +536,8 @@ class AccessoryMappingUpdaterGUI:
                 root = ET.fromstring(workbook_xml)
                 sheets = root.findall('.//{http://schemas.openxmlformats.org/spreadsheetml/2006/main}sheet')
                 return [sheet.get('name') for sheet in sheets]
-        except:
+        except (zipfile.BadZipFile, KeyError, ET.ParseError) as e:
+            print(f"Warning: Could not read sheet names from {xlsx_path}: {e}")
             return ['Sheet1']  # Default fallback
     
     def _process_file(self):

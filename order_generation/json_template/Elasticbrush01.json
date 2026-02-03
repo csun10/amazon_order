@@ -54,7 +54,7 @@
     },
     "G15": {
       "key": "Logo1",
-      "value": "ECOED_shampoo_brush.png"
+      "value": ""
     },
     "B16": {
       "key": "产前确认样",
@@ -145,82 +145,7 @@
         "type": "rich_text",
         "content": [
           {
-            "text": "梳身半降解材料（用新材料防断裂）加麦秸秆",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "5645 C",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "绿色（",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "注意大货注塑颜色，必须与2025.5.30签样一样",
-            "bold": false,
-            "color": "FF0000"
-          },
-          {
-            "text": "），尼龙丝",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "0.8mm7529U",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "灰色尼龙丝颜色同",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "beter",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "，棕色",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": " ecoed logo",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "颜色同",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "beter",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "！染头颜色同梳体",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": ". ",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "包装方式：白卡盒，卡盒我司供，箱规",
-            "bold": false,
-            "color": "000000"
-          },
-          {
-            "text": "120/24",
+            "text": "梳身半降解材料（用新材料防断裂）加麦秸秆5645 C绿色（注意大货注塑颜色，必须与2025.5.30签样一样），尼龙丝0.8mm7529U灰色尼龙丝颜色同beter，棕色 ecoed logo颜色同beter！染头颜色同梳体. 包装方式：白卡盒，卡盒我司供，箱规120/24",
             "bold": false,
             "color": "000000"
           }
@@ -233,7 +158,7 @@
     }
   ],
   "footer": {
-    "buyer": "宁波品秀美容科技有限公司",
+    "buyer": "宁波集秀美容科技有限公司",
     "supplier": "宁波瑾秀制刷科技有限公司"
   }
 }

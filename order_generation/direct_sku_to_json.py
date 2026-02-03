@@ -73,6 +73,12 @@ def _compute_all_items(requests: Dict[str, int], mapping: Dict[str, List[dict]])
                 accessory = int(acc.get("ratio_accessory", 1))
             except ValueError:
                 main = accessory = 1
+            
+            # Prevent division by zero
+            if main <= 0:
+                print(f"Warning: Invalid ratio_main={main} for accessory {acc.get('sku')}, defaulting to 1")
+                main = 1
+            
             acc_qty = qty * accessory // main
             acc_sku = acc.get("sku")
             if acc_sku:
@@ -194,7 +200,22 @@ def main(argv: List[str] | None = None) -> int:
         else:
             print("error: expected even number of arguments", flush=True)
             return 1
-    requests = {ns.items[i]: int(ns.items[i + 1]) for i in range(0, len(ns.items), 2)}
+    # Validate SKU-quantity pairs
+    requests = {}
+    for i in range(0, len(ns.items), 2):
+        sku = ns.items[i]
+        try:
+            qty = int(ns.items[i + 1])
+            if qty <= 0:
+                print(f"error: quantity for {sku} must be positive, got {qty}", flush=True)
+                return 1
+            if qty > 1000000:
+                print(f"warning: quantity for {sku} is very large ({qty}), please verify", flush=True)
+            requests[sku] = qty
+        except ValueError:
+            print(f"error: invalid quantity for {sku}: {ns.items[i + 1]}", flush=True)
+            return 1
+    
     paths = generate_factory_jsons(requests, ns.name)
     for p in paths:
         print(p)
